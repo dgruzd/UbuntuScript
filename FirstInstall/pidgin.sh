@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install pidgin
+sudo apt-get install pidgin

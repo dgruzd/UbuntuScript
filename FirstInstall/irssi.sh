@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install irssi 
+sudo apt-get install irssi 

@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install openssh-server 
+sudo apt-get install openssh-server 

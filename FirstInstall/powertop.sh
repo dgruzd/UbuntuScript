@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install powertop 
+sudo apt-get install powertop 

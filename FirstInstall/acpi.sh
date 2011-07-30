@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install acpi
+sudo apt-get install acpi

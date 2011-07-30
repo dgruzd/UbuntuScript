@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install vlc 
+sudo apt-get install vlc 

@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install htop 
+sudo apt-get install htop 

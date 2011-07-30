@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo aptitude install git 
+sudo apt-get install git 

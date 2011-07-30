@@ -1,5 +1,5 @@
 #!/bin/sh
-sudo aptitude install moc 
+sudo apt-get install moc 
 mkdir -pv $HOME/.moc
 cp -v /usr/share/doc/moc/examples/config.example.gz $HOME/.moc/
 cd $HOME/.moc

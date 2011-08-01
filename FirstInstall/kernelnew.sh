@@ -1,4 +1,7 @@
 #!/bin/sh
+#sudo add-apt-repository ppa:kernel-ppa/ppa
+
+
 # http://kernel.ubuntu.com/~kernel-ppa/mainline/
 # http://kernel.ubuntu.com/~kernel-ppa/mainline/v2.6.39.3-oneiric/
 wget -N http://kernel.ubuntu.com/~kernel-ppa/mainline/v2.6.39.3-oneiric/linux-headers-2.6.39-02063903_2.6.39-02063903.201107091121_all.deb

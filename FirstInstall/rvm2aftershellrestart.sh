@@ -4,7 +4,7 @@
 
 
 sudo apt-get install sqlite3 libsqlite3-dev
-#rvm install 1.9.2
+sudo apt-get install zlib1g-dev zlibc  
 
 # FIX zlib problem
 rvm pkg install zlib

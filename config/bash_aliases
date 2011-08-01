@@ -10,6 +10,7 @@ alias uu="sudo aptitude update && sudo aptitude safe-upgrade"
 alias gs='git status '
 alias ga='git add -A'
 alias gc='git commit -a'
+alias gb='git branch '
 alias gd='git diff'
 alias go='git checkout '
 alias gp='git push '

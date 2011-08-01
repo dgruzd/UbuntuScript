@@ -1,0 +1,88 @@
+" Размер табуляции по умолчанию
+" Включаем "умные" отспупы ( например, автоотступ после {)
+set smartindent
+" Включить автоотступы
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+" Преобразование Таба в пробелы
+set expandtab
+
+" Включаем нумерацию строк
+set nu
+
+" Скрывать указатель мыши, когда печатаем
+set mousehide
+
+" Влючить подстветку синтаксиса
+syntax on
+
+" Формат строки состояния
+set statusline=%<%f%h%m%r\ %b\ %{&encoding}\ 0x\ \ %l,%c%V\ %P 
+set laststatus=2
+
+
+" Устанавливаем кодировки
+set encoding=utf8
+set termencoding=utf-8
+" Подсветка текущей строки
+set hlsearch
+":set go-=T
+set go=-
+colorscheme morning 
+set guifont=Courier\ 12
+set cursorline
+
+"RUBYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+"map <F3> :call RunRuby()<CR>
+func! RunRuby()
+	:w
+	:!ruby "%"
+endfunc
+
+
+
+"-------------------------
+" Горячие клавишы
+"-------------------------
+
+" Пробел в нормальном режиме перелистывает страницы
+nmap <Space> <PageDown>
+
+
+" C-c and C-v - Copy/Paste в "глобальный клипборд"
+vmap <C-C> "+yi
+imap <C-V> <esc>"+gPi
+
+
+" F2 - быстрое сохранение
+nmap <F2> :w<cr>
+vmap <F2> <esc>:w<cr>i
+imap <F2> <esc>:w<cr>i
+
+" F3 - открыть NerdTree  
+nmap <F3> :NERDTree<cr>
+vmap <F3> <esc>:NERDTree<cr>i
+imap <F3> <esc>:NERDTree<cr>i
+
+" F5 - просмотр списка буферов
+nmap <F5> <Esc>:BufExplorer<cr>
+vmap <F5> <esc>:BufExplorer<cr>
+imap <F5> <esc><esc>:BufExplorer<cr>
+
+" F6 - предыдущий буфер
+map <F6> :bp<cr>
+vmap <F6> <esc>:bp<cr>i
+imap <F6> <esc>:bp<cr>i
+
+" F7 - следующий буфер
+map <F7> :bn<cr>
+vmap <F7> <esc>:bn<cr>i
+imap <F7> <esc>:bn<cr>i
+
+" F8 - удалить буфер
+map <F8> :bd<cr>
+vmap <F8> <esc>:bn<cr>i
+imap <F8> <esc>:bn<cr>i
+
+"Plugins

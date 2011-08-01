@@ -1,0 +1,12 @@
+alias update="sudo aptitude update"
+alias install="sudo aptitude install"
+alias upgrade="sudo aptitude safe-upgrade"
+alias remove="sudo aptitude remove"
+
+alias gs='git status '
+alias ga='git add -A'
+alias gc='git commit -a'
+alias gd='git diff'
+alias go='git checkout '
+alias gp='git push '
+alias gpu='git pull '

@@ -42,7 +42,7 @@ endfunc
 
 
 "-------------------------
-" Горячие клавишы
+" HOTKEYS
 "-------------------------
 
 " Пробел в нормальном режиме перелистывает страницы
@@ -54,10 +54,10 @@ vmap <C-C> "+yi
 imap <C-V> <esc>"+gPi
 
 
-" F2 - быстрое сохранение
-nmap <F2> :w<cr>
-vmap <F2> <esc>:w<cr>i
-imap <F2> <esc>:w<cr>i
+" F2 - save and exit
+nmap <F2> :wq<cr>
+vmap <F2> <esc>:wq<cr>i
+imap <F2> <esc>:wq<cr>i
 
 " F3 - открыть NerdTree  
 nmap <F3> :NERDTree<cr>

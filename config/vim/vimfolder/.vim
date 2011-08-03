@@ -1,0 +1,1 @@
+/home/nyaa/Dropbox/UbuntuScript/config/vim/vimfolder

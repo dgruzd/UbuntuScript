@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install flashplugin-nonfree
+sudo apt-get --assume-yes install flashplugin-nonfree

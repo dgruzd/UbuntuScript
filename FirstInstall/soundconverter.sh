@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install soundconverter
+sudo apt-get --assume-yes install soundconverter

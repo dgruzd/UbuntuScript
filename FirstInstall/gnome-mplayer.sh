@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install gnome-mplayer 
+sudo apt-get --assume-yes install gnome-mplayer 

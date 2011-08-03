@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install aptitude
+sudo apt-get --assume-yes install aptitude

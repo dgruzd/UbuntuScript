@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install vim-gnome
+sudo apt-get --assume-yes install vim-gnome

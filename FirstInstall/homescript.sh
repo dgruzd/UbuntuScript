@@ -1,2 +1,2 @@
 #!/bin/sh
-ln -s ~/Dropbox/UbuntuScript/ ~/Script
+ln -v -s ~/Dropbox/UbuntuScript/ ~/Script

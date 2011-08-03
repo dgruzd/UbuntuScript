@@ -1,5 +1,7 @@
 #!/bin/sh
 sudo add-apt-repository ppa:kernel-ppa/ppa
+sudo apt-get update
+apt-cache showpkg linux-headers
 
 
 # http://kernel.ubuntu.com/~kernel-ppa/mainline/

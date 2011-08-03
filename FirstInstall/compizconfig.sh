@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install compizconfig-settings-manager 
+sudo apt-get --assume-yes install compizconfig-settings-manager 

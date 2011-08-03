@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install htop 
+sudo apt-get --assume-yes install htop 

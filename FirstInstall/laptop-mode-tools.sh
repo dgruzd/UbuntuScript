@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install laptop-mode-tools
+sudo apt-get --assume-yes install laptop-mode-tools

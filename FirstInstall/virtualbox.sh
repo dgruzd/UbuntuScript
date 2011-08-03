@@ -6,4 +6,4 @@ sudo echo "deb http://download.virtualbox.org/virtualbox/debian $dist_name contr
 
 wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install virtualbox-4.1
+sudo apt-get --assume-yes install virtualbox-4.1

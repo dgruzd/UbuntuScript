@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install nmap
+sudo apt-get --assume-yes install nmap

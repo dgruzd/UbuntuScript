@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install pidgin
+sudo apt-get --assume-yes install pidgin

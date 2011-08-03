@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install keepassx
+sudo apt-get --assume-yes install keepassx

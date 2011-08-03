@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install screen
+sudo apt-get --assume-yes install screen

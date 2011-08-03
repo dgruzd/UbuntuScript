@@ -28,7 +28,7 @@ set termencoding=utf-8
 set hlsearch
 ":set go-=T
 set go=-
-colorscheme morning 
+colorscheme desert 
 set guifont=Courier\ 12
 set cursorline
 

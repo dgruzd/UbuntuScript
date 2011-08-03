@@ -17,6 +17,9 @@ cp -r $HOME/.purple/ $HOME/TIME_TO_MOVE
 echo "################### Cairo Dock		###################"
 cp -r $HOME/.config/cairo-dock/ $HOME/TIME_TO_MOVE
 
+echo "################### SSH			###################"
+cp -r $HOME/.ssh/ $HOME/TIME_TO_MOVE
+
 echo "################### Dropbox		###################"
 cp -r $HOME/Dropbox/ $HOME/TIME_TO_MOVE
 

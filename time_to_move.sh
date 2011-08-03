@@ -17,6 +17,9 @@ cp -r $HOME/.bitcoin/ $backup_dir
 echo "################### Pidgin		###################"
 cp -r $HOME/.purple/ $backup_dir
 
+echo "################### Transmission		###################"
+cp -r $HOME/.config/transmission/ $backup_dir
+
 echo "################### Cairo Dock		###################"
 cp -r $HOME/.config/cairo-dock/ $backup_dir
 

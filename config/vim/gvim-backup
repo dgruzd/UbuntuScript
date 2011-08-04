@@ -1,0 +1,41 @@
+
+
+
+
+" Размер табуляции по умолчанию
+" Включаем "умные" отспупы ( например, автоотступ после {)
+set smartindent
+" Включить автоотступы
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+" Преобразование Таба в пробелы
+set expandtab
+
+" Включаем нумерацию строк
+set nu
+
+
+
+" Влючить подстветку синтаксиса
+syntax on
+
+" Формат строки состояния
+set statusline=%<%f%h%m%r\ %b\ %{&encoding}\ 0x\ \ %l,%c%V\ %P 
+set laststatus=2
+
+" Устанавливаем кодировки
+set encoding=utf8
+set termencoding=utf-8
+" Подсветка текущей строки
+set hlsearch
+
+"RUBYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+"map <F3> :call RunRuby()<CR>
+func! RunRuby()
+	:w
+	:!ruby "%"
+endfunc
+
+
+

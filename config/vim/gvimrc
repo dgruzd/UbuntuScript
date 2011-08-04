@@ -1,43 +1,63 @@
-" Размер табуляции по умолчанию
-" Включаем "умные" отспупы ( например, автоотступ после {)
-set smartindent
-" Включить автоотступы
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-" Преобразование Таба в пробелы
-set expandtab
+"Use Vim settings, rather then Vi settings (much better!).
+"This must be first, because it changes other options as a side effect.
+set nocompatible
+set number      "show line numbers
+"display tabs
+set list
+set listchars=tab:▷⋅
 
-" Включаем нумерацию строк
-set nu
+set incsearch   "find the next match as we type the search
+set hlsearch    "hilight searches by default
 
-" Скрывать указатель мыши, когда печатаем
-set mousehide
+set wrap        "dont wrap lines
+set linebreak   "wrap lines at convenient points
 
-" Влючить подстветку синтаксиса
+"turn on syntax highlighting
 syntax on
 
-" Формат строки состояния
-set statusline=%<%f%h%m%r\ %b\ %{&encoding}\ 0x\ \ %l,%c%V\ %P 
-set laststatus=2
+
+
+
+
+
+
+
+if has("gui_running")
+  set guioptions-=T
+  set guioptions-=m
+  colorscheme desert 
+  "set guifont=Courier\ 12
+  set cursorline
+else
+  
+endif
 
 " Устанавливаем кодировки
 set encoding=utf8
 set termencoding=utf-8
-" Подсветка текущей строки
-set hlsearch
-":set go-=T
-set go=-
-colorscheme desert 
-set guifont=Courier\ 12
-set cursorline
 
-"RUBYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
-"map <F3> :call RunRuby()<CR>
-func! RunRuby()
-	:w
-	:!ruby "%"
-endfunc
+" Включаем "умные" отспупы ( например, автоотступ после {)
+set smartindent
+"Настроим кол-во символов пробелов, которые будут заменять \t
+set tabstop=2
+set shiftwidth=2
+set smarttab
+set softtabstop=2
+" Преобразование Таба в пробелы
+set expandtab
+
+
+"Включим автоотступы для новых строк
+set ai
+"Включим отступы в стиле Си
+set cin
+
+"Далее настроим поиск и подсветку результатов поиска и совпадения скобок
+set showmatch 
+set incsearch
+set ignorecase
+
+
 
 
 
@@ -53,35 +73,38 @@ nmap <Space> <PageDown>
 vmap <C-C> "+yi
 imap <C-V> <esc>"+gPi
 
+" To save, ctrl-s.
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
+
 
 " F2 - save and exit
-nmap <F2> :wq<cr>
-vmap <F2> <esc>:wq<cr>i
-imap <F2> <esc>:wq<cr>i
+map <F2> :wq<cr>
+vmap <F2> :wq<cr>i
+imap <F2> :wq<cr>i
 
-" F3 - открыть NerdTree  
-nmap <F3> :NERDTree<cr>
-vmap <F3> <esc>:NERDTree<cr>i
-imap <F3> <esc>:NERDTree<cr>i
 
-" F5 - просмотр списка буферов
-nmap <F5> <Esc>:BufExplorer<cr>
-vmap <F5> <esc>:BufExplorer<cr>
-imap <F5> <esc><esc>:BufExplorer<cr>
+" F5 - предыдущий буфер
+map <F5> :bp<cr>
+vmap <F5> :bp<cr>i
+imap <F5> :bp<cr>i
 
-" F6 - предыдущий буфер
-map <F6> :bp<cr>
-vmap <F6> <esc>:bp<cr>i
-imap <F6> <esc>:bp<cr>i
 
-" F7 - следующий буфер
-map <F7> :bn<cr>
-vmap <F7> <esc>:bn<cr>i
-imap <F7> <esc>:bn<cr>i
+
+" F6 - следующий буфер
+map <F6> :bn<cr>
+vmap <F6> :bn<cr>i
+imap <F6> :bn<cr>i
+
+
+" F7 - список буферов
+map <F7> :ls<cr>
+vmap <F7> :ls<cr>i
+imap <F7> :ls<cr>i
 
 " F8 - удалить буфер
 map <F8> :bd<cr>
-vmap <F8> <esc>:bn<cr>i
-imap <F8> <esc>:bn<cr>i
+vmap <F8> <esc>:bd<cr>i
+imap <F8> <esc>:bd<cr>i
 
 "Plugins

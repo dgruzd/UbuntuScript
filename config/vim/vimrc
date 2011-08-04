@@ -1,9 +1,23 @@
+
+
+
+
+
+
+
 "-------------------------
 " HOTKEYS
 "-------------------------
 
+" To save, ctrl-s.
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
 
-" F2 - save and exit
-nmap <F2> :wq<cr>
-vmap <F2> <esc>:wq<cr>i
-imap <F2> <esc>:wq<cr>i
+
+" F2 - save
+map <F2> :w<cr>
+
+" F3 - save and exit
+map <F3> :wq<cr>
+
+

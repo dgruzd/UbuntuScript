@@ -14,6 +14,9 @@ cp -r $HOME/.mozilla/firefox/ $backup_dir
 echo "################### Bitcoin		###################"
 cp -r $HOME/.bitcoin/ $backup_dir
 
+echo "################### Google Music		###################"
+cp -r $HOME/.config/google-musicmanager/ $backup_dir
+
 echo "################### Pidgin		###################"
 cp -r $HOME/.purple/ $backup_dir
 

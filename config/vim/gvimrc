@@ -1,6 +1,7 @@
 "Use Vim settings, rather then Vi settings (much better!).
 "This must be first, because it changes other options as a side effect.
 set nocompatible
+
 set number      "show line numbers
 "display tabs
 set list
@@ -12,15 +13,7 @@ set hlsearch    "hilight searches by default
 set wrap        "dont wrap lines
 set linebreak   "wrap lines at convenient points
 
-"turn on syntax highlighting
 syntax on
-
-
-
-
-
-
-
 
 if has("gui_running")
   set guioptions-=T
@@ -29,7 +22,7 @@ if has("gui_running")
   "set guifont=Courier\ 12
   set cursorline
 else
-  
+
 endif
 
 " Устанавливаем кодировки
@@ -83,28 +76,26 @@ map <F2> :wq<cr>
 vmap <F2> :wq<cr>i
 imap <F2> :wq<cr>i
 
-
-" F5 - предыдущий буфер
-map <F5> :bp<cr>
-vmap <F5> :bp<cr>i
-imap <F5> :bp<cr>i
-
-
-
-" F6 - следующий буфер
-map <F6> :bn<cr>
-vmap <F6> :bn<cr>i
-imap <F6> :bn<cr>i
-
-
-" F7 - список буферов
-map <F7> :ls<cr>
-vmap <F7> :ls<cr>i
-imap <F7> :ls<cr>i
-
-" F8 - удалить буфер
-map <F8> :bd<cr>
-vmap <F8> <esc>:bd<cr>i
-imap <F8> <esc>:bd<cr>i
-
-"Plugins
+if has("gui_running")
+  imap <F4> <Esc>:browse tabnew<CR> 
+  map <F4> <Esc>:browse tabnew<CR>
+  imap <F5> <Esc> :tabprev <CR>i
+  map <F5> :tabprev <CR>
+  imap <F6> <Esc> :tabnext <CR>i
+  map <F6> :tabnext <CR>
+  imap <F8> <Esc> :tabclose <CR>i
+  map <F8> :tabclose <CR>
+else
+  map <F5> :bp<cr>
+  vmap <F5> :bp<cr>
+  imap <F5> :bp<cr>i
+  map <F6> :bn<cr>
+  vmap <F6> :bn<cr>
+  imap <F6> :bn<cr>i
+  map <F7> :ls<cr>
+  vmap <F7> :ls<cr>
+  imap <F7> :ls<cr>i
+  map <F8> :bd<cr>
+  vmap <F8> <esc>:bd<cr>
+  imap <F8> <esc>:bd<cr>i
+endif

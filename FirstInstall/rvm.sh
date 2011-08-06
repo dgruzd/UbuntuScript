@@ -1,13 +1,21 @@
 #!/bin/sh
-sudo apt-get --assume-yes install git curl
-sudo apt-get --assume-yes install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev
-echo "RUN TEXT ABOVE: VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
-echo  "bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)"
-echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+sudo apt-get --assume-yes install git curl build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev
+
+cd /tmp
+wget -N https://rvm.beginrescueend.com/install/rvm
+chmod +x rvm
+mv rvm rvm.sh
+./rvm.sh
+rm rvm.sh
+
 echo "Starting .bashrc:"
+echo "#######################################"
 cat $HOME/.bashrc | grep '.rvm'
-echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-echo "PLEASE LOOK IS THERE A LINE WITH RVM"
+echo "#######################################"
+echo "Check is above a line with rvm"
+
+echo "Now please restart shell or open a new one and run into it rvm2aftershellrestart.sh"
+
 #seems like rvm auto add this line to .bashrc
 #cp $HOME/.bashrc $HOME/.bashrc.backup
 #echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && source \"$HOME/.rvm/scripts/rvm\"" >> $HOME/.bashrc

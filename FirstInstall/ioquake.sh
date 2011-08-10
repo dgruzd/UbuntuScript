@@ -16,10 +16,10 @@ mv -v .q3a .q3a-backup
 mkdir -pv $HOME/.q3a/baseq3
 mkdir -pv $HOME/.q3a/missionpack
 
+echo "seta name \"$nick\"" | tee -a $q3config
 echo "r_customWidth $width" | tee -a $q3config
 echo "r_customHeight $height" | tee -a $q3config
 echo "r_mode -1" | tee -a $q3config
-echo "seta name \"$nick\"" | tee -a $q3config
 echo "vid_restart" | tee -a $q3config
 
 cd /tmp

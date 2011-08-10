@@ -21,6 +21,8 @@ if has("gui_running")
   colorscheme desert 
   "set guifont=Courier\ 12
   set cursorline
+  set lines=33
+  set columns=118
 else
 
 endif

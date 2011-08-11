@@ -8,3 +8,6 @@ rvm --default use 1.9.2
 rvm 1.9.2
 gem install rails
 gem install rake
+
+
+

@@ -1,5 +1,5 @@
 #!/bin/sh
-backup_dir="/home/nyaa/TIME_TO_MOVE_`date \+\%Y_\%m_\%d`"
+backup_dir="$HOME/TIME_TO_MOVE_`date \+\%Y_\%m_\%d`"
 
 mv -iv $backup_dir $backup_dir-old
 mkdir -pv $backup_dir

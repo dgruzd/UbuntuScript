@@ -1,3 +1,3 @@
 #!/bin/sh
-mv -i $HOME/.bash_aliases $HOME/.bash_aliases.backup
-ln -v -s $HOME/Dropbox/UbuntuScript/config/bash_aliases $HOME/.bash_aliases
+mv -iv $HOME/.bash_aliases $HOME/.bash_aliases.backup
+ln -vi -s $HOME/Script/config/bash_aliases $HOME/.bash_aliases

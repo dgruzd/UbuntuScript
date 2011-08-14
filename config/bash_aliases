@@ -21,7 +21,7 @@ function proml {
     ;;
   esac
 
-PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w$RED\$(parse_git_branch)\\[\e[0m\]$ "
+PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w$LIGHT_RED\$(parse_git_branch)\\[\e[0m\]$ "
 #PS1="${TITLEBAR}\
 #$BLUE[$RED\$(date +%H:%M)$BLUE]\
 #$BLUE[$RED\u@\h:\w$GREEN\$(parse_git_branch)$BLUE]\

@@ -11,7 +11,7 @@ read width
 echo "Type your resolution height for 1280x1024 it is 1024:"
 read height
 
-mv -v .q3a .q3a-backup
+#mv -v .q3a .q3a-backup
 
 mkdir -pv $HOME/.q3a/baseq3
 mkdir -pv $HOME/.q3a/missionpack

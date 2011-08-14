@@ -1,3 +1,42 @@
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+function proml {
+  local        BLUE="\[\033[0;34m\]"
+  local         RED="\[\033[0;31m\]"
+  local   LIGHT_RED="\[\033[1;31m\]"
+  local       GREEN="\[\033[0;32m\]"
+  local LIGHT_GREEN="\[\033[1;32m\]"
+  local       WHITE="\[\033[1;37m\]"
+  local  LIGHT_GRAY="\[\033[0;37m\]"
+  case $TERM in
+    xterm*)
+    TITLEBAR='\[\033]0;\u@\h:\w\007\]'
+    ;;
+    *)
+    TITLEBAR=""
+    ;;
+  esac
+
+PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w$RED\$(parse_git_branch)\\[\e[0m\]$ "
+#PS1="${TITLEBAR}\
+#$BLUE[$RED\$(date +%H:%M)$BLUE]\
+#$BLUE[$RED\u@\h:\w$GREEN\$(parse_git_branch)$BLUE]\
+#$GREEN\$ "
+#PS2='> '
+#PS4='+ '
+}
+proml
+
+
+
+
+
+
+
+
+
 # APT ALIASES
 alias update="sudo aptitude update"
 alias install="sudo aptitude install"
@@ -9,6 +48,7 @@ alias uu="sudo aptitude update && sudo aptitude safe-upgrade"
 # ALIASES FOR FAST WORK WITH GIT
 alias gs='git status '
 alias ga='git add -A'
+alias gap='git add -p'
 alias gc='git commit -a'
 alias gb='git branch '
 alias gd='git diff'

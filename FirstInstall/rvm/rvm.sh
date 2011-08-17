@@ -17,6 +17,7 @@ echo "#######################################"
 echo "Check is above a line with rvm"
 
 echo "Now please restart shell or open a new one and run into it rvm2aftershellrestart.sh"
+echo "Ctrl + T > ./rmv2.sh"
 
 #seems like rvm auto add this line to .bashrc
 #cp $HOME/.bashrc $HOME/.bashrc.backup

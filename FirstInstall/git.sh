@@ -2,12 +2,14 @@
 echo "Enter your user.name for git"
 read name
 if [ "$name" ];then
+echo "$name"
 else
 name = "Dmitry Gruzd"
 fi
 echo "Enter your email for git"
 read email
 if [ "$email" ]; then
+echo "$email"
 else
 email = "donotsendhere@gmail.com"
 fi

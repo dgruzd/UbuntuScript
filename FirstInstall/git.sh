@@ -14,8 +14,6 @@ else
 email = "donotsendhere@gmail.com"
 fi
 
-
-
 sudo apt-get install --assume-yes python-software-properties
 sudo add-apt-repository ppa:git-core/ppa
 sudo apt-get update
@@ -24,6 +22,12 @@ sudo apt-get install --assume-yes git
 git config --global user.name "$name"
 git config --global user.email "$email" 
 git config --global core.editor "vim"
+#default is 512m
+#git config core.bigFileThreshold 50m 
+#default is 8g
+#git config core.packedGitLimit 5g 
+
+
 
 echo "Do you want to generate ssh keys for github?[y/n]"
 read keys

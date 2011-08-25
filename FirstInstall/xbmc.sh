@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# SCREEN artefacts fix is Sync to vblanc in compizconfig options and maybe new drivers YEEES :)
 sudo apt-get install python-software-properties pkg-config
 sudo add-apt-repository ppa:team-xbmc
 #unstable

@@ -22,4 +22,17 @@ C^u - move half screen up
 C^f - move one screen down
 C^b - move one screen up
 
+w   - move next word
+b   - move previous word
 
+dw  - delete a word
+x   - delete character at the cursor
+
+m[x] - mark a line with a letter # x is the [a-Z]
+`[x] - go to the marked line
+
+u   - undo
+:earlier [4m] - undo with a 4 minutes
+:later [4m]   - redo
+:undo [x]     - undo with a x changes back
+:undolist     - list a undos

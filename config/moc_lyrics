@@ -1,0 +1,22 @@
+#!/usr/bin/php
+<?php
+$singer = isset($argv[1]) ? $argv[1] : "unknown artist";
+$song = isset($argv[2]) ? $argv[2] : "unknown track";
+$server = "http://search.azlyrics.com/search.php";
+$query = urlencode($singer . " " . $song);
+$page = file_get_contents($server . "?q=" . $query);
+echo "Finding lyrics for '" . $singer . " - " . $song . "'\n";
+preg_match_all('<a.*?href="(.*?azlyrics.com\/lyrics.*?)">', $page, $m);
+if (isset($m[1][0])) {
+        echo "URL: " . $m[1][0] . "\n";
+        $songpage = file_get_contents($m[1][0]);
+        preg_match_all('/<!-- start of lyrics -->(.*)<!-- end of lyrics -->/si', $songpage, $s);
+        $lyr = $s[1][0];
+        $lyr = preg_replace('/\<br(\s*)?\/?\>/i', "\n", $lyr);
+        file_put_contents('/tmp/' . $query, strip_tags($lyr));
+        exec('gedit /tmp/' . $query . ' >/dev/null &');
+} else {
+        echo "No lyrics\n";
+        sleep(3);
+}
+?>

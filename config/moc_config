@@ -174,8 +174,8 @@ ASCIILines		= no
 # are in the keymap file.
 Fastdir1 = /home/nyaa/Dropbox/Supa_Music
 Fastdir2 = /home/nyaa/Dropbox/Supa_Music/!MP3 
-#Fastdir3 = /mp3/rap
-#Fastdir4 = /mp3/etc
+Fastdir3 = /home/nyaa/Music
+Fastdir4 = /home/nyaa/Desktop
 #Fastdir5 = 
 #Fastdir6 = 
 #Fastdir7 = 
@@ -305,7 +305,7 @@ CanStartInPlaylist	= yes
 # Examples:
 # ExecCommand1		= "cp %f /mnt/usb_drive"
 # ExecCommand2		= "/home/joe/now_playing %I"
-
+ExecCommand5    = "/home/nyaa/Script/config/moc_lyrics %r %t"
 # Display the cursor in the line with the selected file. This can be useful with
 # a braille display.
 # UseCursorSelection	= no

@@ -52,16 +52,12 @@ set showmatch
 set incsearch
 set ignorecase
 
-
-
-
-
 "-------------------------
 " HOTKEYS
 "-------------------------
 
 " Пробел в нормальном режиме перелистывает страницы
-nmap <Space> <PageDown>
+"nmap <Space> <PageDown>
 
 
 " C-c and C-v - Copy/Paste в "глобальный клипборд"

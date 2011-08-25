@@ -59,3 +59,8 @@ alias go='git checkout '
 alias gp='git push '
 alias gpu='git pull '
 alias gg='git add -A && git commit -a && git push'
+
+
+
+
+alias tmux="tmux attach || tmux new"

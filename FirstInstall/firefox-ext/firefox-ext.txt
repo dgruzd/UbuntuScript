@@ -1,7 +1,7 @@
 https://addons.mozilla.org/en-US/firefox/addon/requestpolicy/
 https://addons.mozilla.org/en-US/firefox/addon/adblock-plus/
 https://addons.mozilla.org/en-US/firefox/addon/noscript/
-https://addons.mozilla.org/en-US/firefox/addon/easy-youtube-video-downl-10137/
+https://addons.mozilla.org/ru/firefox/addon/easy-youtube-video-downl-10137/
 https://addons.mozilla.org/en-US/firefox/addon/downthemall/
 https://addons.mozilla.org/en-US/firefox/addon/download-statusbar/
 https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/

@@ -3,8 +3,7 @@
 
 export user=$(whoami)
 
-sudo apt-get install deluged
-sudo apt-get install deluge-webui
+sudo apt-get -y install deluged deluge-webui
 
 sudo touch /var/log/deluge-web.log
 sudo chown $user:$user /var/log/deluge*

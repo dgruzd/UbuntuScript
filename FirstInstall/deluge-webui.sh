@@ -22,6 +22,6 @@ sudo mv -v ./deluge-daemon /etc/init.d/deluge-daemon
 sudo chmod 755 /etc/init.d/deluge-daemon
 
 sudo update-rc.d deluge-daemon defaults
-
+#sudo update-rc.d -f deluge-daemon remove
 sudo invoke-rc.d deluge-daemon start
 #localhost:8112

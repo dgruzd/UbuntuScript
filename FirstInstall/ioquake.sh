@@ -1,7 +1,6 @@
 #!/bin/sh
 q3config="$HOME/.q3a/baseq3/autoexec.cfg"
 
-
 echo "Type your machine type \"64\" or \"32\" bit (2 digits), followed by [ENTER]:"
 read mtype
 echo "Type your nickname:"
@@ -11,6 +10,7 @@ read width
 echo "Type your resolution height for 1280x1024 it is 1024:"
 read height
 
+sudo apt-get --assume-yes install axel
 #mv -v .q3a .q3a-backup
 
 mkdir -pv $HOME/.q3a/baseq3
@@ -26,7 +26,8 @@ cd /tmp
 #http://ioquake3.org/extras/patch-data/
 wget -N http://dl.dropbox.com/u/9513848/quake3-latest-pk3s.zip
 #quake gold cd
-wget -N http://dl.dropbox.com/u/9513848/PAK0.PK3
+#wget -N http://dl.dropbox.com/u/9513848/PAK0.PK3
+axel http://dl.dropbox.com/u/9513848/PAK0.PK3
 mv -v PAK0.PK3 $HOME/.q3a/baseq3
 unzip quake3-latest-pk3s.zip
 rm -v quake3-latest-pk3s.zip

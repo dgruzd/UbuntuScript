@@ -2,6 +2,8 @@
 require 'rubygems'
 require 'net/ssh'
 require 'highline/import'
+#gem install net-ssh
+#gem install highline
 
 HOST = ARGV[0]
 USER = ARGV[1]

@@ -16,7 +16,7 @@ if HOST && USER
 password = get_password
 Net::SSH.start( HOST, USER,:port => '5190', :password => password ) do|ssh|
   puts "logged in"
-  puts ssh.exec!('ls -l /')
+  puts ssh.exec!('uptime')
   puts ssh.exec!('ether-wake 00:1a:4d:5d:d0:33')
 end
 else

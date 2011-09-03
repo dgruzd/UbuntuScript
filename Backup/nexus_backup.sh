@@ -10,5 +10,12 @@ echo "starting APK"
 cp APK/*.apk $backup_dir
 echo "starting CityGuide"
 cp -r CityGuide $backup_dir
+cp CityGuide/maps/*.dcm $backup_dir
+cp CityGuide/bmfavorites.dat $backup_dir
+cp CityGuide/bmfinish.dat $backup_dir
+cp CityGuide/bookmarks.dat $backup_dir
+cp CityGuide/HotKeys.dat $backup_dir
+
+
 echo "starting MP3"
 cp -r MP3 $backup_dir

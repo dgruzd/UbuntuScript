@@ -12,3 +12,4 @@ https://addons.mozilla.org/en-US/firefox/addon/skipscreen-incredible-rapidsha/
 https://addons.mozilla.org/en-US/firefox/addon/scrapbook/
 https://addons.mozilla.org/en-US/firefox/addon/secure-login/
 https://addons.mozilla.org/en-US/firefox/addon/vimperator/
+https://www.eff.org/https-everywhere

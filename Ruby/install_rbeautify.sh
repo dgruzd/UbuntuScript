@@ -1,2 +1,3 @@
 #!/bin/sh
-sudo cp rbeautify /usr/bin
+sudo apt-get --assume-yes install ruby
+sudo cp -vi rbeautify /usr/bin

@@ -22,10 +22,10 @@ sudo apt-get install --assume-yes git
 git config --global user.name "$name"
 git config --global user.email "$email" 
 git config --global core.editor "vim"
-#default is 512m
-#git config core.bigFileThreshold 10m 
 #default is 8g
-#git config core.packedGitLimit 5g 
+git config core.packedGitLimit 1g 
+#default is 512m
+git config core.bigFileThreshold 10m 
 
 
 

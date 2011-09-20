@@ -7,5 +7,5 @@ sudo hdparm -B 1 -S 12 /dev/sda
 
 
 #cat /proc/sys/vm/dirty_writeback_centisecs
-echo "Setting hdd write timeout to 30seconds"
-echo 3000 | sudo tee -a /proc/sys/vm/dirty_writeback_centisecs
+echo "Setting hdd write timeout to 80seconds"
+echo 8000 | sudo tee -a /proc/sys/vm/dirty_writeback_centisecs

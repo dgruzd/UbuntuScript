@@ -6,7 +6,9 @@ require 'highline/import'
 #gem install highline
 
 HOST = ARGV[0]
-USER = ARGV[1]
+PORT = ARGV[1]
+USER = ARGV[2]
+
 
 def get_password
 return ask("Enter your password:  ") { |q| q.echo = "*" }

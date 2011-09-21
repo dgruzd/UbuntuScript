@@ -1,5 +1,8 @@
 #!/bin/sh
 q3config="$HOME/.q3a/baseq3/autoexec.cfg"
+wget32="ioquake3-1.36-7.1.i386.run"
+wget64="ioquake3-1.36-7.1.x86_64.run"
+
 
 echo "Type your machine type \"64\" or \"32\" bit (2 digits), followed by [ENTER]:"
 read mtype
@@ -36,11 +39,11 @@ cp -v baseq3/* $HOME/.q3a/baseq3
 cp -v missionpack/* $HOME/.q3a/missionpack
 rm -rf quake3-latest-pk3s/
 if [ "$mtype" = "64" ]; then
-  wget -N http://ioquake3.org/files/1.36/installer/ioquake3-1.36-7.1.x86_64.run
-  LANG=C sudo sh ioquake3-1.36-7.1.x86_64.run
+  wget -N http://ioquake3.org/files/1.36/installer/$wget64
+  LANG=C sudo sh $wget64 
 else
-  wget -N http://ioquake3.org/files/1.36/installer/ioquake3-1.36-7.1.i386.run
-  LANG=C sudo sh ioquake3-1.36-7.1.i386.run
+  wget -N http://ioquake3.org/files/1.36/installer/$wget32 
+  LANG=C sudo sh $wget32 
 fi
 
-rm -v ioquake3-1.36-7.1*
+rm -v ioquake3-1*

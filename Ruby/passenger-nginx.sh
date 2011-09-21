@@ -14,6 +14,7 @@ cd /tmp
 wget -N https://raw.github.com/jnstq/rails-nginx-passenger-ubuntu/master/nginx/nginx
 sudo mv -v nginx /etc/init.d/nginx
 sudo chown root:root /etc/init.d/nginx
+sudo chmod +x /etc/init.d/nginx
 #rm -rf rails-nginx-passenger-ubuntu/
 
 echo "Do you want to autostart nginx?[y/n]"

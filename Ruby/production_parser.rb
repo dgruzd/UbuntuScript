@@ -7,7 +7,8 @@ lines = f.readlines
 buffer = ""
 counter = 0
 lines.each do|line|
-  line.gsub!(/[<>]/,"*")
+  line.gsub!(/[<>]/,"|")
+  line.gsub!(/500 Internal Server Error/,"<font color=\"red\">500 Internal Server Error</font>")
   if /\S/ !~ line
     counter +=1
   else

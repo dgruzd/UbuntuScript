@@ -55,6 +55,8 @@ set ignorecase
 "-------------------------
 " HOTKEYS
 "-------------------------
+" Launch program
+map R <Esc>:w<CR>:!%:p<CR>
 
 " Пробел в нормальном режиме перелистывает страницы
 "nmap <Space> <PageDown>

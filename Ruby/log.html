@@ -1,0 +1,50 @@
+<html>
+<body>
+<div>
+
+<hr>
+Started GET "/home?link=my-likes" for 77.234.195.21 at 2011-09-19 12:12:54 +0300
+<br>  Processing by UsersController#home as HTML
+<br>  Parameters: {"link"=*"my-likes"}
+<br>Rendered users/_favs.html.erb (31.7ms)
+<br>Rendered users/home.html.erb within layouts/application (32.8ms)
+<br>Completed 500 Internal Server Error in 145ms
+<br>ActionView::Template::Error (undefined method `[]' for nil:NilClass):
+<br>    23:       */div*
+<br>    24:       *div class="post-text"*
+<br>    25:        *h2**%= link_to dish.name, :controller =* "dish", :action =* "show", :id =* dish.id  %**/h2*
+<br>    26:        *h3**%= raw check_rest dish.restaurant["Name"] %**/h3*
+<br>    27:        *div class="post-author"*
+<br>    28:          *span class="bold"*Состав:*/span* 
+<br>    29:          *%= check_it(shorten(dish.contain.to_s, 100)) %*
+<br>  app/views/users/_favs.html.erb:26:in `block in _app_views_users__favs_html_erb___3768327_84923210_326341424'
+<br>  app/views/users/_favs.html.erb:2:in `each'
+<br>  app/views/users/_favs.html.erb:2:in `_app_views_users__favs_html_erb___3768327_84923210_326341424'
+<br>  app/views/users/home.html.erb:17:in `_app_views_users_home_html_erb___1022503799_85508380_256183935'
+<br>
+<hr>
+Started GET "/home?link=my-likes" for 77.234.195.21 at 2011-09-19 12:13:28 +0300
+<br>  Processing by UsersController#home as HTML
+<br>  Parameters: {"link"=*"my-likes"}
+<br>Rendered users/_favs.html.erb (32.7ms)
+<br>Rendered users/home.html.erb within layouts/application (33.8ms)
+<br>Completed 500 Internal Server Error in 145ms
+<br>ActionView::Template::Error (undefined method `[]' for nil:NilClass):
+<br>    23:       */div*
+<br>    24:       *div class="post-text"*
+<br>    25:        *h2**%= link_to dish.name, :controller =* "dish", :action =* "show", :id =* dish.id  %**/h2*
+<br>    26:        *h3**%= raw check_rest dish.restaurant["Name"] %**/h3*
+<br>    27:        *div class="post-author"*
+<br>    28:          *span class="bold"*Состав:*/span* 
+<br>    29:          *%= check_it(shorten(dish.contain.to_s, 100)) %*
+<br>  app/views/users/_favs.html.erb:26:in `block in _app_views_users__favs_html_erb___3768327_84923210_326341424'
+<br>  app/views/users/_favs.html.erb:2:in `each'
+<br>  app/views/users/_favs.html.erb:2:in `_app_views_users__favs_html_erb___3768327_84923210_326341424'
+<br>  app/views/users/home.html.erb:17:in `_app_views_users_home_html_erb___1022503799_85508380_256183935'
+<br>
+<hr>
+
+<hr>
+</div>
+</body>
+</html>

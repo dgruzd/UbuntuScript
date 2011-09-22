@@ -1,7 +1,7 @@
 #!/bin/sh
 #http://www.modrails.com/documentation/Users%20guide%20Nginx.html
-
-# gem install passenger
+echo "Please install passenger first"
+#gem install passenger
 # passenger-config --root
 #Curl development headers with SSL support
 sudo apt-get --assume-yes install libcurl4-openssl-dev
@@ -9,10 +9,14 @@ sudo apt-get --assume-yes install libcurl4-openssl-dev
 rvmsudo passenger-install-nginx-module
 
 cd /tmp
-git clone git://github.com/jnstq/rails-nginx-passenger-ubuntu.git
-sudo cp -v rails-nginx-passenger-ubuntu/nginx/nginx /etc/init.d/nginx
+
+wget -N https://raw.github.com/jnstq/rails-nginx-passenger-ubuntu/master/nginx/nginx
+sudo mv -v nginx /etc/init.d/nginx
 sudo chown root:root /etc/init.d/nginx
-rm -rf rails-nginx-passenger-ubuntu/
+sudo chmod +x /etc/init.d/nginx
+#git clone git://github.com/jnstq/rails-nginx-passenger-ubuntu.git
+#sudo cp -v rails-nginx-passenger-ubuntu/nginx/nginx /etc/init.d/nginx
+#rm -rf rails-nginx-passenger-ubuntu/
 
 echo "Do you want to autostart nginx?[y/n]"
 read autostart

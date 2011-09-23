@@ -10,3 +10,10 @@ mkdir -pv $HOME/.moc
 #sed -i 's/#ID3v1TagsEncoding/ID3v1TagsEncoding/g' $HOME/.moc/config
 #sed -i 's/# XTermTheme/XTermTheme/g' $HOME/.moc/config
 
+
+cp /usr/share/doc/moc/examples/config.example.gz ~/.moc/
+cd ~/.moc
+export user=$(whoami)
+sudo chown $user:$user config.example.gz
+gunzip config.example.gz
+mv config.example config

@@ -4,8 +4,7 @@
 rvm install 1.9.2
 rvm --default use 1.9.2
 rvm 1.9.2
-gem install rdoc
 
-#gem install rails --no-ri --no-rdoc
-gem install rails
+gem install rails --no-ri --no-rdoc
+#gem install rails
 

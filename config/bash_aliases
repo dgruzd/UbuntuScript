@@ -60,6 +60,9 @@ alias gp='git push '
 alias gpu='git pull '
 alias gg='git add -A && git commit -a && git push'
 
+# ALIASES FOR RAILS
+alias dbm='bundle exec rake db:migrate'
+alias rspec='bundle exec rspec spec/'
 
 
 

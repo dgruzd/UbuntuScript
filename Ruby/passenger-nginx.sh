@@ -24,7 +24,7 @@ if [ "$autostart" = "y" ]; then
 sudo /usr/sbin/update-rc.d -f nginx defaults
 fi
 
-sudo gedit /opt/nginx/conf/nginx.conf
+sudo vim /opt/nginx/conf/nginx.conf
 
 sudo /etc/init.d/nginx restart
 

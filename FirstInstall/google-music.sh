@@ -7,3 +7,4 @@ echo "Downloading: $filename"
 wget -N http://dl.google.com/linux/direct/$filename
 sudo dpkg -i $filename
 rm $filename
+sudo apt-get -f install

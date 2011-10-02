@@ -16,4 +16,4 @@ cd ~/.moc
 export user=$(whoami)
 sudo chown $user:$user config.example.gz
 gunzip config.example.gz
-mv config.example config
+mv -i config.example config

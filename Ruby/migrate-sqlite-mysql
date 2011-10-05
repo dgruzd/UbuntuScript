@@ -1,0 +1,5 @@
+http://morecode.wordpress.com/2007/01/14/rails-on-sqlite-or-switching-to-mysql-from-sqlite/
+sqlite3 database.db .dump > dump-file
+perl -pne s/”//g dump-file > dump-no-double-quote
+mysql -u someuser -p somedatabase < dump-no-double-quote
+

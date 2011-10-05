@@ -1,0 +1,7 @@
+SHOW DATABASES;
+CREATE DATABASE russian_reading_list_production;
+
+GRANT ALL PRIVILEGES ON russian_reading_list_production.*
+TO 'ruread'@'localhost'
+IDENTIFIED BY 'password';
+

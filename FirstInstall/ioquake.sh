@@ -13,7 +13,7 @@ read width
 echo "Type your resolution height for 1280x1024 it is 1024:"
 read height
 
-sudo apt-get --assume-yes install axel
+sudo apt-get --assume-yes install axel unzip
 #mv -v .q3a .q3a-backup
 
 mkdir -pv $HOME/.q3a/baseq3
@@ -33,8 +33,7 @@ axel http://dl.dropbox.com/u/9513848/quake3-latest-pk3s.zip
 #wget -N http://dl.dropbox.com/u/9513848/PAK0.PK3
 axel http://dl.dropbox.com/u/9513848/PAK0.PK3
 mv -v PAK0.PK3 $HOME/.q3a/baseq3
-unzip quake3-latest-pk3s.zip
-rm -v quake3-latest-pk3s.zip
+unzip quake3-latest-pk3s.zip && rm -v quake3-latest-pk3s.zip
 cd quake3-latest-pk3s
 cp -v baseq3/* $HOME/.q3a/baseq3 
 cp -v missionpack/* $HOME/.q3a/missionpack

@@ -5,6 +5,7 @@ CREATE DATABASE `russian_reading_list_production` CHARACTER SET utf8 COLLATE utf
 
 DROP DATABASE russian_reading_list_development;
 
+<<<<<<< HEAD
 CREATE USER 'ruread'@'localhost' identified by 'ruread';
 GRANT ALL ON russian_reading_list_production.* to 'ruread'@'localhost';
 
@@ -12,5 +13,10 @@ GRANT ALL ON russian_reading_list_production.* to 'ruread'@'localhost';
 GRANT ALL PRIVILEGES ON russian_reading_list_production.* TO 'ruread'@'localhost' IDENTIFIED BY 'ruread';
 
 GRANT ALL PRIVILEGES ON russian_reading_list_development.* TO 'ruread'@'localhost' IDENTIFIED BY 'ruread';
+=======
+GRANT ALL PRIVILEGES ON russian_reading_list_production.*
+TO 'ruread'@'localhost'
+IDENTIFIED BY 'ruread';
+>>>>>>> 3ad077c2f26faed0744b3c57bc30ea66a69820cb
 
 rake db:migrate RAILS_ENV=production

@@ -1,3 +1,4 @@
 .gitignore
 my
 *.*~
+config/keepassx-config.ini

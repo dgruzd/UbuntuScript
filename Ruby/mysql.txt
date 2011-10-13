@@ -6,6 +6,6 @@ DROP DATABASE russian_reading_list_development;
 
 GRANT ALL PRIVILEGES ON russian_reading_list_production.*
 TO 'ruread'@'localhost'
-IDENTIFIED BY 'password';
+IDENTIFIED BY 'ruread';
 
 rake db:migrate RAILS_ENV=production

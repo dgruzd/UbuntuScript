@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#http://habrahabr.ru/blogs/linux/122876/
 
 # Install wifi hotspot daemon and dns/dhcp server
 sudo apt-get --assume-yes install hostapd dnsmasq

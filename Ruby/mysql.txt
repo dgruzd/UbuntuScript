@@ -1,11 +1,16 @@
 SHOW DATABASES;
-#CREATE DATABASE russian_reading_list_production;
-CREATE DATABASE `russian_reading_list_production` CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+#CREATE DATABASE `russian_reading_list_production` CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE `russian_reading_list_production` CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP DATABASE russian_reading_list_development;
 
-GRANT ALL PRIVILEGES ON russian_reading_list_production.*
-TO 'ruread'@'localhost'
-IDENTIFIED BY 'password';
+CREATE USER 'ruread'@'localhost' identified by 'ruread';
+GRANT ALL ON russian_reading_list_production.* to 'ruread'@'localhost';
+
+
+GRANT ALL PRIVILEGES ON russian_reading_list_production.* TO 'ruread'@'localhost' IDENTIFIED BY 'ruread';
+
+GRANT ALL PRIVILEGES ON russian_reading_list_development.* TO 'ruread'@'localhost' IDENTIFIED BY 'ruread';
 
 rake db:migrate RAILS_ENV=production

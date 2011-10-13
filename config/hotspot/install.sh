@@ -11,6 +11,6 @@ sudo update-rc.d hostapd disable
 sudo update-rc.d dnsmasq disable
 
 
-cp -iv hostapd.conf /etc/hostapd.conf
+sudo cp -iv hostapd.conf /etc/hostapd.conf
 
-cp -iv dnsmasq.conf /etc/dnsmasq.conf
+sudo cp -iv dnsmasq.conf /etc/dnsmasq.conf

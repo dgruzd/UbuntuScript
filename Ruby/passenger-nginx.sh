@@ -1,7 +1,7 @@
 #!/bin/sh
 #http://www.modrails.com/documentation/Users%20guide%20Nginx.html
 echo "Please install passenger first"
-#gem install passenger
+gem install passenger
 # passenger-config --root
 #Curl development headers with SSL support
 sudo apt-get --assume-yes install libcurl4-openssl-dev

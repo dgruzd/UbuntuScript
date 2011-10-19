@@ -1,8 +1,10 @@
 #!/bin/sh
 sudo apt-get install --assume-yes python-software-properties
-#sudo add-apt-repository ppa:git-core/ppa
-#sudo apt-get update
-sudo apt-get --assume-yes install git curl build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev ruby-dev
+
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt-get update
+sudo apt-get --assume-yes install git curl build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev ruby-dev wget
+
 
 cd /tmp
 wget -N https://rvm.beginrescueend.com/install/rvm
@@ -17,7 +19,7 @@ cat $HOME/.bashrc | grep '.rvm'
 echo "#######################################"
 echo "Check is above a line with rvm"
 
-echo "Now please restart shell or open a new one and run into it rvm2aftershellrestart.sh"
+echo "Now please restart shell or open a new one and run into it rvm2.sh"
 echo "Ctrl + Shift + T > ./rmv2.sh"
 
 #seems like rvm auto add this line to .bashrc

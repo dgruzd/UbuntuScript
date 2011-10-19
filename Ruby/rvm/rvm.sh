@@ -19,7 +19,7 @@ cat $HOME/.bashrc | grep '.rvm'
 echo "#######################################"
 echo "Check is above a line with rvm"
 
-echo "Now please restart shell or open a new one and run into it rvm2aftershellrestart.sh"
+echo "Now please restart shell or open a new one and run into it rvm2.sh"
 echo "Ctrl + Shift + T > ./rmv2.sh"
 
 #seems like rvm auto add this line to .bashrc

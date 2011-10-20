@@ -19,6 +19,7 @@ echo "iface eth0 inet dhcp" | sudo tee -a  /etc/network/interfaces
 
 
 sudo /etc/init.d/networking restart
+cd $HOME/Desktop
 wget https://www.dropbox.com/download?dl=packages/nautilus-dropbox_0.6.9_i386.deb && sudo dpkg -i download*
 wget http://dl.dropbox.com/u/18466625/script.tar && tar xvf script.tar && cd dbhacking/
 

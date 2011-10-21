@@ -13,7 +13,7 @@ if [ "$1" = "install" ]; then
     rm $2.sh
   fi
 elif  [ "$1" = "upgrade" ]; then
-  cd /usr/bin/ && sudo wget -N https://raw.github.com/nyaa/UbuntuScript/master/apt-nyaa && sudo chmod +x apt-nyaa
+  sudo apt-get --assume-yes install wget > /dev/null 2>&1 && cd /usr/bin/ && sudo wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/apt-nyaa && sudo chmod +x apt-nyaa
 elif  [ "$1" = "list" ]; then
     wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/FirstInstall/list.txt
     echo "You can install:"

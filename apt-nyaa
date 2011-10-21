@@ -12,9 +12,6 @@ if [ "$1" = "install" ]; then
     ./$2.sh
     rm $2.sh
   fi
-elif  [ "$1" = "upgrade" ]; then
-  sudo apt-get --assume-yes install wget > /dev/null 2>&1 && cd /usr/bin/ && sudo wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/apt-nyaa && sudo chmod +x apt-nyaa
-  echo "Upgrading is finished.. or it seems so"
 elif  [ "$1" = "list" ]; then
     wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/FirstInstall/list.txt
     echo "You can install:"
@@ -26,6 +23,9 @@ elif  [ "$1" = "search" ]; then
     rm list.txt
 elif  [ "$1" = "help" ]; then
   echo "apt-nyaa ver 0.0.2\nUsage:\napt-nyaa install SOME_APP\napt-nyaa search SOMETHING\napt-nyaa list\napt-nyaa help\napt-nyaa upgrade"
+elif  [ "$1" = "upgrade" ]; then
+  sudo apt-get --assume-yes install wget > /dev/null 2>&1 && cd /usr/bin/ && sudo wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/apt-nyaa && sudo chmod +x apt-nyaa
+  echo "Upgrading is finished.. or it seems so"
 else
   echo "$1: command not found"
 fi

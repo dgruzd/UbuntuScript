@@ -38,13 +38,10 @@ keepassx
 kernelnew
 lamp
 laptop-mode-tools
-libreoffice
-list
 mc
 moc
 mp3split
 mplayer
-myinstall
 mysql
 nginx
 nload
@@ -62,7 +59,7 @@ remmina
 rtorrent
 rvm
 rvm2
-rvm_reload
+rvm_upgrade
 samba
 screen
 skype64
@@ -71,7 +68,6 @@ splashscreenoff
 sshfs
 steam
 streamripper
-tempinstall
 tmux
 tor
 traceroute
@@ -79,7 +75,6 @@ transmission
 truecrypt
 ubuntutweak
 unetbootin
-update-manager-tray
 vim-gnome
 vim
 virtualbox

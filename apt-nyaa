@@ -24,7 +24,7 @@ elif  [ "$1" = "search" ]; then
     cat list.txt | grep $2
     rm list.txt
 elif  [ "$1" = "help" ]; then
-  echo "apt-nyaa ver 0.0.1\nUsage:\napt-nyaa install SOME_APP\napt-nyaa search SOMETHING\napt-nyaa list\napt-nyaa help"
+  echo "apt-nyaa ver 0.0.2\nUsage:\napt-nyaa install SOME_APP\napt-nyaa search SOMETHING\napt-nyaa list\napt-nyaa help\napt-nyaa upgrade"
 else
   echo "$1: command not found"
 fi

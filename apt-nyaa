@@ -14,6 +14,7 @@ if [ "$1" = "install" ]; then
   fi
 elif  [ "$1" = "upgrade" ]; then
   sudo apt-get --assume-yes install wget > /dev/null 2>&1 && cd /usr/bin/ && sudo wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/apt-nyaa && sudo chmod +x apt-nyaa
+  echo "Upgrading is finished.. or it seems so"
 elif  [ "$1" = "list" ]; then
     wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/FirstInstall/list.txt
     echo "You can install:"

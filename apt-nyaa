@@ -26,5 +26,5 @@ elif  [ "$1" = "search" ]; then
 elif  [ "$1" = "help" ]; then
   echo "apt-nyaa ver 0.0.1\nUsage:\napt-nyaa install SOME_APP\napt-nyaa search SOMETHING\napt-nyaa list\napt-nyaa help"
 else
-  echo "No parametres found"
+  echo "$1: command not found"
 fi

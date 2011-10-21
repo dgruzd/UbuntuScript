@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd /tmp
+
+if [ "$1" = "install" ]; then
+  if [ "$2" = "" ]; then
+    echo "install need parameter"
+  else
+    wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/FirstInstall/$2.sh
+    chmod +x $2.sh
+    ./$2.sh
+    rm $2.sh
+  fi
+else
+  echo "No parametres found"
+fi

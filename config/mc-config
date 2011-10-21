@@ -111,6 +111,8 @@ base_color=
 xterm=
 color_terminals=
 
+screen=
+
 [Panelize]
 Найти корректуры, отвергнутые командой patch=find . -name \\*.rej -print
 Найти оригиналы (*.orig) после команды patch=find . -name \\*.orig -print

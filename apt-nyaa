@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 cd /tmp
 
 if [ "$1" = "install" ]; then
@@ -11,7 +12,8 @@ if [ "$1" = "install" ]; then
     ./$2.sh
     rm $2.sh
   fi
-
+elif  [ "$1" = "upgrade" ]; then
+  cd /usr/bin/ && sudo wget -N https://raw.github.com/nyaa/UbuntuScript/master/apt-nyaa && sudo chmod +x apt-nyaa
 elif  [ "$1" = "list" ]; then
     wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/FirstInstall/list.txt
     echo "You can install:"
@@ -22,7 +24,7 @@ elif  [ "$1" = "search" ]; then
     cat list.txt | grep $2
     rm list.txt
 elif  [ "$1" = "help" ]; then
-  echo "Usage:\napt-nyaa install SOME_APP\napt-nyaa list\napt-nyaa help"
+  echo "apt-nyaa ver 0.0.1\nUsage:\napt-nyaa install SOME_APP\napt-nyaa search SOMETHING\napt-nyaa list\napt-nyaa help"
 else
   echo "No parametres found"
 fi

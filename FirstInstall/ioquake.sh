@@ -28,14 +28,26 @@ echo "vid_restart" | tee -a $q3config
 cd /tmp
 #http://ioquake3.org/extras/patch-data/
 axel http://dl.dropbox.com/u/9175582/quake3-latest-pk3s.zip
+#maps
+axel http://dl.dropbox.com/u/9175582/quake3-maps.zip
 #quake gold cd
 axel http://dl.dropbox.com/u/9175582/PAK0.PK3
 mv -v PAK0.PK3 $HOME/.q3a/baseq3
 unzip quake3-latest-pk3s.zip && rm -v quake3-latest-pk3s.zip
+unzip quake3-maps.zip && rm -v quake3-maps.zip
 cd quake3-latest-pk3s
 cp -v baseq3/* $HOME/.q3a/baseq3 
 cp -v missionpack/* $HOME/.q3a/missionpack
+cd quake3-maps
+cp -v *.pk3 $HOME/.q3a/baseq3
+
 rm -rf quake3-latest-pk3s/
+rm -rf quake3-maps/
+
+
+
+
+
 if [ "$mtype" = "64" ]; then
   wget -N http://ioquake3.org/files/1.36/installer/$wget64
   LANG=C sudo sh $wget64 

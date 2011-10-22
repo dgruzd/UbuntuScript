@@ -27,11 +27,9 @@ echo "vid_restart" | tee -a $q3config
 
 cd /tmp
 #http://ioquake3.org/extras/patch-data/
-#wget -N http://dl.dropbox.com/u/9513848/quake3-latest-pk3s.zip
-axel http://dl.dropbox.com/u/9513848/quake3-latest-pk3s.zip
+axel http://dl.dropbox.com/u/9175582/quake3-latest-pk3s.zip
 #quake gold cd
-#wget -N http://dl.dropbox.com/u/9513848/PAK0.PK3
-axel http://dl.dropbox.com/u/9513848/PAK0.PK3
+axel http://dl.dropbox.com/u/9175582/PAK0.PK3
 mv -v PAK0.PK3 $HOME/.q3a/baseq3
 unzip quake3-latest-pk3s.zip && rm -v quake3-latest-pk3s.zip
 cd quake3-latest-pk3s

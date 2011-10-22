@@ -6,12 +6,15 @@ wget64="ioquake3-1.36-7.1.x86_64.run"
 
 echo "Type your machine type \"64\" or \"32\" bit (2 digits), followed by [ENTER]:"
 read mtype
-echo "Type your nickname:"
-read nick
-echo "Type your resolution width, for 1280x1024 it is 1280:"
-read width
-echo "Type your resolution height for 1280x1024 it is 1024:"
-read height
+#echo "Type your nickname:"
+#read nick
+nick=`whoami`
+#echo "Type your resolution width, for 1280x1024 it is 1280:"
+#read width
+width=800
+#echo "Type your resolution height for 1280x1024 it is 1024:"
+#read height
+height=600
 
 sudo apt-get --assume-yes install axel unzip
 #mv -v .q3a .q3a-backup
@@ -27,11 +30,11 @@ echo "vid_restart" | tee -a $q3config
 
 cd /tmp
 #http://ioquake3.org/extras/patch-data/
-axel http://dl.dropbox.com/u/9175582/quake3-latest-pk3s.zip
+axel -a http://dl.dropbox.com/u/9175582/quake3-latest-pk3s.zip
 #maps
-axel http://dl.dropbox.com/u/9175582/quake3-maps.zip
+axel -a http://dl.dropbox.com/u/9175582/quake3-maps.zip
 #quake gold cd
-axel http://dl.dropbox.com/u/9175582/PAK0.PK3
+axel -a http://dl.dropbox.com/u/9175582/PAK0.PK3
 mv -v PAK0.PK3 $HOME/.q3a/baseq3
 unzip quake3-latest-pk3s.zip && rm -v quake3-latest-pk3s.zip
 unzip quake3-maps.zip && rm -v quake3-maps.zip

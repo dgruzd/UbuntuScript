@@ -1,6 +1,7 @@
 #!/bin/sh
 #http://faq.cs2.ru/readarticle.php?article_id=400
 #http://forum.csmania.ru/viewtopic.php?f=28&t=3794
+sudo apt-get --assume-yes install lib32gcc1
 mkdir -pv /tmp/hlds
 cd /tmp/hlds
 wget -N http://www.steampowered.com/download/hldsupdatetool.bin

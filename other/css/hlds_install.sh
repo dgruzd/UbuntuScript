@@ -3,12 +3,12 @@
 #http://forum.csmania.ru/viewtopic.php?f=28&t=3794
 mkdir -pv /tmp/hlds
 cd /tmp/hlds
-#wget -N http://www.steampowered.com/download/hldsupdatetool.bin
-#chmod +x hldsupdatetool.bin
-#./hldsupdatetool.bin
-#rm hldsupdatetool.bin
+wget -N http://www.steampowered.com/download/hldsupdatetool.bin
+chmod +x hldsupdatetool.bin
+./hldsupdatetool.bin
+rm hldsupdatetool.bin
 
-wget -N http://dl.dropbox.com/u/9175582/steam
+#wget -N http://dl.dropbox.com/u/9175582/steam
 chmod +x steam
 echo "#!/bin/sh" >> update-css.sh
 echo "./steam -command update -game 'Counter-Strike Source' -dir ." >> update-css.sh

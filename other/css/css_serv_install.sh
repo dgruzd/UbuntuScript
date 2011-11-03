@@ -8,14 +8,13 @@ chmod +x hldsupdatetool.bin
 ./hldsupdatetool.bin
 rm hldsupdatetool.bin
 chmod +x steam
-echo "#!/bin/sh" >> update.sh
-echo "./steam -command update -game 'Counter-Strike Source' -dir ." >> update.sh
-chmod +x update.sh
+echo "#!/bin/sh" >> update-css.sh
+echo "./steam -command update -game 'Counter-Strike Source' -dir ." >> update-css.sh
+chmod +x update-css.sh
 #./steam -command list
-echo "#!/bin/sh" >> launch.sh
-echo "screen -A -m -d -S css-server ./css/srcds_run -game cstrike +maxplayers 16 +map de_dust +sv_lan 1 -insecure" >> launch.sh
-echo "#version stats exit" >> launch.sh
-chmod +x launch.sh
+echo "#!/bin/sh" >> css-launch.sh
+echo "screen -A -m -d -S css-server ./css/srcds_run -game cstrike +maxplayers 16 +map de_dust +sv_lan 1 -insecure" >> css-launch.sh
+echo "#version stats exit" >> css-launch.sh
+chmod +x css-launch.sh
 
 ./steam
-./steam -command update -game "Counter-Strike Source" -dir .

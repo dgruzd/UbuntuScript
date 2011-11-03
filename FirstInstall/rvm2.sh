@@ -8,4 +8,3 @@ rvm 1.9.2
 echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 #gem install rails --no-ri --no-rdoc
 gem install rails -v '3.0.9'
-

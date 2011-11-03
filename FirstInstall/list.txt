@@ -1,4 +1,5 @@
 acpi
+ajenti
 apt-fast
 aptitude
 archiveapps
@@ -27,6 +28,7 @@ gnome-mplayer
 google-music
 hdtvpc
 hedgewars
+hlds
 htop
 hyper-v-ubuntu-modules
 ioquake
@@ -56,6 +58,7 @@ remmina
 rtorrent
 rvm
 rvm2
+rvm_193
 rvm_upgrade
 samba
 screen
@@ -77,5 +80,7 @@ virtualbox
 vlc
 wine
 wuala
+xbmc-codecs
 xbmc
 xchat
+zenmap

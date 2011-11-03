@@ -1,6 +1,7 @@
 #!/bin/sh
 #http://faq.cs2.ru/readarticle.php?article_id=400
 #http://forum.csmania.ru/viewtopic.php?f=28&t=3794
+#http://forums.steamgames.com/forums/showthread.php?p=23500914
 sudo apt-get --assume-yes install lib32gcc1
 mkdir -pv /tmp/hlds
 cd /tmp/hlds
@@ -27,5 +28,6 @@ chmod +x css-launch.sh
 
 echo "#!/bin/sh" >> tf-launch.sh
 echo "./orangebox/srcds_run -game tf +map cp_badlands" >> tf-launch.sh
+chmod +x tf-launch.sh
 
 ./steam

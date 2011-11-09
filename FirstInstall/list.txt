@@ -51,6 +51,7 @@ ntpdate
 openssh-server
 openvpn
 opera
+passenger-nginx
 pidgin
 powertop
 ppamanager

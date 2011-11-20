@@ -18,7 +18,7 @@ sudo iptables -P OUTPUT ACCEPT
 sudo iptables -P FORWARD ACCEPT
 #
 # Включаем режим прозрачности
-iptables -t nat -A POSTROUTING -o $INET_IFACE -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o $INET_IFACE -j MASQUERADE
 #
 # Включаем режим пересылки пакетов
 #echo "1" > /proc/sys/net/ipv4/ip_forward

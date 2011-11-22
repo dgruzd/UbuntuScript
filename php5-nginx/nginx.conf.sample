@@ -1,0 +1,13 @@
+#sample php site
+#server {
+#  listen  80;
+#  server_name public.dgruzd.ru;
+#  root /home/nyaa/Rails/public.dgruzd.ru;
+#  index index.php;
+#  location ~ \.php$ {
+#    fastcgi_pass   127.0.0.1:9000;
+#    fastcgi_index  index.php;
+#    fastcgi_param  SCRIPT_FILENAME  /home/nyaa/Rails/public.dgruzd.ru$fastcgi_script_name;
+#    include        fastcgi_params;
+#  }
+#}

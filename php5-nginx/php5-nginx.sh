@@ -1,5 +1,8 @@
 #!/bin/sh
 #http://andrey.org/nginx-php-debian-lenny/
+
+BASE_URL="https://raw.github.com/nyaa/UbuntuScript/master/php5-nginx/"
+
 sudo apt-get install php5-cli php5-cgi build-essential
 echo "######### building spawn-fcgi #############"
 cd /tmp

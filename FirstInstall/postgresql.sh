@@ -5,3 +5,4 @@
 #sudo -u postgres createdb mydb
 
 sudo apt-get --assume-yes install postgresql
+sudo apt-get --assume-yes install libpq-dev

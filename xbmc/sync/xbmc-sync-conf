@@ -1,0 +1,22 @@
+advancedsettings.xml
+xbmc\userdata
+
+<advancedsettings>
+    <videodatabase>
+        <type>mysql</type>
+        <host>***.***.***.***</host>
+        <port>3306</port>
+        <user>xbmc</user>
+        <pass>xbmc</pass>
+        <name>xbmc_video</name>
+    </videodatabase> 
+
+    <musicdatabase>
+        <type>mysql</type>
+        <host>***.***.***.***</host>
+        <port>3306</port>
+        <user>xbmc</user>
+        <pass>xbmc</pass>
+        <name>xbmc_music</name>
+    </musicdatabase>
+</advancedsettings>

@@ -1,0 +1,2 @@
+https://help.ubuntu.com/community/SoundTroubleshootingProcedure
+http://maketecheasier.com/setup-hdmi-digital-playback-in-linux/2011/01/05

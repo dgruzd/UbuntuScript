@@ -28,9 +28,9 @@ sudo vim /opt/nginx/conf/nginx.conf
 
 sudo /etc/init.d/nginx restart
 
-echo "server {" | sudo tee -a /opt/nginx/conf/nginx.conf
-echo "  listen 80;" | sudo tee -a /opt/nginx/conf/nginx.conf
-echo "  server_name www.mycook.com;" | sudo tee -a /opt/nginx/conf/nginx.conf
-echo "  root /web/some_app/public;" | sudo tee -a /opt/nginx/conf/nginx.conf
-echo "  passenger_enabled on;" | sudo tee -a /opt/nginx/conf/nginx.conf
-echo "}" | sudo tee -a /opt/nginx/conf/nginx.conf
+echo "#server {" | sudo tee -a /opt/nginx/conf/nginx.conf
+echo "#  listen 80;" | sudo tee -a /opt/nginx/conf/nginx.conf
+echo "#  server_name www.mycook.com;" | sudo tee -a /opt/nginx/conf/nginx.conf
+echo "#  root /web/some_app/public;" | sudo tee -a /opt/nginx/conf/nginx.conf
+echo "#  passenger_enabled on;" | sudo tee -a /opt/nginx/conf/nginx.conf
+echo "#}" | sudo tee -a /opt/nginx/conf/nginx.conf

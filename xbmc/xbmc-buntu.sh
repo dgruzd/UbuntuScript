@@ -7,8 +7,12 @@
 
 echo "#### installing xbmc #######"
 sudo apt-get --assume-yes install python-software-properties pkg-config && sudo add-apt-repository ppa:team-xbmc/ppa && sudo apt-get update && sudo apt-get --assume-yes install xbmc xorg
-echo "#### installing ati drivers ########"
-sudo add-apt-repository ppa:ubuntu-x-swat/x-updates && sudo apt-get update && sudo apt-get --assume-yes install fglrx
+#echo "#### installing ati drivers ########"
+#sudo add-apt-repository ppa:ubuntu-x-swat/x-updates && sudo apt-get update && sudo apt-get --assume-yes install fglrx
+echo "#### installing nvidia drivers ########"
+#apt-cache search nvidia | grep glx
+sudo apt-get install nvidia-glx-185 nvidia-settings mesa-utils libvdpau-dev
+
 echo "#### add user xbmc ######"
 sudo adduser xbmc --gecos XBMC && sudo usermod --group adm,sudo,cdrom,floppy,audio,video,plugdev,netdev,powerdev,fuse,polkituser xbmc
 echo "#### add autostart xbmc ######"

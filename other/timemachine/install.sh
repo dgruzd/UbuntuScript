@@ -11,10 +11,9 @@ cd netatalk-2.2.0
 make
 sudo make install
 
+sudo sed -i 's/~\//#~\//g' /etc/netatalk/AppleVolumes.default
+echo "/home/timemachine \"TimeMachine\" options:tm" | sudo tee -a /etc/netatalk/AppleVolumes.default
 sudo vim /etc/netatalk/AppleVolumes.default
-## Comment out ~/ home directory entry in the file
-## Add just below it:
-## /home/timemachine "TimeMachine" options:tm
 
 
 echo "<service-group>" | sudo tee -a /etc/avahi/services/afpd.service

@@ -13,7 +13,7 @@ sudo make install
 
 sudo sed -i 's/~\//#~\//g' /etc/netatalk/AppleVolumes.default
 echo "/home/timemachine \"TimeMachine\" options:tm" | sudo tee -a /etc/netatalk/AppleVolumes.default
-sudo vim /etc/netatalk/AppleVolumes.default
+#sudo vim /etc/netatalk/AppleVolumes.default
 
 
 echo "<service-group>" | sudo tee -a /etc/avahi/services/afpd.service
@@ -34,5 +34,5 @@ sudo service avahi-daemon restart
  
 sudo adduser timemachine
  
-sudo mkdir /home/timemachine
+sudo mkdir -pv /home/timemachine
 sudo chown timemachine /home/timemachine

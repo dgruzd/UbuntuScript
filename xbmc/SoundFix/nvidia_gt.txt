@@ -1,0 +1,3 @@
+http://wiki.xbmc.org/index.php?title=HOW-TO_set_up_HDMI_audio_on_nVidia_GeForce_G210,_GT220,_or_GT240
+http://forum.ubuntu.ru/index.php?topic=87254.0
+

@@ -1,0 +1,6 @@
+http://forum.xbmc.org/showthread.php?t=83157
+http://wiki.xbmc.org/index.php?title=HOW-TO:Set_up_HDMI_audio_on_nVidia_GeForce_G210,_GT220,_or_GT240
+
+
+G210
+plughw:0,7

@@ -1,5 +1,7 @@
 acpi
 ajenti
+alsa-new
+alsa-ppa
 apt-fast
 aptitude
 archiveapps
@@ -12,12 +14,14 @@ chrome
 chromium-browser
 chromium-codecs
 compizconfig
+conn_share
 deadbeef
 deluge-webui
 deluge
 dropbox
 dropbox32
 faenza-icon-theme
+fail2ban
 firefox
 flash
 flash11
@@ -53,10 +57,15 @@ openvpn
 opera
 passenger-nginx
 pidgin
+postgresql-gui
+postgresql
 powertop
 ppamanager
+proxychains
 remmina
+rsnapshot
 rtorrent
+rvm-186
 rvm
 rvm2
 rvm_193
@@ -68,6 +77,7 @@ soundconverter
 sshfs
 steam
 streamripper
+thunderbird
 tmux
 tor
 traceroute
@@ -81,7 +91,9 @@ virtualbox
 vlc
 wine
 wuala
+xbmc-1110
 xbmc-codecs
+xbmc-minimal-ub
 xbmc
 xchat
 zenmap

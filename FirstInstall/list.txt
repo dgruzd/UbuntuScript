@@ -11,6 +11,7 @@ chromium-browser
 chromium-codecs
 compizconfig
 deadbeef
+dropbox-via-apt-beta
 dropbox32
 dropbox64
 fail2ban

@@ -19,7 +19,7 @@ echo "auth strong" >> config.cfg
 echo "socks -p5190" >> config.cfg
 sudo mv config.cfg /opt/3proxy
 
-sudo vim /opt/3proxy/config.cfg
+sudoedit /opt/3proxy/config.cfg
 echo "launching 3proxy"
 cd /opt/3proxy/
 ./3proxy config.cfg

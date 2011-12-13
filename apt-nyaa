@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [ `id -u` = 0 ]; then 
+ echo "apt-nyaa launched by root, will exit now"
+ echo "please launch as normal user"
+ exit 0
+fi
+
 
 cd /tmp
 

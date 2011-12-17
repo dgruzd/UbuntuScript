@@ -1,3 +1,4 @@
+3proxy-socks
 acpi
 ajenti
 apt-fast
@@ -56,6 +57,7 @@ rvm_upgrade
 samba
 screen
 soundconverter
+sphinxsearch
 sshfs
 streamripper
 thunderbird

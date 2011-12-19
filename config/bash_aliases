@@ -55,11 +55,12 @@ alias go='git checkout '
 alias gp='git push '
 alias gpu='git pull '
 alias gg='git add -A && git commit -a && git push'
+alias gm='git merge --no-ff '
 
 # ALIASES FOR RAILS
 alias dbm='bundle exec rake db:migrate'
 alias rspec='bundle exec rspec spec/'
-
+alias ruby-style='find . -iname "*.rb" -exec rbeautify {} \;'
 alias speedtest512='dd if=/dev/zero of=output.img bs=8k count=64k && rm output.img'
 
 alias tmux="tmux attach || tmux new"

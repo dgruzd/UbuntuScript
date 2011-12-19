@@ -86,6 +86,8 @@ skin=default
 keymap=mc.keymap
 auto_save_setup_panels=1
 
+ignore_ftp_chattr_errors=true
+
 [Layout]
 equal_split=1
 first_panel_size=55

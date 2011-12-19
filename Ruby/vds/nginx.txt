@@ -1,0 +1,5 @@
+#server
+#http://www.modrails.com/documentation/Users%20guide%20Nginx.html#PassengerMaxPoolSize
+passenger_max_pool_size 2;
+
+

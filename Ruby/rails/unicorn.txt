@@ -1,0 +1,5 @@
+http://habrahabr.ru/blogs/ror/120368/
+http://habrahabr.ru/blogs/ror/128048/
+http://sirupsen.com/setting-up-unicorn-with-nginx/
+
+unicorn_rails -c config/unicorn.rb -E production -D

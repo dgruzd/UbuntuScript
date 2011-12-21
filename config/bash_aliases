@@ -57,6 +57,8 @@ alias gpu='git pull '
 alias gg='git add -A && git commit -a && git push'
 alias gm='git merge --no-ff '
 
+alias gii='git rm -r --cached . && git add -A && git commit -a'
+
 # ALIASES FOR RAILS
 alias dbm='bundle exec rake db:migrate'
 alias rspec='bundle exec rspec spec/'

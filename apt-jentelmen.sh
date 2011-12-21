@@ -10,13 +10,11 @@ apt-nyaa install unity-indicator-virtualbox
 #######################
 
 apt-nyaa install aptitude
+apt-nyaa install keepassx
+apt-nyaa install mysql
 apt-nyaa install vim
 apt-nyaa install axel
-apt-nyaa install firefox
 apt-nyaa install rvm
-apt-nyaa install mysql
-apt-nyaa install nload
-apt-nyaa install nmap
 apt-nyaa install openssh-server
 apt-nyaa install pidgin
 apt-nyaa install proxychains
@@ -30,3 +28,6 @@ apt-nyaa install vim-gnome
 apt-nyaa install virtualbox
 apt-nyaa install vlc
 apt-nyaa install mplayer
+apt-nyaa install htop 
+apt-nyaa install nload
+apt-nyaa install nmap

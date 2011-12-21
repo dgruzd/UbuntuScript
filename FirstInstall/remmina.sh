@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get install remmina
+sudo apt-get --assume-yes install remmina

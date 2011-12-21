@@ -1,0 +1,10 @@
+server {
+          server_name  q3.eth0.me; 
+          rewrite ^(.*)$ http://q3.railscasts.ru$1 permanent;
+        }
+server {
+          server_name  book.eth0.me;
+          server_name guru.railscasts.ru; 
+          rewrite ^(.*)$ http://booq.pro$1 permanent;
+        }
+

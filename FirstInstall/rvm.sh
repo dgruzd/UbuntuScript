@@ -24,6 +24,10 @@ echo "Check is above a line with rvm"
 echo "Now please restart shell or open a new one and run into it rvm2.sh"
 echo "Ctrl + Shift + T > ./rmv2.sh"
 
+
+echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+
+
 #seems like rvm auto add this line to .bashrc
 #cp $HOME/.bashrc $HOME/.bashrc.backup
 #echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && source \"$HOME/.rvm/scripts/rvm\"" >> $HOME/.bashrc

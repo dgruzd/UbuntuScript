@@ -3,3 +3,15 @@ http://habrahabr.ru/blogs/ror/128048/
 http://sirupsen.com/setting-up-unicorn-with-nginx/
 
 unicorn_rails -c config/unicorn.rb -E production -D
+
+
+
+http://habrahabr.ru/blogs/ror/120368/
+runit
+http://habrahabr.ru/blogs/sysadm/83775/
+
+http://blog.kiskolabs.com/post/722322392/unicorn-init-scripts
+
+
+http://brandontilley.com/2011/01/29/serving-rails-apps-with-rvm-nginx-unicorn-and-upstart.html
+http://beginrescueend.com/deployment/best-practices/

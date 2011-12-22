@@ -1,16 +1,22 @@
 worker_processes 2
-working_directory "/PATH/APP/"
+working_directory "/home/rails/Rails/booq.pro/"
 
 preload_app true
 
 timeout 30
 
-listen "/PATH/APP/tmp/sockets/unicorn.sock", :backlog => 64
+listen "/home/rails/Rails/booq.pro/tmp/sockets/unicorn.sock", :backlog => 64
 
-pid "/PATH/APP/tmp/pids/unicorn.pid"
+pid "/home/rails/Rails/booq.pro/tmp/pids/unicorn.pid"
 
-stderr_path "/PATH/APP/log/unicorn.stderr.log"
-stdout_path "/PATH/APP/log/unicorn.stdout.log"
+stderr_path "/home/rails/Rails/booq.pro/log/unicorn.stderr.log"
+stdout_path "/home/rails/Rails/booq.pro/log/unicorn.stdout.log"
+
+
+before_exec do |server|
+ ENV["BUNDLE_GEMFILE"] = "#{rails_root}/Gemfile"
+end
+
 
 before_fork do |server, worker|
     defined?(ActiveRecord::Base) and

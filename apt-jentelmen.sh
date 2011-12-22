@@ -10,6 +10,7 @@ apt-nyaa install unity-indicator-virtualbox
 #######################
 
 apt-nyaa install aptitude
+apt-nyaa install mocp 
 apt-nyaa install keepassx
 apt-nyaa install mysql
 apt-nyaa install vim

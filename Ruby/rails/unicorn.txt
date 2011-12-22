@@ -15,3 +15,4 @@ http://blog.kiskolabs.com/post/722322392/unicorn-init-scripts
 
 http://brandontilley.com/2011/01/29/serving-rails-apps-with-rvm-nginx-unicorn-and-upstart.html
 http://beginrescueend.com/deployment/best-practices/
+http://brandontilley.com/2011/01/29/rvm-unicorn-and-upstart.html

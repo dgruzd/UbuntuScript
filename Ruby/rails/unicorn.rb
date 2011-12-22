@@ -1,16 +1,19 @@
+APP_PATH = File.expand_path(File.dirname(File.dirname(__FILE__)))
+#APP_PATH = "/home/rails/booq.pro"
+
 worker_processes 2
-working_directory "/home/rails/Rails/booq.pro/"
+working_directory APP_PATH
 
 preload_app true
 
 timeout 30
 
-listen "/home/rails/Rails/booq.pro/tmp/sockets/unicorn.sock", :backlog => 64
+listen APP_PATH + "/tmp/sockets/unicorn.sock", :backlog => 64
 
-pid "/home/rails/Rails/booq.pro/tmp/pids/unicorn.pid"
+pid APP_PATH + "/tmp/pids/unicorn.pid"
 
-stderr_path "/home/rails/Rails/booq.pro/log/unicorn.stderr.log"
-stdout_path "/home/rails/Rails/booq.pro/log/unicorn.stdout.log"
+stderr_path APP_PATH + "/log/unicorn.stderr.log"
+stdout_path APP_PATH + "/log/unicorn.stdout.log"
 
 
 before_exec do |server|

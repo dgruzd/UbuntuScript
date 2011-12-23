@@ -17,7 +17,8 @@ stdout_path APP_PATH + "/log/unicorn.stdout.log"
 
 
 before_exec do |server|
- ENV["BUNDLE_GEMFILE"] = "#{rails_root}/Gemfile"
+# ENV["BUNDLE_GEMFILE"] = "#{rails_root}/Gemfile"
+  ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', File.dirname(__FILE__))
 end
 
 

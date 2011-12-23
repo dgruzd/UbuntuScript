@@ -4,6 +4,10 @@ http://sirupsen.com/setting-up-unicorn-with-nginx/
 
 unicorn_rails -c config/unicorn.rb -E production -D
 
+rvm use 1.9.2 && gem install unicorn && rvm wrapper 1.9.2 r192 unicorn
+rvm use 1.9.3 && gem install unicorn && rvm wrapper 1.9.3 r193 unicorn
+
+r193_unicorn -c /home/rails/www/booq.pro/current/config/unicorn.rb -E production -D
 
 
 http://habrahabr.ru/blogs/ror/120368/
@@ -18,5 +22,4 @@ http://beginrescueend.com/deployment/best-practices/
 http://brandontilley.com/2011/01/29/rvm-unicorn-and-upstart.html
 
 
-rvm use 1.9.2 && gem install unicorn && rvm wrapper 1.9.2 r192 unicorn
-rvm use 1.9.3 && gem install unicorn && rvm wrapper 1.9.3 r193 unicorn
+

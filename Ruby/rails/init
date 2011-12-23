@@ -18,8 +18,8 @@ set -e
 
 # Change these to match your app:
 APP_NAME=booq.pro
-APP_ROOT="/home/rails/Rails/$APP_NAME"
-PID="/srv/$APP_NAME/tmp/pids/unicorn.pid"
+APP_ROOT="/home/rails/www/$APP_NAME/current"
+PID="/home/rails/www/$APP_NAME/shared/pids/unicorn.pid"
 ENV=production
 
 GEM_HOME="/home/rails/.rvm/gems/ruby-1.9.2-p290"
@@ -27,7 +27,8 @@ GEM_HOME="/home/rails/.rvm/gems/ruby-1.9.2-p290"
 UNICORN_OPTS="-D -E $ENV -c $APP_ROOT/config/unicorn.rb"
 
 SET_PATH="cd $APP_ROOT; rvm use 1.9.2; export GEM_HOME=$GEM_HOME"
-CMD="$SET_PATH; $GEM_HOME/bin/unicorn $UNICORN_OPTS"
+#CMD="$SET_PATH; $GEM_HOME/bin/unicorn $UNICORN_OPTS"
+CMD="r193_unicorn $UNICORN_OPTS"
 
 old_pid="$PID.oldbin"
 

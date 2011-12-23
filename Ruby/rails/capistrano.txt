@@ -1,0 +1,1 @@
+http://blog.jerodsanto.net/2009/05/dead-simple-rails-deployment/

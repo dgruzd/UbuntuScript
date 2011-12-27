@@ -20,7 +20,7 @@ namespace :assets do
 desc "Assets precompile"
 task :precompile do
 #run "cd #{current_path} && bundle exec rake assets:precompile"
-  if fetch(:assets) == true
+  if exists?(:assets) && fetch(:assets) == true
   system("bundle exec rake assets:precompile && cd public && tar czf assets.tar.gz assets/")
   upload("public/assets.tar.gz","#{current_path}/public/assets.tar.gz")
   system("rm public/assets.tar.gz")
@@ -55,17 +55,7 @@ task :delconf do
 end
 after "nginx:delconf", "nginx:reload"
 end
-namespace :unicorn do
-desc "start unicorn"
-task :start, :roles => :app, :except => {:no_release => true} do
-#  run "/home/#{user}/.rvm/bin/r193_unicorn -c #{current_path}/config/unicorn.rb -E production -D"
-  run "cd #{current_path} && bundle exec unicorn -c #{current_path}/config/unicorn.rb -E production -D"
-end
-desc "start unicorn"
-task :stop, :roles => :app, :except => {:no_release => true} do
-  run "cd #{current_path} && bundle exec unicorn_exec stop"
-end
-end
+
 namespace :bundle do
 desc "Run bundle install"
 task :install, :roles => :app, :except => {:no_release => true} do
@@ -87,6 +77,28 @@ task :create_files do
   run "ln -sfv #{shared_path}/sockets #{current_path}/tmp/sockets"
 end
 
+
+set :unicorn_conf, "#{current_path}/config/unicorn.rb"
+set :unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid"
+set :rails_env, "production"
+namespace :unicorn do
+desc "start unicorn"
+task :start, :roles => :app, :except => {:no_release => true} do
+  run "cd #{current_path} && bundle exec unicorn -c #{unicorn_conf} -E #{rails_env} -D"
+end
+desc "stop unicorn"
+task :stop, :roles => :app, :except => {:no_release => true} do
+  run "if [ -f #{unicorn_pid} ] && [ -e /proc/$(cat #{unicorn_pid}) ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
+end
+#desc "restart unicorn"
+#task :stop, :roles => :app, :except => {:no_release => true} do
+#  run "if [ -f #{unicorn_pid} ] && [ -e /proc/$(cat #{unicorn_pid}) ]; then kill -USR2 `cat #{unicorn_pid}`; else cd #{current_path} && bundle exec unicorn -c #{unicorn_conf} -E #{rails_env} -D; fi"
+#end
+end
+
+
+
+
 before "deploy:restart", "assets:precompile"
-after "deploy", "create_files", "unicorn:start"
+after "deploy", "create_files","unicorn:stop", "unicorn:start"
 ################################

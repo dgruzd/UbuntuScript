@@ -1,0 +1,92 @@
+load 'deploy' if respond_to?(:namespace) # cap2 differentiator
+
+# Uncomment if you are using Rails' asset pipeline
+# load 'deploy/assets'
+
+Dir['vendor/gems/*/recipes/*.rb','vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
+
+
+load 'config/deploy' # remove this line to skip loading any of the default tasks
+
+#load 'deploy/assets'
+
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require "rvm/capistrano"
+rvmrc = "rvm use #{rvm_ruby_string}"
+set :rvm_type, :user
+
+
+namespace :assets do
+desc "Assets precompile"
+task :precompile do
+#run "cd #{current_path} && bundle exec rake assets:precompile"
+  if fetch(:assets) == true
+  system("bundle exec rake assets:precompile && cd public && tar czf assets.tar.gz assets/")
+  upload("public/assets.tar.gz","#{current_path}/public/assets.tar.gz")
+  system("rm public/assets.tar.gz")
+  run("cd #{current_path}/public && rm -rf assets/ && tar xzf assets.tar.gz && rm assets.tar.gz")
+  else
+  puts "assets is disabled in config/deploy.rb to enable add line set :assets, true"
+  end
+end
+end
+
+namespace :nginx do
+desc "Restart nginx"
+task :restart do
+  run "sudo /etc/init.d/nginx restart"
+end
+desc "Reload nginx"
+task :reload do
+  run "sudo /etc/init.d/nginx reload"
+end
+desc "Stop nginx"
+task :stop do
+  run "sudo /etc/init.d/nginx stop"
+end
+desc "Add app nginx conf to server"
+task :conf do
+  run "sudo ln -sfv #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
+end
+after "nginx:conf", "nginx:reload"
+desc "Del nginx config"
+task :delconf do
+  run "sudo rm -v /etc/nginx/sites-enabled/#{application}"
+end
+after "nginx:delconf", "nginx:reload"
+end
+namespace :unicorn do
+desc "start unicorn"
+task :start, :roles => :app, :except => {:no_release => true} do
+#  run "/home/#{user}/.rvm/bin/r193_unicorn -c #{current_path}/config/unicorn.rb -E production -D"
+  run "cd #{current_path} && bundle exec unicorn -c #{current_path}/config/unicorn.rb -E production -D"
+end
+desc "start unicorn"
+task :stop, :roles => :app, :except => {:no_release => true} do
+  run "cd #{current_path} && bundle exec unicorn_exec stop"
+end
+end
+namespace :bundle do
+desc "Run bundle install"
+task :install, :roles => :app, :except => {:no_release => true} do
+  run "cd #{current_path} && bundle install"
+end
+end
+namespace :log do
+desc "tail -f production.log"
+task :tail do
+  stream("tail -f -n 0 #{current_path}/log/production.log")
+end
+end
+
+desc "Create .rvmrc & files"
+task :create_files do
+  shared_dirs = ["log","pids","sockets"]
+  shared_dirs.each {|dir| run "mkdir -pv #{shared_path}/#{dir}" }
+  put rvmrc, "#{current_path}/.rvmrc"
+  run "ln -sfv #{shared_path}/sockets #{current_path}/tmp/sockets"
+end
+
+before "deploy:restart", "assets:precompile"
+after "deploy", "create_files", "unicorn:start"
+################################

@@ -68,3 +68,6 @@ alias speedtest512='dd if=/dev/zero of=output.img bs=8k count=64k && rm output.i
 alias tmux="tmux attach || tmux new"
 
 alias postgres="sudo su - postgres"
+
+alias pyserv="python -m SimpleHTTPServer"
+alias pingt="mtr "

@@ -24,6 +24,7 @@ echo "######### launch init-fastcgi #############"
 sudo /etc/init.d/init-fastcgi start
 echo "######### testing fastcgi port ############"
 sudo netstat -tulpn | grep :9000
+sleep 5
 echo "######### autostart fastcgi ###########"
 sudo update-rc.d init-fastcgi defaults
 echo "######### restart nginx ###########"

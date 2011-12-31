@@ -31,5 +31,6 @@ sudo /etc/init.d/nginx restart
 echo "######### downloading sample php site conf ########"
 cd /tmp
 wget -N https://raw.github.com/nyaa/UbuntuScript/master/php5-nginx/nginx.conf.sample
-echo "######## append to nginx.conf ##############"
-cat nginx.conf.sample | sudo tee -a /opt/nginx/conf/nginx.conf
+vim nginx.conf.sample
+#echo "######## append to nginx.conf ##############"
+#cat nginx.conf.sample | sudo tee -a /opt/nginx/conf/nginx.conf

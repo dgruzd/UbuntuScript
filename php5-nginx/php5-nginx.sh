@@ -3,7 +3,7 @@
 
 BASE_URL="https://raw.github.com/nyaa/UbuntuScript/master/php5-nginx/"
 
-sudo apt-get install php5-cli php5-cgi build-essential
+sudo apt-get --assume-yes install php5-cli php5-cgi build-essential
 echo "######### building spawn-fcgi #############"
 cd /tmp
 wget http://www.lighttpd.net/download/lighttpd-1.4.18.tar.bz2
@@ -24,6 +24,7 @@ echo "######### launch init-fastcgi #############"
 sudo /etc/init.d/init-fastcgi start
 echo "######### testing fastcgi port ############"
 sudo netstat -tulpn | grep :9000
+sleep 5
 echo "######### autostart fastcgi ###########"
 sudo update-rc.d init-fastcgi defaults
 echo "######### restart nginx ###########"
@@ -31,5 +32,6 @@ sudo /etc/init.d/nginx restart
 echo "######### downloading sample php site conf ########"
 cd /tmp
 wget -N https://raw.github.com/nyaa/UbuntuScript/master/php5-nginx/nginx.conf.sample
-echo "######## append to nginx.conf ##############"
-cat nginx.conf.sample | sudo tee -a /opt/nginx/conf/nginx.conf
+vim nginx.conf.sample
+#echo "######## append to nginx.conf ##############"
+#cat nginx.conf.sample | sudo tee -a /opt/nginx/conf/nginx.conf

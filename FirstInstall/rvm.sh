@@ -25,9 +25,13 @@ echo "Check is above a line with rvm"
 echo "Now please restart shell or open a new one and install ruby"
 #echo "Ctrl + Shift + T > ./rmv2.sh"
 
+echo "Do you want to use ri & rdoc (on server recomended not to) [Y/N]?"
+read ri
 
+if [[ $ri =~ [Yy]  ]]; then
+else
 echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-
+fi
 
 #seems like rvm auto add this line to .bashrc
 #cp $HOME/.bashrc $HOME/.bashrc.backup

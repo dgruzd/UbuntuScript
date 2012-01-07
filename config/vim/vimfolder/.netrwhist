@@ -1,13 +1,6 @@
 let g:netrw_dirhistmax  =10
-<<<<<<< HEAD
 let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/home/nyaa/github/ip.railscasts.ru/app/views/layouts'
 let g:netrw_dirhist_2='/home/nyaa/BVS/app'
-let g:netrw_dirhist_3='/home/nyaa/temp/test_deadline/config'
-let g:netrw_dirhist_4='/home/nyaa/github/old-repository/config'
-=======
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/nyaa/github/ip.railscasts.ru/app/views/layouts'
-let g:netrw_dirhist_2='/home/nyaa/BVS/app'
 let g:netrw_dirhist_3='/home/nyaa/github/reading-guru/app'
->>>>>>> 9165ebc6079fd8e197c4bb1c39a96ab7e906d368
+let g:netrw_dirhist_4='/home/nyaa/kinderglaz/config/deploy'

@@ -20,7 +20,7 @@ sudo add-apt-repository ppa:git-core/ppa
 #dist_name=`lsb_release -c | awk -F":" '{ print $2 }'`
 #echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu $dist_name main" | sudo tee -a /etc/apt/sources.list
 sudo apt-get update
-sudo apt-get install --assume-yes git
+sudo apt-get install --assume-yes git git-core bash-completion
 
 
 git config --global user.name "$name"

@@ -1,0 +1,1 @@
+pg_dump -s YOUR_DB | grep -i 'owner to' | sed -e 's/OWNER TO .*;/OWNER TO NEW_OWNER;/i' | psqL YOUR_DB

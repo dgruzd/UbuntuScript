@@ -3,4 +3,8 @@ let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/home/nyaa/github/ip.railscasts.ru/app/views/layouts'
 let g:netrw_dirhist_2='/home/nyaa/BVS/app'
 let g:netrw_dirhist_3='/home/nyaa/github/reading-guru/app'
+<<<<<<< HEAD
 let g:netrw_dirhist_4='/home/nyaa/github/ansever/app/views/lands'
+=======
+let g:netrw_dirhist_4='/home/nyaa/kinderglaz/config/deploy'
+>>>>>>> 98b60a479979b13866669e758afb00c6ff7df124

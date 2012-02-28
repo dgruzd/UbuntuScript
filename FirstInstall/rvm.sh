@@ -35,5 +35,5 @@ echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 fi
 
 #seems like rvm auto add this line to .bashrc
-#cp $HOME/.bashrc $HOME/.bashrc.backup
-#echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && source \"$HOME/.rvm/scripts/rvm\"" >> $HOME/.bashrc
+cp $HOME/.bashrc $HOME/.bashrc.backup
+echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && source \"$HOME/.rvm/scripts/rvm\"" >> $HOME/.bashrc

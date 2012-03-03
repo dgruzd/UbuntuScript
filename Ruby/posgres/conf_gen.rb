@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-ram = 256
+ram = 2048
 tables_count = 100
-fast_cpu = false
+fast_cpu = true
 
 
 

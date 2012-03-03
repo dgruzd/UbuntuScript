@@ -1,0 +1,25 @@
+#http://www.commandlinefu.com/commands/browse/sort-by-votes
+
+
+aptitude update
+sudo !!
+
+
+VIM:
+#saves with sudo
+:w !sudo tee %
+
+
+BASH:
+#enter big command to bash by editor
+ctrl-x e
+
+#flush a file
+> file.txt
+
+
+#Lists all listening ports together with the PID of the associated process
+netstat -tlnp
+
+
+

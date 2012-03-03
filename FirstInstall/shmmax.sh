@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #http://www.unixmen.com/shmmax-share-linux-memory/
 
@@ -10,6 +10,6 @@ MB=512
 let SHMMAX=MB*1024*1024
 echo $SHMMAX
 
-sudo echo $SHMMAX > /proc/sys/kernel/shmmax
-echo "kernel.shmmax=$SHMMAX" >> /etc/sysctl.conf
+echo $SHMMAX | sudo tee /proc/sys/kernel/shmmax
+echo "kernel.shmmax=$SHMMAX" | sudo tee -a /etc/sysctl.conf
 sudo vim /etc/sysctl.conf

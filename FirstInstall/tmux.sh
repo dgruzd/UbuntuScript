@@ -3,4 +3,4 @@
 
 sudo apt-get --assume-yes install tmux
 
-echo "alias tmux=\"tmux attach || tmux new\"" | tee -a $HOME/.bash_aliases
+#echo "alias tmux=\"tmux attach || tmux new\"" | tee -a $HOME/.bash_aliases

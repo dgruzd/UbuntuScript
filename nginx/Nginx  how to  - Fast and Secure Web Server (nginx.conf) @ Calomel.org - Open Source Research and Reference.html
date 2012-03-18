@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)https://calomel.org/nginx.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="ROBOTS" content="NOARCHIVE" charset="utf-8"><link rel="StyleSheet" href="./Nginx  how to  - Fast and Secure Web Server (nginx.conf) @ Calomel.org - Open Source Research and Reference_files/calomel.css" type="text/css" media="screen"><link rel="shortcut icon" type="image/x-icon" href="https://calomel.org/favicon.ico"><link rel="alternate" type="application/rss+xml" title="Calomel.org RSS Feed" href="https://calomel.org/calomel_rss.xml"><link rel="apple-touch-icon-precomposed" href="https://calomel.org/apple-touch-icon-precomposed.png"><title>Nginx "how to" - Fast and Secure Web Server (nginx.conf) @ Calomel.org - Open Source Research and Reference</title><!--<base href="https://calomel.org/">--><base href="."></head><body><a href="https://calomel.org/"><img src="./Nginx  how to  - Fast and Secure Web Server (nginx.conf) @ Calomel.org - Open Source Research and Reference_files/calomel_top.jpg" alt="Calomel.org :: Open Source Research and Reference" height="340" width="1000" border="0" class="center"></a><div style="text-align:left" class="boxcenter"><!-- SiteSearch Google --><div style="text-align:center"><form method="get" action="https://encrypted.google.com/search"><input type="text" name="q" size="20" maxlength="255" value=""><input type="submit" value="Search Calomel.org"><input type="hidden" name="sitesearch" value="calomel.org" checked=""><br></form></div><!-- SiteSearch Google --><h1 style="text-align:center">Nginx "how to" - Fast and Secure Web Server</h1><br><br><p><a href="https://calomel.org/">Calomel.org Home Page</a> &nbsp;&nbsp;&nbsp; <a href="https://calomel.org/calomel_rss.xml">RSS Feed</a><br><br><br> Nginx is a fast and efficient web server. It can be configured to serve out files or be a reverse proxy depending on your application. What makes this web server different from <a href="https://calomel.org/apache_server.html">Apache</a>, <a href="https://calomel.org/lighttpd.html">Lighttpd</a> or <a href="https://calomel.org/thttpd.html">thttpd</a> is the overall efficiency of the daemon, the number of configuration options and how easy it is to setup.</p><p></p><blockquote> Nginx ("engine x") is a high-performance HTTP server and reverse proxy server. Nginx was written by Igor Sysoev for rambler.ru, Russia's second-most visited website, where it has been running in production for over two and a half years. Igor has released the source code under a BSD-like license. Although still in beta, Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. <a href="http://wiki.nginx.org/">Nginx</a></blockquote><p></p><br><br><h2>The methodology behind our configuration - Trust No One</h2><p>In the following example we are going to setup a simple web server to serve our static web pages to explain the basics. The daemon will load a few mime include files, compress outgoing data in real time and set the expires header to reduce bandwidth of client cached traffic. Full logging is on, in the default Apache format with the addition of compressed file size and the amount of time the server took to fulfill the request. Finally, we are going to set up restriction filters by ip to limit access to the "/secure" directory structure where you might put more sensitive non-public data.</p><p>The <b>security mindset</b> of the configuration is very <b>paranoid</b>. There are a significant amount of bots, scanners and broken clients that will abuse your site if given the opportunity. These clients will waste your bandwidth and system resources. As a response, we will not trust any client to access our server without first making sure that all of the request parameters are met. This means that the remote client must be asking for our site by the proper host name and must request any support files, like pictures and css, with the referrer headers properly set. Any deviation from these rules will lead to Nginx dropping the client's connection with a return code 444. Even though Nginx does not have a module like mod_security we can still make our own access rules. Note that even though these rules are strict, normal web traffic and bots like Google can access the site without issue.</p><p>Our goal is to setup a fast serving and CPU/disk efficient web server, but most importantly a _very secure_ web server. This configuration will work for the latest version of Nginx as well as the development versions. For the purpose of this example we built the latest development version of Nginx from source.</p><p>Below you will find a few different example nginx.conf configuration files in scrollable windows. The formats are available to make it easier for you to review the code. They are all fully working configuration files with the exception of setting up a few variables for your environment like listen port or ip.</p><p>You are welcome to copy and paste the following working examples. Before using the configuration file take a look it and then scroll down this page to the section titled, "Explaining the directives in nginx.conf". </p><br><br><h2>Option 1: Nginx webserver to serve static files</h2><p>This is a basic webserver running on port 80 (http) serving out web pages. Though we have added quite a few security checks, this is as basic a server as you can get. On an AMD64 2GHz machine this config will easily serve out thousands of pages a minute.</p><p></p><pre class="code">#######################################################
+###  Calomel.org  /etc/nginx.conf  BEGIN
+#######################################################
+#
+worker_processes  3;
+#worker_rlimit_nofile 1024;
+
+events {
+    worker_connections  64;
+}
+
+http {
+
+ ## Size Limits
+ #client_body_buffer_size   8k;
+ #client_header_buffer_size 1k;
+ #client_max_body_size      1m;
+ #large_client_header_buffers 4 4k/8k;
+
+ ## Timeouts 
+ #client_body_timeout     60;
+ #client_header_timeout   60;
+  keepalive_timeout       300 300;
+ #send_timeout            60;
+
+ ## General Options
+  charset                 utf-8;
+  default_type            application/octet-stream;
+  ignore_invalid_headers  on;
+  include                 /etc/mime.types;
+  keepalive_requests      20;
+ #keepalive_disable       msie6;
+  max_ranges              0;
+ #open_file_cache         max=1000 inactive=1h;
+ #open_file_cache_errors  on;
+ #open_file_cache_min_uses 3;
+ #open_file_cache_valid   1m;
+  recursive_error_pages   on;
+  sendfile                on;
+  server_tokens           off;
+ #server_name_in_redirect on;
+  source_charset          utf-8;
+ #tcp_nodelay             on;
+ #tcp_nopush              off;
+
+ ## Request limits
+  limit_req_zone  $binary_remote_addr  zone=gulag:1m   rate=60r/m;
+
+ ## Compression
+  gzip              on;
+  gzip_static       on;
+ #gzip_buffers      16 8k;
+ #gzip_comp_level   1;
+ #gzip_http_version 1.0;
+ #gzip_min_length   0;
+ #gzip_types        text/plain text/html text/css image/x-icon image/bmp;
+  gzip_vary         on;
+
+ ## Log Format
+  log_format  main  '$remote_addr $host $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $ssl_cipher $request_time';
+
+ ## Deny access to any host other than (www.)mydomain.com. Only use this
+ ## option is you want to lock down the name in the Host header the client sends. 
+  # server {
+  #      server_name  _;  #default
+  #      return 444;
+  #  }
+
+ ## Server (www.)mydomain.com
+  server {
+      add_header  Cache-Control public;
+      access_log  /var/log/nginx/access.log main buffer=32k;
+      error_log   /var/log/nginx/error.log error;
+      expires     max;
+      limit_req   zone=gulag burst=200 nodelay;
+      listen      127.0.0.1:80;
+      root        /htdocs;
+      server_name mydomain.com www.mydomain;
+
+     ## Note: if{} sections are expensive to process. Please only use them if you need them
+     ## and take a look lower down on the page for our discussion of if{} statements.
+
+     ## Only allow GET and HEAD request methods. By default Nginx blocks
+     ## all requests type other then GET and HEAD for static content.
+     # if ($request_method !~ ^(GET|HEAD)$ ) {
+     #   return 405;
+     # }
+
+     ## Deny illegal Host headers. 
+     # if ($host !~* ^(mydomain.com|www.mydomain.com)$ ) {
+     #  return 405;
+     # }
+
+     ## Deny certain User-Agents (case insensitive)
+     ## The ~* makes it case insensitive as opposed to just a ~
+     # if ($http_user_agent ~* (Baiduspider|Jullo) ) {
+     #  return 405;
+     # }
+
+     ## Deny certain Referers (case insensitive)
+     ## The ~* makes it case insensitive as opposed to just a ~
+     # if ($http_referer ~* (babes|click|diamond|forsale|girl|jewelry|love|nudit|organic|poker|porn|poweroversoftware|sex|teen|video|webcam|zippo) ) {
+     #  return 405;
+     # }
+
+     ## Redirect from www to non-www
+     # if ($host = 'www.mydomain.com' ) {
+     #  rewrite  ^/(.*)$  http://mydomain.com/$1  permanent;
+     # }
+
+     ## Stop Image and Document Hijacking
+      location ~* (\.jpg|\.png|\.css)$ {
+        if ($http_referer !~ ^(http://mydomain.com) ) {
+          return 405;
+        }
+      }
+
+     ## Restricted Access directory by password in the access_list file.
+      location ^~ /secure/ {
+            allow 127.0.0.1/32;
+            allow 10.10.10.0/24;
+            deny all;
+            auth_basic "RESTRICTED ACCESS";
+            auth_basic_user_file /var/www/htdocs/secure/access_list;
+        }
+
+     ## Only allow these full URI paths relative to document root. If you only want
+     ## to reference the file name use $request_filename instead of $request_uri. By default
+     ## nginx will only serve out files in "root /htdocs;" defined above so this block is not needed, just an example.
+     #  if ($request_uri ~* (^\/|\.html|\.jpg|\.org|\.png|\.css|favicon\.ico|robots\.txt)$ ) {
+     #    break;
+     #  }
+     #  return 405;
+
+     ## Serve an empty 1x1 gif _OR_ an error 204 (No Content) for favicon.ico
+      location = /favicon.ico {
+       #empty_gif;
+        return 204;
+      }
+
+      ## System Maintenance (Service Unavailable) 
+      if (-f $document_root/system_maintenance.html ) {
+        error_page 503 /system_maintenance.html;
+        return 503;
+      }
+
+     ## All other errors get the generic error page
+      error_page 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 417 495 496 497
+                 500 501 502 503 504 505 506 507 /error_page.html;
+      location  /error_page.html {
+          internal;
+      }
+  }
+}
+#
+#######################################################
+###  Calomel.org  /etc/nginx.conf  END
+#######################################################
+</pre><p></p><br><br><br><br><div class="note"> Do you dislike malicious ip addresses scanning your web server and causing excessive errors? Take a look at our <a href="https://calomel.org/web_server_abuse_detection.html">Web Server Abuse Detection perl script</a> to keep track of the abusers and block them in real time. </div><br><br><br><br><h2>Option 2: Nginx serving only SSL and redirecting http to https</h2><p>This example configuration is for a webserver that serves out SSL (https) traffic only. We will redirect all clients that try to goto port 80 (http) to port 443 (https) with a permanent 301 redirect. This type of redirect works for Google bot and other search bots too. We will also stop illegal linking and document hijacking. On a AMD64 2GHz machine this config can serve out thousands of fully encrypted https sessions per minute without a problem.</p><p>If you need help with setting up a SSL certificate with a certificate authority like Comodo check out the section below titled, "How to setup a SSL cert from Comodo through NameCheap for Nginx". If you want to learn more about SSL in general then check out our <a href="https://calomel.org/ssl_certs.html">Guide to Webserver SSL Certificates</a>.</p><p></p><pre class="code">#######################################################
+###  Calomel.org  /etc/nginx.conf  BEGIN
+#######################################################
+
+worker_processes  3;
+#worker_rlimit_nofile 1024;
+
+events {
+    worker_connections  64;
+}
+
+http {
+
+ ## Size Limits
+ #client_body_buffer_size   8k;
+ #client_header_buffer_size 1k;
+ #client_max_body_size      1m;
+ #large_client_header_buffers 4 4k/8k;
+
+ ## Global SSL options
+  ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:AES256-GCM-SHA384:AES256-SHA256:AES256-SHA:AES128-SHA;
+ #ssl_engine aesni;
+  ssl_prefer_server_ciphers on;
+  ssl_protocols TLSv1;
+  ssl_session_timeout 5m;
+ #ssl_dhparam /ssl_keys/diffie_helman.pem;
+
+ ## Timeouts 
+ #client_body_timeout     60;
+ #client_header_timeout   60;
+  keepalive_timeout       300 300;
+ #send_timeout            60;
+
+ ## General Options
+  charset                 utf-8;
+  default_type            application/octet-stream;
+  ignore_invalid_headers  on;
+  include                 /etc/mime.types;
+  keepalive_requests      20;
+ #keepalive_disable       msie6;
+  max_ranges              0;
+ #open_file_cache         max=1000 inactive=1h;
+ #open_file_cache_errors  on;
+ #open_file_cache_min_uses 3;
+ #open_file_cache_valid   1m;
+  recursive_error_pages   on;
+  sendfile                on;
+  server_tokens           off;
+ #server_name_in_redirect on;
+  source_charset          utf-8;
+ #tcp_nodelay             on;
+ #tcp_nopush              off;
+
+ ## Request limits
+  limit_req_zone  $binary_remote_addr  zone=gulag:1m   rate=60r/m;
+
+ ## Compression
+  gzip                 on;
+  gzip_static          on;
+ #gzip_buffers      16 8k;
+ #gzip_http_version   1.0;
+ #gzip_comp_level       1;
+ #gzip_min_length     100;
+ #gzip_types        text/plain text/html text/css image/x-icon image/gif;
+  gzip_vary            on;
+
+ ## Log Format
+  log_format  main  '$remote_addr $host $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $ssl_cipher $request_time';
+
+ ## http .:. redirect to https
+  server {
+      access_log  /var/log/nginx/access.log main buffer=32k;
+      error_log   /var/log/nginx/error.log error;
+      expires     max;
+      limit_req   zone=gulag burst=200 nodelay;
+      listen      127.0.0.1:80;
+      root        /var/empty;
+      rewrite ^ https://example.com$request_uri permanent;
+  }
+
+
+ ## https .:. (www.)example.com
+  server {
+      add_header Cache-Control "public";
+      add_header Strict-Transport-Security "max-age=315360000; includeSubdomains";
+      access_log  /var/log/nginx/access.log main buffer=32k;
+      error_log   /var/log/nginx/error.log error;
+      expires     max;
+      index       index.html;
+      limit_req   zone=gulag burst=200 nodelay;
+      listen      127.0.0.1:443;
+      root        /var/www/htdocs;
+      server_name example.com www.example.com;
+
+     ## SSL Certs
+      ssl on;
+      ssl_session_cache shared:SSL:10m;
+      ssl_certificate /ssl_keys/example.com_ssl.crt;
+      ssl_certificate_key /ssl_keys/example.com_ssl.key;
+      ssl_ecdh_curve secp521r1;
+
+     ## Note: if{} sections are expensive to process. Please only use them if you need them
+     ## and take a look lower down on the page for our discussion of if{} statements.
+
+     ## Only allow GET and HEAD request methods. By default Nginx blocks
+     ## all requests type other then GET and HEAD for static content.
+     # if ($request_method !~ ^(GET|HEAD)$ ) {
+     #   return 405;
+     # }
+
+     ## Deny illegal Host headers. 
+     # if ($host !~* ^(mydomain.com|www.mydomain.com)$ ) {
+     #  return 405;
+     # }
+
+     ## Deny certain User-Agents (case insensitive)
+     ## The ~* makes it case insensitive as opposed to just a ~
+     # if ($http_user_agent ~* (Baiduspider|Jullo) ) {
+     #  return 405;
+     # }
+
+     ## Deny certain Referers (case insensitive)
+     ## The ~* makes it case insensitive as opposed to just a ~
+     # if ($http_referer ~* (babes|click|diamond|forsale|girl|jewelry|love|nudit|organic|poker|porn|poweroversoftware|sex|teen|video|webcam|zippo) ) {
+     #  return 405;
+     # }
+
+     ## Redirect from www to non-www
+     # if ($host = 'www.mydomain.com' ) {
+     #  rewrite  ^/(.*)$  http://mydomain.com/$1  permanent;
+     # }
+
+     ## Stop Image and Document Hijacking
+      location ~* (\.jpg|\.gif|\.png|example\.css)$ {
+        if ($http_referer !~ ^(https://example.com) ) {
+          return 404;
+        }
+      }
+
+     ## Contact page access restricted to example.com referer. You may want to
+     ## restrict access to a page to only those clients who clicked on the link from
+     ## your site. A common setup is to only allow access to your contacts page if the
+     ## user came from a link on one of your pages. This may stop some spam.
+      location ~* contact_us\.html {
+         if ($http_referer !~ ^(https://example.com) ) {
+            return 403;
+         }
+      }
+
+     ## Restricted Access directory with password in access_list
+      location ^~ /secure/ {
+            allow 127.0.0.1/32;
+            allow 10.10.10.0/24;
+            deny all;
+            auth_basic "RESTRICTED ACCESS";
+            auth_basic_user_file /var/www/htdocs/secure/access_list;
+        }
+
+     ## All other errors get the generic error page
+      error_page 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 417 495 496 497
+                 500 501 502 503 504 505 506 507 /error_page.html;
+      location  /example_error_page.html {
+          internal;
+      }
+  }
+}
+#######################################################
+###  Calomel.org  /etc/nginx.conf  END
+#######################################################
+</pre><p></p><br><br><br><br><h2>Option 3: Nginx reverse proxy to a few back end web servers</h2><p>A reverse proxy is a type of proxy server that retrieves resources on behalf of a client from one or more servers. These resources are then returned to the client as though it originated from the reverse proxy itself. Reverse proxies are a great way to reduce the load on any one machine as well as help secure the web cluster from external influences. Some advantages for using a reverse proxy (source wikipedia) are:</p><ul><li>Reverse proxies can hide the existence and characteristics of the origin server(s).</li><li>Application firewall features can protect against common web-based attacks. Without a reverse proxy, removing malware or initiating take downs, for example, can become difficult.</li><li>A reverse proxy can distribute the load from incoming requests to several servers, with each server serving its own application area. In the case of reverse proxying in the neighborhood of web servers, the reverse proxy may have to rewrite the URL in each incoming request in order to match the relevant internal location of the requested resource.</li><li>A reverse proxy can reduce load on its origin servers by caching static content, as well as dynamic content. Proxy caches of this sort can often satisfy a considerable amount of website requests, greatly reducing the load on the origin server(s). Another term for this is web accelerator. This technique is also used for the Wikipedia servers. A reverse proxy can optimize content by compressing it in order to speed up loading times.</li><li>In a technique known as "spoon feeding",[2] a dynamically generated page can be produced all at once and served to the reverse-proxy, which can then return it to the client a little bit at a time. The program that generates the page is not forced to remain open and tying up server resources during the possibly extended time the client requires to complete the transfer.</li><li>Reverse proxies can be used whenever multiple web servers must be accessible via a single public IP address. The web servers listen on different ports in the same machine, with the same local IP address or, possibly, on different machines and different local IP addresses altogether. The reverse proxy analysis each incoming call and delivers it to the right server within the local area network.</li></ul><p>This config is for a reverse proxy server in front of a few back end web servers. The client will connect to the proxy and depending on the hostname and path the request the proxy will forward the request to the proper back end server.</p><p>You may also want to think about switching from Apache's reverse proxy configuration (if you currently use it) due to the amount of serious vulnerabilities that have come up. By using different operating systems and software throughout your organization you can better protect yourself from a single vulnerability taking out the entire company.</p><p>In the example we have also added the ability to cache data on the proxy so requests do not have to go all the way to the back end servers. Commonly ask for data is quickly served from the proxy reducing the load of your infrastructure. We have also added client request rate limiting. This is a very good idea to limit bad clients from abusing your web servers. You can also configure Nginx to compress http calls back to the client in real time, thus saving bandwidth.</p><pre class="code">#######################################################
+###  Calomel.org  /etc/nginx.conf  BEGIN
+#######################################################
+
+worker_processes  3;
+#worker_rlimit_nofile 1024;
+
+events {
+    worker_connections  64;
+}
+
+http {
+
+ ## Size Limits
+ #client_body_buffer_size   8k;
+ #client_header_buffer_size 1k;
+ #client_max_body_size      1m;
+ #large_client_header_buffers 4 4k/8k;
+
+ ## Timeouts 
+ # client_body_timeout       60;
+ # client_header_timeout     60;
+   keepalive_timeout     300 300;
+ # send_timeout              60;
+
+ ## General Options
+  charset                 utf-8;
+  default_type            application/octet-stream;
+  ignore_invalid_headers  on;
+  include                 /etc/mime.types;
+  keepalive_requests      100;
+ #keepalive_disable       msie6;
+  max_ranges              0;
+ #open_file_cache         max=1000 inactive=1h;
+ #open_file_cache_errors  on;
+ #open_file_cache_min_uses 3;
+ #open_file_cache_valid   1m;
+  recursive_error_pages   on;
+  server_tokens           off;
+  server_name_in_redirect off;
+  sendfile                off;
+  source_charset          utf-8;
+
+ ## Proxy settings. Make sure the "timeout"s are long enough to
+ ## take account of over loaded back end servers or long running
+ ## cgi scripts. If the proxy timeout is too short the nginx proxy
+ ## might re-request the data over and over again, putting more
+ ## load on the backend server. 
+  proxy_max_temp_file_size    0;
+  proxy_connect_timeout      900;
+  proxy_send_timeout         900;
+  proxy_read_timeout         900;
+  proxy_buffer_size          4k;
+  proxy_buffers              4 32k;
+  proxy_busy_buffers_size    64k;
+  proxy_temp_file_write_size 64k;
+  proxy_intercept_errors     on;
+
+  proxy_cache_path /disk01/web_cache levels=1:2 keys_zone=webcache:10m inactive=1d max_size=2000m;
+  proxy_temp_path /disk01/web_cache/tmp;
+  proxy_cache_min_uses 5;
+
+ ## Limit requests per second to 250 requests  per minute. If the
+ ## user's ip address goes over the limit they will be sent an
+ ## error 503 for every subsequent request.
+   limit_req_zone  $binary_remote_addr  zone=gulag:10m   rate=250r/m;
+
+ ## Compression (if you want real time compression you can enable it here. Make
+ ## sure your system is quite fast as compression could add a noticeable delay in
+ ## sending data to the client.
+ #gzip                off;
+ #gzip_static          on;
+ #gzip_buffers      16 8k;
+ #gzip_http_version   1.0;
+ #gzip_comp_level       6;
+ #gzip_min_length     100;
+ #gzip_types        text/plain text/html text/css image/x-icon image/gif;
+ #gzip_vary            on;
+
+ ## Log Format
+  log_format main  '$remote_addr $host $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+  log_format cache '$time_local $upstream_cache_status Cache-Control: $upstream_http_cache_control Expires: $upstream_http_expires "$request" ($status) "$http_user_agent"';
+
+ ## back end web servers with "hot fail over". You can add as many back end
+ ## servers as you like here. If you add the "backup" directive the server will
+ ## only be used if the other servers are down. In this example we have two main
+ ## web servers (100 and 150) being load balanced and (1.200) as the hot spare
+ ## backup.
+  upstream backend_web_servers {
+      server 192.168.1.100:80 max_fails=250 fail_timeout=180s;
+      server 192.168.1.150:80 max_fails=250 fail_timeout=180s;
+      server 192.168.1.200:80 backup;
+      }
+
+ ## http .:. clients without a host header get an error page. This will handle
+ ## scanners looking for servers on an ip address and broken clients.
+  server {
+     add_header Cache-Control "public, must-revalidate";
+     access_log  /var/log/nginx/access.log main buffer=32k;
+     error_log   /var/log/nginx/error.log error;
+     expires     30d;
+     listen      192.168.1.50:80;
+     server_name _;
+
+   ## All other errors get the generic error page
+      error_page 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 417 495 496 497
+                 500 501 502 503 504 505 506 507 /error_page.html;
+      location  /error_page_generic.html {
+      internal;
+      }
+  }
+
+ ## This is our first hostname, example.com. Any client with a host header
+ ## containing any string in this server{} block's server_name directive will be
+ ## served from here.
+ 
+ ## http .:. example.com 
+  server {
+     add_header Cache-Control "public, must-revalidate";
+     access_log  /var/log/nginx/access.log main buffer=32k;
+     access_log  /var/log/nginx/cache.log cache;
+     error_log   /var/log/nginx/error.log error;
+     expires     1h;
+     listen      192.168.1.50:80;
+     limit_req   zone=gulag  burst=1000 nodelay;
+     server_name example.com www.example.com internal_lan_name.domain.lan;
+
+    proxy_redirect     off;
+    proxy_set_header   Host             $host;
+    proxy_set_header   X-Real-IP        $remote_addr;
+    proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+    proxy_cache webcache;
+    proxy_cache_key $scheme$host$request_uri;
+    proxy_cache_valid  200 301 302 304 120m;
+    proxy_cache_valid  any 1m;
+
+   # Only allow GET, HEAD and POST request methods. Since this a proxy you may
+   # want to be more restrictive with your request methods. The calls are going
+   # to be passed to the back end server and nginx does not know what it
+   # normally accepts, so everything gets passed. If we only need to accept GET
+   # HEAD and POST then limit that here.
+    if ($request_method !~ ^(GET|HEAD|POST)$ ) {
+        return 403;
+    }
+
+    # user forum. This goes to a different server then the standard we cluster for example. 
+    location /forum/ {
+        proxy_pass http://192.168.1.201/forum/;
+    }
+
+    ## Do not cache any requests using our cgi paths. The http_my_secret_header
+    ## is not used and is just a place holder if you need this function.
+    location ~* (/cgi/||/authorized/|/restrict/) {
+       expires epoch;
+       proxy_no_cache 1;
+       proxy_cache_bypass $http_my_secret_header;
+       proxy_pass http://backend_web_servers;
+    }
+
+    # default htdocs
+    location / {
+        ## redirect host going to www to non-www hostname
+        if ($host ~* ^(www\.example\.com)$ ) {
+          rewrite  ^/(.*)$  http://example.com/$1 permanent;
+        }
+        proxy_pass http://backend_web_servers;
+    }
+
+   ## All other errors get the generic error page
+      error_page 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 417 495 496 497
+                 500 501 502 503 504 505 506 507 /error_page.html;
+      location  /error_page_example_com.html {
+      internal;
+      }
+
+  }
+
+ ## This next section is here to show you that nginx can proxy a completely
+ ## different domain name out of the same nginx daemon. On the back end servers,
+ ## someotherdomain.com is served from a different Apache virtual host.
+
+ ## http .:. someotherdomain.com
+  server {
+     add_header Cache-Control "public, must-revalidate";
+     access_log  /var/log/nginx/access.log main buffer=32k;
+     access_log  /var/log/nginx/cache.log cache;
+     error_log   /var/log/nginx/error.log error;
+     expires     1h;
+     listen      192.168.1.50:80;
+     limit_req   zone=gulag  burst=100 nodelay;
+     server_name someotherdomain.com www.someotherdomain.com some_internal_lan_name.domain.lan;
+
+    proxy_redirect     off;
+    proxy_set_header   Host             $host;
+    proxy_set_header   X-Real-IP        $remote_addr;
+    proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+    proxy_cache webcache;
+    proxy_cache_key $scheme$host$request_uri;
+    proxy_cache_valid  200 301 302 304 180m;
+    proxy_cache_valid  any 1m;
+
+    ## Only allow GET, HEAD and POST request methods
+    if ($request_method !~ ^(GET|HEAD|POST)$ ) {
+         return 403;
+    }
+
+    # snv server
+    location /svn/ {
+       proxy_pass http://192.168.1.60:8000/svn/;
+    }
+
+    # git server
+    location /git/ {
+       proxy_pass http://192.168.1.70:8000/git/;
+    }
+
+    # forum redirect -- for example, perhaps we do not host that
+    # data anymore and want to redirect users to the new location.
+    location /forum/ {
+        rewrite  ^/(.*)$  http://new_loaction.somedomain.com/forum/ permanent;
+    }
+
+    # default htdocs
+    location / {
+        proxy_pass http://backend_web_servers;
+    }
+
+   ## All other errors get the generic error page
+      error_page 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 417 495 496 497
+                 500 501 502 503 504 505 506 507 /error_page_3.html;
+      location  /error_page_someotherdomain_com.html {
+      internal;
+      }
+   }
+
+}
+#
+#######################################################
+###  Calomel.org  /etc/nginx.conf  END
+#######################################################
+</pre><p></p><br><br><h2>Building the Nginx Reverse Proxy example</h2><p>To make it easy we have included the source build line we used to make the reverse proxy above. It just removes all of the unneeded nginx modules and leaves only those which are needed for the proxy, caching and client rate limit restrictions.</p><pre class="code">make clean; ./configure --without-http_autoindex_module \
+--without-http_browser_module --without-http_fastcgi_module \
+--without-http_geo_module --without-http_empty_gif_module \
+--without-http_map_module --without-http_memcached_module \
+--without-http_ssi_module --without-http_userid_module \
+--without-mail_pop3_module --without-mail_imap_module \
+--without-mail_smtp_module --without-http_split_clients_module \
+--without-http_uwsgi_module --without-http_scgi_module \
+--without-http_referer_module --without-http-cache \
+--without-http_upstream_ip_hash_module \
+--http-log-path=/var/log/nginx/access.log \
+--error-log-path=/var/log/nginx/error.log &amp;&amp; make &amp;&amp; make install
+</pre><br><br><br><br><div class="note"><b>For more information about OpenBSD's Pf firewall, CARP and HFSC quality of service options check out our <a href="https://calomel.org/pf_config.html">PF Config (pf.conf)</a>, <a href="https://calomel.org/pf_carp.html">PF CARP</a> and <a href="https://calomel.org/pf_hfsc.html">PF quality of service HFSC</a> "how to's".</b></div><br><br><h2>Building nginx from source</h2><p>To get started, you need to first install nginx on your machine. The source code is available from the <a href="http://nginx.net/">nginx home page</a> and practically every distribution has pre-made packages if you prefer those. The install is very easy and it will not take you much time.</p><p>We highly recommend you build Nginx from source. This way you can modify the code if you need to and make sure you apply the latest patches when they come out. </p><p>You need to make sure that the package for <b>PCRE</b> is installed. Use the command "pkg_add -i pcre" to install from your chosen PKG_PATH repository. BTW, you may want to also look at the Perl script <a href="https://calomel.org/pkg_find.html">pkg_find</a> for OpenBSD package management.</p><p><b>OPTIONAL: Change the Server: string of your host</b></p><blockquote><p>The Server: string is the header which is sent back to the client to tell them what type of http server you are running and possibly what version. This string is used by places like Alexia and Netcraft to collect statistics about how many and of what type of web server are live on the Internet. To support the author and statistics for Nginx we recommend keeping this string as is. But, for security you may not want people to know what you are running and you can change this in the source code. Edit the source file <b>src/http/ngx_http_header_filter_module.c</b> at look at lines 48 and 49. You can change the String to anything you want. </p><pre class="code">## vi src/http/ngx_http_header_filter_module.c (lines 48 and 49)
+static char ngx_http_server_string[] = "Server: MyDomain.com" CRLF;
+static char ngx_http_server_full_string[] = "Server: MyDomain.com" CRLF;
+</pre><p></p></blockquote><p></p><p><b>OPTIONAL: annonomize you server string in the auto generated error pages</b></p><blockquote><p>When nginx sends an error back to the client it can auto generate the error page. This error page has the error code at the top, a single horizontal line and then the string "nginx" and possibly the version number. If you want to you can take out the server string in the error page by editing the source code in the file <b>src/http/ngx_http_special_response.c</b> on lines 21 and 28. The following line would make the nginx generated error pages show your domain name for example.</p><p>This same file contains all of the default HTML error pages Nginx will send to the client if there is an error. Look for the functions that start with the line <b>static char ngx_http_error_</b> and make any changes you find necessary. Note that the HTML text is only shown to the user and that all errors sent by Nginx will have the proper error code in the HTML headers. This means you can put anything you want into the HTML code.</p><p></p><pre class="code">## vi src/http/ngx_http_special_response.c (lines 21 and 28)
+"&lt;center&gt;http://mydomain.org&lt;/center&gt;" CRLF
+
+## You can also change all of the built in error
+## messages with just a carriage return.
+
+static char ngx_http_error_301_page[] = CRLF;
+static char ngx_http_error_302_page[] = CRLF;
+static char ngx_http_error_400_page[] = CRLF;
+static char ngx_http_error_401_page[] = CRLF;
+static char ngx_http_error_402_page[] = CRLF;
+static char ngx_http_error_403_page[] = CRLF;
+static char ngx_http_error_404_page[] = CRLF;
+static char ngx_http_error_405_page[] = CRLF;
+static char ngx_http_error_406_page[] = CRLF;
+static char ngx_http_error_408_page[] = CRLF;
+static char ngx_http_error_409_page[] = CRLF;
+static char ngx_http_error_410_page[] = CRLF;
+static char ngx_http_error_411_page[] = CRLF;
+static char ngx_http_error_412_page[] = CRLF;
+static char ngx_http_error_413_page[] = CRLF;
+static char ngx_http_error_414_page[] = CRLF;
+static char ngx_http_error_415_page[] = CRLF;
+static char ngx_http_error_416_page[] = CRLF;
+static char ngx_http_error_495_page[] = CRLF;
+static char ngx_http_error_496_page[] = CRLF;
+static char ngx_http_error_497_page[] = CRLF;
+static char ngx_http_error_500_page[] = CRLF;
+static char ngx_http_error_501_page[] = CRLF;
+static char ngx_http_error_502_page[] = CRLF;
+static char ngx_http_error_503_page[] = CRLF;
+static char ngx_http_error_504_page[] = CRLF;
+static char ngx_http_error_507_page[] = CRLF;
+</pre><p></p></blockquote><p></p><p><b>OPTIONAL: change any of the default error codes</b></p><blockquote><p>Normally you DO NOT want to change any of the standard error codes specified by RFC. But, in case you really need to you can edit the file <b>src/http/ngx_http_request.h</b> and look for the variables starting with NGX_HTTP_REQUEST. For example, if we wanted to change the default error code for REQUEST_URI_TOO_LARGE from 414 to 999 we could: </p><pre class="code">vi src/http/ngx_http_request.h (line 83)
+OLD LINE:  #define NGX_HTTP_REQUEST_URI_TOO_LARGE     414
+NEW LINE:  #define NGX_HTTP_REQUEST_URI_TOO_LARGE     999
+</pre><p></p></blockquote><p></p><p><b>Compiling the code for the static server with SSL support</b></p><blockquote><p>Building nginx for the AMD64 architecture on OpenBSD (running as user/group "nginx")</p><p>For the purpose of this example, Nginx was built with the following arguments. Make sure to check if you need to use one of the modules that we omit during the build. We use the methodology, "if you do not need it then do not build it in." Our example nginx.conf (option 1 and 2) works fine with the following: </p><pre class="code">make clean
+
+make clean; ./configure --with-cpu-opt=amd64 --with-http_ssl_module --with-http_gzip_static_module /
+ --without-http_autoindex_module --without-http_browser_module --without-http_fastcgi_module \
+ --without-http_geo_module --without-http_empty_gif_module --without-http_map_module / 
+ --without-http_proxy_module --without-http_memcached_module --without-http_ssi_module /
+ --without-http_userid_module --without-mail_pop3_module --without-mail_imap_module /
+ --without-mail_smtp_module --without-http_split_clients_module --without-http_uwsgi_module /
+ --without-http_scgi_module --without-http_limit_zone_module --without-http_referer_module /
+ --without-http-cache --without-http_upstream_ip_hash_module --prefix=/usr/local/nginx /
+ --sbin-path=/usr/local/sbin/nginx --conf-path=/etc/nginx.conf --pid-path=/var/run/nginx.pid /
+ --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log /
+ --user=nginx --group=nginx 
+
+make &amp;&amp; make install
+</pre></blockquote><p></p><p>Once Nginx is built and installed in place it is time to take a look at the config file.</p><br><br><br><br><h2>Explaining the directives in nginx.conf</h2><p>Now we need to edit the config file for your environment. Lets take a look at each of the directives that need attention.</p><blockquote><p><b>pid /var/run/nginx.pid :</b> This is the location of the process id file that holds the pid number of the master Nginx process. If you wanted to re-read the nginx.conf file without restarting the daemon you could cat this file and send a HUP like so, "kill -HUP `cat /var/run/nginx.pid` .</p><p><b>user nginx nginx :</b> Is the user and group the child processes will run as. You may need to make this user and group if you install Nginx from source. Make sure this user is completely unprivileged or at least runs with the least privileges necessary to make the server work.</p><p><b>worker_processes :</b> Is the number of worker processes to spawn. A worker is similar to a child process in Apache. Nginx has the ability to use more then one worker process for several reasons: use on (SMP) multiple processors machines, to decrease latency when workers are blocked by disk I/O, or to limit the number of connections per process when select() or poll() is used. The general rule of the thumb is to set the number of nginx workers to two(2) or the number of CPUs your server has; which ever is greater. But, on most servers you will find out that two(2) workers serve pages quickly and put less load on the server. The exception to this rule is if you use ssl and/or compress all of your content. If you use ssl and compression then we suggest testing your site with equal or less the amount of workers. Our example nginx.conf has 3 workers on a 4 core box.</p><p>For testing, we suggest using the httperf or Apache benchmark binary (ab) to stress your server and see how many connections your machine can handle. "ab" can be found in any apache_utils install and httperf is a stand alone package. To calculate how many total concurrent connections nginx can support, multiply "worker_processes" times "worker_connections". Our example is setup to handle 3*64=192 total concurrent connections. Clients who attempt to connect after 192 concurrent clients are already connected will be denied access. It is better to deny clients than overload the machine possibly causing a DOS. Make sure not to set these values to high as your machine might just crumble under the strain of too many clients. Take a look for our httperf testing procedure lower down on this page.</p><p><b>worker_rlimit_nofile :</b> is the maximum number file descriptors (ulimit -n) that can be opened by EACH worker_processes. In the case of Nginx this translates to the amount of open network connections to remote clients in addition to proxied backend connections. Understand that the open file limit is really regulated by the operating system. This directive simply allows Nginx to try to set "ulimit -n value" when nginx starts. When you set this directive you will not need to set a separate "ulimit -n 'value' " in the OS. Default value (the ulimit -n value) will be overridden. If worker_rlimit_nofile is not specified, your default ulimit -n number for the user who is running nginx will take effect. It is very important to note the worker_rlimit_nofile value should be greater or equal to worker_connections. If your open file limit is too low for the amount of connections nginx is making you will see the error, "Too many open files" in the error log. For example, OpenBSD has a really low open file limit of 128 files for a normal user; i.e. not root. You will want to set this directive to at least 1024 to avoid errors. You will also want to make sure that if you are keeping connections open for a long time with keepalive statements to watch this value. Each open connection is a used open file descriptor and thus counts against your "ulimit -n" value.</p><p><b>worker_connections :</b> This is the amount of client connections a single child process will handle by themselves at any one time. (default: 1024) Note: Multiply worker_processes times worker_connections for the total amount of connections Nginx will handle. Our example is setup to handle 3*64=192 concurrent connections in total. Clients who connect after the max has been reached will be denied access.</p><blockquote><h3>Why not set the worker_processes and worker_connections really high ?</h3><p>If your server sits idle most of the day it is better to increase worker_processes and reduce worker_connections. The reason is worker_connections will recycle and clean up better and you will not run into possible serial issues. However, if the server is consistently busy you should increase worker_connections and reduce worker_processes so the server is not trying to do garbage college too fast or too soon.</p><p>In truth, we found during testing that a 4 core server works quite well with only three(3) worker_processes. We leave one core for the system and its interrupts and the other three cores for the web server. As for worker_connections we found that a server responding to two thousand (2000) requests per second worked perfectly fine with only 64 worker_connections. </p><p>The best idea is to test your server with real data in its final configuration with a tool like httperf. We have an example of httperf uses lower down on this page.</p></blockquote><p><b>accept_mutex :</b> accept mutex is used to serialize accept() syscalls thus making the division of labor to the child processes more efficient. "accept_mutex on;" is the default condition so we did not put it in our configs. The other solution is to make "accept_mutex off;" and allow the sockets to be non-blocking. In this case the accept call won't block the children, and they will be allowed to continue immediately. But this wastes CPU time by about 1% on average and makes the system a little less efficient. For example, suppose you have ten idle children in select, and one connection arrives. Then nine of those children will wake up, try to accept the connection, fail, and loop back into select, accomplishing nothing. In the mean time, none of those children are servicing requests that occurred on other sockets until they get back up to the select again. Overall this solution does not seem very good unless you have as many idle CPUs (in a multiprocessor box) as you have idle children which is not a very likely situation. The only time you may want to turn accept_mutex off is if you are doing synthetic benchmarks and hammering the system with httperf of apache benchmark. Otherwise, the solution used by Nginx is to serialize entry into the inner loop and assign work to the child processes is fine.</p><p><b>multi_accept :</b> multi_accept tries to accept() as many connections as possible after nginx gets notification about a new connection. By default this is turned off to make sure a single client can not take up more then their fair share of the server's connections. The purpose of multi_accept is to accept all connections from listen queue all at once. Normally, only one connection will be accepted on each return from event function. In the worst case scenario, with multi_accept "on", if you have constant stream of incoming connections at a very high rate the connections may overflow your worker_connections and they will not have a chance to process the previously accepted connections. Keep in mind that "multi_accept on;" will not matter for kqueue which is used on OpenBSD and FreeBSD as there is a limit of accepted connections set by the kernel, and nginx accepts all them up to this limit. It is highly recommended to limit clients on the server using the limit_req_zone and limit_req directives lime in the examples above. This will keep malicious clients at bay.</p><blockquote><p><b>MIME types :</b> This section allows nginx to identify files by extension. For example, if we serve out a .txt file then the mime type would be defined as text/plain. </p><p><b>include mime.types</b> is the definition file nginx loads to identify all of the mime types. These directive simply allow our server to send the the proper file type and application type to the clients. Alternatively you can take out this line and instead define your own Mime types by using the following "type" directive".</p><p><b>types {...}</b> Instead of using the "include mime.types" directive you can define your own mime types. This is especially useful option if you want to use the same mime types on many different systems or do not want to rely on a secondary definition file. You also have the option of defining a mime type for a non-standard extension. In our example we define the extension "bob" as a text/plain.</p><p><b>default_type application/octet-stream</b> is the default type if a file extension has not already be defined in the mime.types file. This is useful if you serve out files with no extension or of a non standard extension. Either way, clients will be able to retrieve the file un-obstructed.</p></blockquote><p></p><p><b>Size Limits :</b> These directive specify the buffer size limitations on the amount of data we will consider to be valid for a request. If the client sends to much data in one request, for example in a buffer overflow attack, then the request will be denied. </p><blockquote><p><b>client_body_buffer_size </b> If the request body is more than the buffer, then the entire request body or some part is written in a temporary file.</p><p><b>client_header_buffer_size </b> is the limit on the size of all of the http headers the client can send to the server. For the overwhelming majority of requests a buffer size of 1K is sufficient. The only time you would need to increase this is if you have a custom header or a large cookie sent from the client.</p><p><b>client_max_body_size </b> is the maximum accepted body size of client request, indicated by the line "Content-Length" in the header of request. If size exceeds this value the client gets sent the error "Request Entity Too Large" (413). If you expect to receive files uploaded to your server through the POST request method you should increase this value.</p><p><b>large_client_header_buffers </b> is the limit of the URI request line which can not be larger than the buffer size multiplied by the amount of buffers. In our example we accept a buffer size of 1 kilobyte and there is only one(1) buffer. So, will not accept a URI which is larger than (1x1K=1K) 1 kilobyte of data. If the client sends a bigger request then Nginx will return an error "Request URI too large" (414). The longest header line of the request must also be less than the size of (1x1K=1K) 1 kilobyte, otherwise the client get the error "Bad request" (400). Limiting the client URI is important to keep a scanner or broken client from sending large requests and possibly cause a denial of service (DOS) or buffer overflow.</p></blockquote><p></p><p><b>Timeouts :</b> These values specify the amount of time in seconds that Nginx will wait for the client to complete the specified action. A keepalive of 300 seconds is a good value as browsers will wait from 120 to 300 seconds to drop the keepalive connection. If you close the connection and browser thinks it is still open the result to the client will look as if the web site is responding slowly; in truth the browse sends request over a closed keepalive connection, has to timeout and then resend the request. Also, 300 seconds is the timeout of most SSL keys. For the other timeout 60 seconds (default of 60 seconds) is normally fine.</p><blockquote><p><b>client_body_timeout </b> is the read timeout for the request body from client. If after this time the client sends nothing, nginx returns error "Request time out" (408). You may want to lower this value to around 5 seconds protect yourself from attacks like Slowloris DoS attack explained lower on this page. </p><p><b>client_header_timeout </b> is the timeout reading the title of the request of the client. If after this time the client send nothing, nginx returns error "Request time out" (408). Just like stated before, this value can be lowered to as little as 5 seconds to help mitigate attacks like the Slowloris DoS attack explained lower on this page.</p><p><b>keepalive_timeout </b> the first value is for keep-alive connections with the client. The second parameter assigns the value "Keep-Alive: timeout=time" in the header of answer. With the complexity today's websites keep-alive are critical to keeping clients load times to a minimum. Establishing a TCP connection is very expensive in terms of time. It is very efficient for a client to establish its first set of connections (Firefox makes 4 for example) and request all of the objects on the page through those connections. A problem with keepalives to be aware of is every browser, and every version of each browser, has a different timeout the use for keep alives. Firewalls also have their own connection timeouts which may be shorter then the keep alives set on either the client or server. This means browsers, servers and firewalls all have to be in alignment so that keeps alives work. If not, the browser will try to request something over a connection which will never work which results in pausing and slowness for the user. Google Chrome got around this timeout issue by sending a keepalive every 45 seconds until the browser's default 300 second timeout limit. You can do your part by setting firewall timeouts no less then 600 seconds and allowing clients to keep a connection open to your server for at least 300 seconds.</p><p><b>send_timeout </b> is response timeout to the client. Timeout is established not on the entire transfer of answer, but only between two operations of reading, if after this time client will accepts nothing, then nginx is shutting down the connection. You may want to look at lowering this value (5 seconds is ok) if you have malicious clients opening connection and not closing them like in the Slowloris DoS attack explained lower on this page.</p></blockquote><p></p><br><br><p></p><div class="note"><b>Want more speed? Make sure to also check out the <a href="https://calomel.org/network_performance.html">Network Speed and Performance Guide</a>. With a little time and understanding you could easily double your firewall's throughput.</b></div><p></p><br><br><p><b>General Options :</b></p><blockquote><p><b>ignore_invalid_headers on</b> throws away non-standard headers in the client request. If you do not expect to receive any custom made headers then make sure to enable this option.</p><p><b>keepalive_requests </b> are the number of requests which can be made over a keep-alive connection. If a client makes 4 connections to your server (Firefox's default is 4 initial connections for example) they have 4 keepalive channels. If you set keepalive_requests to 20 like in our example above that would give a client 80 objects to request through those 4 connections. Keep alive requests are a lot faster and more efficient then having the client make 80 individual TCP connections. Try to set your keepalive_requests high enough so that a browser can request at least double what an average user requests in 300 seconds (keepalive_timeout 300 300;). So, lets say I have a web site and the average amount of objects (pictures, css. html, js, ect. ) is 20 per page. Lets also say that the average browser looks at 2 pages in 300 seconds (5 minutes). You may want to keep keepalive_requests set at 20 as this would serve 2 pages times 20 objects which equals 40 requests in 300 seconds easily. Remember keepalive_requests at 20 times 4 connections was 80 requests total. Why not just set keepalive_requests really high ? You always want to put a limit on clients in case a malicious user attacks your site.</p><p><b>keepalive_disable </b> by default Nginx disables keepalive requests from both Safari and MSIE6. There is a known bug in the Mac OSX TCP stack which has problems uploading (the POST command) to web servers which have keepalives enabled. The result are pauses and stalled connections seen by the Safari client. This bug with OSX has been known about since 2005 with no fixes proposed. This means that Apple products like the iPod, iPad and iPhone as well as Mac OSX machines will have to make new TCP connections for every object on your site. Creating a separate TCP connection for every item is quite slow. The good news is if your server does not allow the client to upload (POST) data you can enable keepalives with Safari like we did in the examples above. You may want to test your server with Safari to test if you see any issues. It is up to you, but there are enough Safari browsers on the market to argue that we are willing to risk some Safari users experiencing pauses compared to increasing the load speeds of all other Safari users. Make an informed decision if you really want to enable Safari to do kepalives for your site.</p><p><b>max_ranges </b> clients use the range header to download parts of a file. This method is useful for transferring large files to clients who get disconnected during a transfer. Lets say a client is downloading a 1 gigabyte file from you and they get 80% and then get disconnected. If max_ranges is set to at least one(1) the client can send a request for the same file, but starting at 80% so they do not have to start all over again. We recommend setting max_ranges to no more then 1 for this situation. The times you do not want to use max_ranges is if you only serve out very small files. For a small static server which sends out small files, sizes less then 1 meg for example, set max_ranges to 0. Another hazard to be aware of is not to set the max_ranges high. If you allow max_ranges to 10 then a client could request a single file split into 10 parts. Request 1 asks for 0%-10%, request two asks for 11%-20%, ect. This behavior is what "download accelerators" do to attempt to speed up their downloads and this can put quite a heavy burden on your server. On a side note, Apache had a vulnerability which included abuse of the range header. You can search on Google for, "Apache Range Header DoS Attack" for more information.</p><p><b>open_file_cache </b> is nginx's ability to cache file inode locations in ram for quick access to the files and distribution to the clients. Understand that the file itself is _not_ cached, just the pointer to the inode.</p><blockquote><p>How does open file caching work? When nginx needs a file it asks the file system, which then looks up the location for the inode and then the file is retrieved. By using open_file_cache you bypass the slowest step which is the file system look up for the inode. A quick analogy is when you are looking for a web page. If you do not know what the URL is then you search through Google for page and then click on the link for the URL; this is slow just like when you are asking the filesystem to go find the inode pointing to a file. A fast way is to already have the webpage bookmarked and this is just like having the inode location of the file in cache.</p><p>This directive uses two arguments; "max" is the maximum amount of objects in the cache and inactive is the amount of time an object can stay in cache. Understand that an object can be removed from cache it the inode has changed and the timeout set on "open_file_cache_valid" was reached. If "max" is hit the oldest, least used object is removed to make room for the new object. Cached files can significantly increase the speed at which nginx can find the object the client requested and begin the transfer to them.</p><p>We highly suggest using caching if it works in your environment. But, you have to be aware of some problems caching could cause when you make changes to files. The open_file_cache directive looks at the inode of a file to see if it has changed or not. If you go in and edit a file and save it as the same name the inode is the same. So nginx may not catch the change and continue serving out the old version of the file till the "invalid" timeout is reached. The other item to remember is that every worker process has its own cached items. If you change a file and one worker has a cached copy it will serve that out. If another worker did not have a copy then it will pick up the new version of the file. So, it is possible that you could have multiple versions of the same file being served at the same time. Truthfully, this is not a problem for the speed you gain by using caching and there are some was around the delay. When you edit a file you could just wait till the "open_file_cache_valid" timeout for nginx to check if the file is still the same. You could also copy the original html file you want to edit, edit the file and then mv (move) the new copy on top of the old file. This would change the inode, update the cache and keep the same file name.</p></blockquote><p><b>open_file_cache_min_uses </b> is the amount of times a file needs to be requested before it is added to the open_file_cache. The files also need to be requested this many times within the "inactive" time frame in the open_file_cache directive. So if "inactive=1h;" like in the example above and open_file_cache_min_uses is 3 then any client needs to request the same file at least three(3) times in 1 hour for the open file pointer to be cached. The default is 1 for this directive which is fine for most uses. If you also enable open_file_cache_errors then set this directive a little higher. No need to have our cache filled with errors which were only called once.</p><p><b>open_file_cache_errors </b> is simply allowing nginx to cache errors as well. Errors could be any request for a file that does not exist for example. This may be a good idea to keep confused clients or scanners from forcing your server to do I/O calls to the disk for the same invalid URLs.</p><p><b>open_file_cache_valid </b> is the amount of time before nginx is going to go check if a file, which is identified by its inode and is currently in cache, has changed or not. If you are using caching then you are trying to reduce the amount of disk I/O. Set this value high enough so that nginx does not have to check the disk over and over for changed files. This is especially true for static sites. You may want to set this value to tens of seconds to make sure changes are seen or many hours for a highly static site. BTW, if an object is in a worker's cache and has not changed in this directive's time frame then it will continue to stay in the cache until "open_file_cache invalid=(time)" timeout.</p><p><b>limit_req_zone $binary_remote_addr zone=gulag:1m rate=60r/m;</b> sets up a table we will call "gulag" which uses no more than 1 megabyte of ram to store session information keyed by remote ip address. This directive is used in conjunction with <b>limit_req zone=gulag burst=200 nodelay;</b>. The ngx_http_limit_zone_module restricts the amount of requests an ip address can make. An error 503 will be returned to the client if request processing is being blocked at the socket level and new requests from same ip starts. Limiting requests is a good way of keeping a single client ip address from hammering your server. This directive will limit requests no matter how the client connects; for example they could connect though many individual TCP connections or use only a few TCP connections and pass many keepalive requests.</p><blockquote><p>This is _not_ a directive to limit the total number of open, "established" connections to the server per ip address!! You could use your iptables or PF firewall to limit the total amount of connections. The <a href="https://calomel.org/pf_config.html">OpenBSD PF firewall (pf.conf)</a> uses max-src-conn or max-src-states to limit the amount of established connections to your server.</p><p>You can increase the size of the "gulag" table from 1 megabyte if you need to. A zone size of 1M can handle 32000 sessions at a default size of 32 bytes/session. You can also change the name of the table we called "gulag" to any string you want. We thought this was a good name due to Nginx's country of origin combined with the purpose of this directive.</p><p>The HTTP 1.1 specification, circa 1999, recommends that browsers and servers limit parallel requests to the same hostname to two. Most browsers comply with the multi-threading recommendation of the specification, although downgrading to HTTP 1.0 boosts parallel downloads to four. So most web browsers are effectively throttled by this limit on parallel downloads if the objects in the web page they download are hosted on one hostname. We set this limit to 5 so browsers can open 4 connections with one slot left over as a buffer. Download accelerators can open many hundreds of connections to download a file so this directive will help to alleviate abuses.</p></blockquote><p><b>recursive_error_pages </b> allows the use of the error_pages directive specified later in the config.</p><p><b>sendfile </b> enables the use of sendfile(). Sendfile relies on the OS to do actual IO, and this may be a good idea if you are serving large files, if your OS is a little slow like OpenBSD or if you are letting the OS cache the data. You need to be careful about using sendfile if the file being sent has any possibility of being modified ( especially truncated ) while the operation is in progress since some very odd things ( like the process crashing ) can happen on some platforms. You may just want to test your server with sendfile on and off. We like to keep sendmail on as our site is serving small static files.</p><p><b>server_name_in_redirect </b> if off disables the server's ability to substitute the client supplied "Host" header with the virtual server variable "server_name" when a client is redirected.</p><p><b>server_tokens </b> if off disables nginx's version numbers in the auto generated error pages. We do not want to display this information for security purposes.</p></blockquote><p></p><p><b>TCP options :</b> These options say how we should use the TCP stack. </p><blockquote><p><b>tcp_nodelay </b> TCP_NODELAY is for a specific purpose; to disable the Nagle buffering algorithm. It should only be set for applications that send frequent small bursts of information without getting an immediate response, where timely delivery of data is required (the canonical example is mouse movements). BY default tcp_nodelay is on and this is a good setting.</p><p><b>tcp_nopush </b> If set, don't send out partial frames. All queued partial frames are sent when the option is cleared again. This is useful for pre-pending headers before calling sendfile(2), or for throughput optimization. As currently implemented, there is a 200 millisecond ceiling on the time for which output is corked by TCP_CORK. If this ceiling is reached, then queued data is automatically transmitted. tcp_nopush is off by default and we did not see a reason to change that.</p></blockquote><p></p><p><b>Compression :</b> These values tell nginx how to compress outgoing data. Remember that all files of the specified mime.type (gzip_types) are compressed in real time. On a P3 500MHz a 100KB HTML file takes 0.05 seconds (5 hundredths of a second) to gzip at level 9 compression (highest). </p><blockquote><p><b>gzip on</b> turn real time compression on. You may want to disable this option if you decide to use the more efficient gzip_static instead. You always want to gzip compress your HTML pages as most clients have plenty of extra CPU cycles, but limited internet bandwidth. Also, using this option to compress data in real time adds a response delay back to the client. If you are compressing the same HTML code to every client then this is just wasting time. Disable this real time gzip and use gzip_static instead. Then you can pre-compress your html files and increase your response times.</p><p><b>gzip_static on;</b> allows one to have pre-compressed .gz files served instead of compressing files on the fly. This is the most efficient method of serving compressed data. To use this option simply have a compressed copy of the same .html file in document root. For example, if we have the index.html file in place we will also have a pre-compressed index.html.gz file. You will have a non-compressed copy for older client that do not accept compression and a pre-compressed copy for all other clients. gzip_static does not depend on the gzip filter nginx module. You can use gzip_static without compiling the gzip filter.</p><blockquote><p>The following script will publish a compressed gzip file from a given html file. When you are done editing the html file execute this script to make a compressed copy ready for distribution. As soon as it is in place Nginx will serve it out. Also, make sure the date on the compressed .gz is always newer or equal to the original as Nginx will always serve out the most recent copy: </p><pre class="code">#!/bin/sh
+#
+## Calomel.org  publish_html2gz.sh
+## usage: ./publish_html2gz.sh index.html
+#
+## Make a tmp copy of the original HTML file
+cp $1 $1.tmp
+
+## Remove the old gz if there is one
+rm -rf $1.gz
+
+## Compress the tmp HTML copy. Use level 6
+## compression and do not store dates or file names
+## in the gzip header. BTW, if the compressed gz is
+## larger then the original file a gzip will NOT be made.
+gzip -6 -n $1.tmp -o $1.gz
+
+## Clean up any tmp files
+rm -rf $1.tmp
+
+echo ""
+echo "Verify files"
+ls -al $1*
+
+echo ""
+echo "Compression statistics"
+gzip -vl $1.gz
+</pre><p></p><p>When Nginx sees the .gz file it will send this out to clients who accept compression instead of compressing the file in real time. Make sure you have built your nginx binary with the argument "--with-http_gzip_static_module". Execute "nginx -V" to see the compiled options.</p></blockquote><p><b>gzip_buffers </b> allows 16 slots of 8k buffers used to respond to clients with a gzip'd response. This means the max size of our compressed responses can be no larger than 16*8= 128 kilobytes. By default Nginx limits compressed responses to 4*8k= 32 kilobytes. If you expect to return responses which compressed size is more than 32KB in size then increase the number of buffers (e.g. 16). The single buffer size of 8K can not be increased.</p><p><b>gzip_comp_level </b> set at 1 compresses files to the lowest compression level. Level 1 is the fastest/lowest compression and level 9 is the slowest/best compression. During testing the time difference between level 1 and 9 was around 2 hundredths of a second per file on a P3 500MHz. Two(2) hundredths of a second is about the same amount of time the entire page should be rendered. </p><blockquote><p><b>Which compression ratio is right for your server?</b> As a test we took a standard 68.3 kilobyte HTML file and compressed it on a AMD64 1GHz machine using gzip levels 1, 6, and 9. Level 1 compressed the file 61.5%, but Level 9 took twice as long to compress the file to 67.1%. Level 1 has the best compression to time ratio. Realistically, even though the times are so short we still suggest using level 1, or at least level 6 compression to save overall bandwidth. Today's computers are fast enough that a user is unlikely to notice slightly more CPU usage compared to longer download times. If you are using the gzip static module on the other hand make sure you compress all pages to level 9. This is because we are doing all the compression up front and can send the same compressed file out to the client quickly.</p><pre class="code">gzip     ratio  time      compressed  uncompressed
+level 1  61.5%  0m0.009s  26320       68372
+level 6  67.0%  0m0.016s  22560       68372
+level 9  67.1%  0m0.018s  22525       68372
+</pre></blockquote><p></p><p><b>gzip_http_version </b> 1.0 allows the server to send compressed data to HTTP/1.0 clients. HTTP/1.1 clients use the proper headers so they can always ask for compressed data.</p><p><b>gzip_min_length </b> set to 0 means that nginx should compress all files no matter what the size. The value is the size in bytes. You can always set this value to something higher if you do not wish to compress small files.</p><p><b>gzip_types text/plain text/html text/css image/bmp</b> are the only files types to be compressed. For example, JPG's are already compressed so it would be useless for us to try to compress them again. TXT and BMP files on the other hand compress very well at an average of 250% smaller. Smaller files mean less bandwidth used and less time to transmit the same amount of data. This makes your site "feel" significantly faster.</p><p><b>gzip_vary on</b> enables the response header "Vary: Accept-Encoding". This way clients know that our server has the ability to send out compressed data.</p></blockquote><p></p><p><b>log_format main :</b> is the log format of the web logs. This format is assigned to the variable "main" and can be used later in the http section. This format is fully compatible with standard log analyzing tools like <a href="https://calomel.org/awstats.html">Awstats</a>, <a href="https://calomel.org/webalizer.html">Webalizer</a> and custom tools like the Calomel.org <a href="https://calomel.org/web_access_sentry.html">Web Log Sentry</a>. We also have added two(2) more fields at the end of each log line. "$request_time" logs how much time the server took to generate the content and "$gzip_ratio" shows what X-factor the file was compressed by. A value of 2.50 means the file was compressed 250%.</p><p><b>access_log and error_log :</b> are the locations you want the logs to be placed in. In the access_log directive you can also use the buffer command. This will buffer the access log activity into ram and once the limit has been reached Nginx will then write the logs. This can save I/O stress and bandwidth on your hard drive. You will want to remove "buffer=32k" while testing else you will not see any log output until at least 32 kilobytes of data are ready to be written to the access_log file. 32K of logs input is approximately 150 lines. The notice directive on the error_log will increase the verbosity of the logs to include the reasons that clients were denied access.</p><p><b>expires 31d:</b> says we want our pages to be expired from the clients cache in 31 days. We also highly suggest setting the value to "max" if your pages do not change that often. Time in the Expires header is obtained as the sum of the current system time added to the time assigned in this directive. In effect, we are saying that pages are to be expired 31 days after they were accessed by the client. You can also specify a time in hours using "h". In the Nginx v0.7.0 release you can use the format "expires modified +1d" to set the expires header based on the modified time of a file. The expire header tag will tell clients they should keep a copy of the object they already downloaded for the specified amount of time. This saves a significant amount of upload bandwidth for you. Instead of clients going from page to page downloading the same picture banner over and over again, they can keep a copy locally and just get the changes on your site. Imagine a client getting 5 pages from your site. Each page has a banner that is 15KB. With expires headers enabled that client will only download the banner once instead of 5 times (15KB compared to 75KB) saving your upload bandwidth and making your site "feel" quicker responding.</p><p><b>limit_req zone=gulag burst=1000 nodelay; :</b> limits remote clients to no more than 1000 concurrently "open" connections per remote ip address being processed by Nginx. See the complimentary directive <b>limit_req_zone</b> above for more information about defining the "gulag" table.</p><p><b>listen 127.0.0.1:80 default rcvbuf=64K backlog=128 :</b> tells nginx to listen on localhost (127.0.0.1) port 8080. The directive rcvbuf=64K buffers incoming data (sysctl net.inet.tcp.sendspace). rcvbuf can be decreased to as little as 1K, possible decreasing the probability of overflow during a DDoS attack. The directive backlog (sysctl kern.somaxconn) are the max number of backlogged client requests Nginx will process. If you server is quite busy you will want to increase this value. We listen on 127.0.0.1:8080 in order to use the redirection rules in iptables or in <a href="https://calomel.org/pf_config.html">OpenBSD's pf packet filter firewall</a>. The argument "default" says that this server {...} function should handle any client request sent to this port no matter the hostname (not used in the example).</p><p><b>root /var/www/htdocs :</b> is the location of document root on your server. This is where nginx will look for all files to be served out to clients.</p><p><b>server_name mydomain.com www.mydomain :</b> means this server {...} block will only answer requests that have "mydomain.com" or "www.mydomain" host headers. By default the hostname of the machine is used. We are expecting the client to ask for the correct hostname with the Host header, if not, the default server block with "server_name _;" returns an error 444 to the client. BTW, the server_name_in_redirect and server_name directives work in conjunction with each other.</p><p><b>SSL Options (only enable if you use a SSL certificate)</b> If you are interested in setting up a SSL certificate for encrypted traffic on your site then we highly suggest reading our <a href="https://calomel.org/ssl_certs.html">Guide to Webserver SSL Certificates</a>. Once you understand the details of SSL certs then you must build Nginx from source and enable the argument "<b>./configure --with-http_ssl_module</b>". </p><blockquote><p><b>ssl on; </b>Enables the use of the ngx_http_ssl_module once it has been built into the Nginx binary.</p><p><b>ssl_certificate /ssl_keys/mydomain.com_ssl.crt; </b> This file is the combined certificate which contains both of the "crt" files signed and sent to you by your certificate authority. See "How to setup a SSL cert from Comodo through NameCheap for Nginx" below for details.</p><p><b>ssl_certificate_key /ssl_keys/mydomain_ssl.key; </b> Specifies the location of the file with the secret key in PEM format for this server. This file is the public certificate secret key you made using the OpenSSL binary.</p><p><b>ssl_ciphers </b> says our server will only accept SSL based connections using AES 128/256 bit symmetric encryption without anonymous DH. MD5 is also not accepted due to its know weaknesses. Googlebot, Bing bot and others support at least AES256. The command "openssl ciphers -v 'HIGH:!ADH!MD5:@STRENGTH'" will show you all of the ciphers your version of OpenSSL supports in the HIGH level without anonymous DH. Our <a href="https://calomel.org/ssl_certs.html">Guide to Webserver SSL Certificates</a> explains all of the details about ciphers and compatibility models. It is important to note that Android 2.3.x based devices (mobile phones and the Amazon Fire) only support up to AES128. Androis 3.x and about support most ECHDE ciphers.</p><p><b>ssl_prefer_server_ciphers on; </b> just means that our server will use the ciphers specified in the "ssl_ciphers" directive over the ciphers preferred by remote clients. It is not a good security practice to ever trust remote clients.</p><p><b>ssl_protocols TLSv1; </b>tells the server to only allow TLS version 1.0 or greater (TLSv1). It is highly recommended never to use SSL version 2 (SSLv2) or SSL version 3 (SSLv3) as they have vulnerabilities due to weak key strength. In order to be <a href="http://en.wikipedia.org/wiki/FIPS_140-2">FIPS 140-2 compliant</a> only TLSv1 (which stands for 1.0 or higher) can be used. Please check out the section lower down on this page where we explain how to build nginx with the latest version of OpenSSL for TLS v1.0, 1.1 and 1.2 support.</p><p><b>ssl_session_cache shared:SSL:1m; </b> allows Nginx to cache the SSL session keys in its own cache structure instead of using OpenSSL slower, single threaded cache. This means Nginx can now take advantage of multiple worker_processes and separate the SSL jobs between them. The result is an impressive speed boost (2x or more) over the slower OpenSSL cache depending on your OS. The format of the line "shared:SSL:1m" is as follows: "shared" is the internal caching function, "SSL" is just an arbitrary name of this SSL cache (you can name it anything you want) and "1m"is the size of the cache (1 megabyte can hold around 4000 SSL cache sessions).</p><p><b>ssl_session_timeout 5m; </b> is the cache session timeout between the client and the server set at 5 minutes or 300 seconds. When this time runs out the clients ssl session information is removed from the "ssl_session_cache". The reason this number was chosen is it also the default amount of time all client browsers will cache an ssl session. If you expect client to stay on your site longer and go to multiple pages you can always increase this default value. Depending on the client browser, they may or may not respect your ssl_session_timeout value if it larger than 5 minutes. 5 minutes seems to work perfectly fine for most sites.</p><p><b>ssl_ecdh_curve secp521r1; </b>Elliptic curve Diffie-Hellman (ECDH) is a key agreement protocol that allows two parties, each having an elliptic curve public-private key pair, to establish a shared secret over an insecure channel. secp521r1 is a 521 bit Elliptic curve key and the strongest, most compatible and most widely supported key agreement protocol. For example, Here at Calomel.org, increased security is achieved with an initial 521 bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_Diffie%E2%80%93Hellman">Elliptic curve Diffie-Hellman</a> key agreement and SHA1 message authentication. <a href="https://calomel.org/">Calomel.org</a> prefers negotiating with a browser client using the <a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security (TLS)</a> protocol and the <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard (AES)</a> cipher at 256 bit encryption with the CBC block cipher mode. The end result of a 521 bit ECDHE handshake and a 256 bit AES key is a true 256 bit symmetric key size security model (ECDHE-RSA-AES256-SHA). Take a look at the NSA's paper titled, <a href="http://www.nsa.gov/business/programs/elliptic_curve.shtml">The Case for Elliptic Curve Cryptography</a> for more details.</p><br><br><br><br><p><b>How to setup a SSL cert from Comodo through NameCheap for Nginx</b></p><p>IMPORTANT NOTE: This section was called "How to setup a GoDaddy Turbo SSL Certificate for Nginx", but we can no longer support their corporate policy. We dropped them as our registrar and now fully support <a href="http://www.namecheap.com/">NameCheap.com</a> These instructions are for the benefit of all who want to transfer their domains to NameCheap.com and setup a basic SSL cert. We are in no way reimbursed for this suggestion.</p><ul><li>Goto your SSL Certificate Authority company of choice. For this example we are going to look at Comodo's PositiveSSL though NameCheap which you can get for as little a $1.99 for the first year and $8.95 for the following years.<p></p><p>You will be asked to upload a Certificate Signing Request (CSR) by Comodo. Use our <a href="https://calomel.org/ssl_certs.html">Guide to Webserver SSL Certificates</a> and look for the section titled, "How to request a SSL certificate from a Certificate Authority (CA)". The explains how to use the OpenSSL binary to generate the CSR.</p></li><li>When you provide Comodo with your CSR it is <b>IMPORTANT</b> to make sure to choose the "APACHE" certificate type when asked what format to download in; else you will not receive any usable files.</li><li>Comodo will then email you a compressed ZIP file called something like mydomain_com.zip . In the zip file will be four files. We will need to combine the files in the correct order for the site crt file to work with Nginx. Here is an example of the files in the zip archive: <ul><li>mydomain_com.crt</li><li>PositiveSSLCA.crt</li><li>UTNAddTrustServerCA.crt</li><li>AddTrustExternalCARoot.crt</li></ul><p>Now we need to combine all of the Comodo crt files into a single site crt file Nginx will use. The order is important: </p><pre class="code">## cat all files in this order to your new site crt file
+cat mydomain_com.crt PositiveSSLCA.crt UTNAddTrustServerCA.crt AddTrustExternalCARoot.crt &gt; mydomain.com_ssl.crt
+
+## Now the mydomain.com_ssl.crt is your Nginx "ssl_certificate" file.
+</pre><p></p><p>Finally, make a secure directory outside of the web document tree and limit access to it to root (read and write) and the Nginx web daemon (read only). In our example we will make a directory called /ssl_keys. Both your public "key" file generated by OpenSSL (ssl_certificate_key /ssl_keys/mydomain_ssl.key) and the combined certificate "crt" file (ssl_certificate /ssl_keys/mydomain.com_ssl.crt) are copied to /ssl_keys. It is a good idea to make both files read only by the Nginx daemon. Now you can test your SSL server.</p><p></p></li></ul></blockquote><p></p><br><br><br><br><h3>Why are if statements bad ?</h3><p>If statements ( if{} ) are expensive to process and they can be unpredictable. Every object a client requests will trigger the if statement and this takes cpu time to process in a time when sites are expected to come up within tenths of a second. We are not saying to never use an if statement as there are some time where it can be avoided. Just be aware of the way If statement work, how much of a performance hit you may take on and what alternatives exist.</p><p>Take a look at these two pages on the Nginx wiki site for more information and insight:</p><ul><li><a href="http://wiki.nginx.org/Pitfalls">Nginx: Pitfalls and Common Mistakes</a></li><li><a href="http://wiki.nginx.org/IfIsEvil">Nginx: "If" Is Evil</a></li></ul><br><br><br><br><h3>Why setup a "default blank SSL server" ?</h3><p>When a client browser asks for your server they should request the hostname you registered your SSL certificate for. In our example, we registered www.example.com and example.com. If a remote client asks for anything other than these they should not be allow to get to our site. The reason being that if they did not ask for our site by name then the SSL certificate is going to be invalid. The second reason is security. If you are not asking for our site they you should not be able to get to our site.</p><p>A "default blank SSL server" is the catch all for any client not specifically asking for our site by name.</p><p>In order to allow multiple SSL certificates to be served from a single IP address we need to use virtual hosting with <a href="http://en.wikipedia.org/wiki/Server_Name_Indication">Server Name Indication</a>. This means that your nginx build must report that it is supporting TLS with SNI like this: </p><pre class="code">user@machine$  nginx -V
+nginx version: nginx/0.8.45
+TLS SNI support enabled
+</pre><p></p><p>If your server supports SNI you are good to go. If not, you will probably need to upgrade your version of Nginx or possibly get a newer version of OpenSSL. The example above used Nginx v0.8.45 and OpenSSL v1.0.0a for example. Now you can setup a second server block in Nginx.conf.</p><p>The following code from our "SSL only webserver" example above will tell Nginx to serve out the blank, self-signed SSL certificate for any clients not using the hostname www.example.com or example.com. This includes any scanners looking at the ip address of the server or any bad clients using false "Host:" headers. </p><pre class="code">## https .:. default blank SSL server
+  server {
+      listen              127.0.0.1:443 default;
+      server_name         _;
+      ssl                 on;
+      ssl_certificate     ssl_keys/default_blank.crt;
+      ssl_certificate_key ssl_keys/default_blank.key;
+      return              403;
+     }
+</pre><p></p><p>We need to generate the certificate "crt" and public "key" files for Nginx. The following commands will make a self-signed certificate and key file without a pass phrase. The ssl cert is blank will not give any information to anyone looking at it. </p><blockquote><p>First we need to make a new key. This will be a 4096 bit key signed using AES at 256 bits. Put in any pass phrase you want because we are going to remove it in the next step. </p><pre class="code">openssl genrsa -aes256 4096 &gt; default_blank.key
+</pre><p></p><p>Next, this is a dummy key we really do not care about so this command will remove the pass phrase. </p><pre class="code">openssl rsa -in default_blank.key -out default_blank.key
+</pre><p></p><p>Third, create a certificate signing request. The only question you need to answer if the first one for Country. Put any two(2) letters in like "US" and hit enter for the rest. Make sure to keep the "hostname" entry blank too. </p><pre class="code">openssl req -new -key default_blank.key -out default_blank.csr
+</pre><p></p><p>self sign your own certificate. </p><pre class="code">openssl x509 -req -days 1460 -in default_blank.csr -signkey default_blank.key -out default_blank.crt
+</pre><p></p><p>Finally, copy the default_blank.crt and default_blank.key into your "ssl keys" directory so Nginx can find them.</p><h3>Testing the setup</h3><blockquote><p>Using openssl and the s_client directive we can query the server for the proper hostname and server name using SNI. For this example we will use our real hostname calomel.org. What you are looking for in the output is the "Certificate chain" information. The real SSL cert will show multiple entries for the CA like GoDaddy. The blank SSL cert will show zero certificates in the chain and no real information. The following line will properly access the server. </p><pre class="code">openssl s_client -servername calomel.org -connect calomel.org:443
+</pre><p></p><p>The second test should be to test a failure. Here we connect to the proper hostname calomel.org on port 443, but we ask for the wrong hostname in the SSL certificate with the "-servername" directive. </p><pre class="code">openssl s_client -servername NotTheRightHost.com -connect calomel.org:443
+</pre><p></p></blockquote><p>NOTE: there are some clients that can not use SNI enabled servers. Very OLD browsers like IE5 and Firefox v1.0 are not compatible. Strangely, some modern versions of Wget are also not compatible, but Curl and Elinks are. Modern OS's and browsers do support SNI as well as search bots like Googlebot, MSN and Yahoo. As and added bonus we find that a lot of the spammer bots do not negotiate SNI very well.</p></blockquote><p></p><br><br><br><br><h3>IMPORTANT NOTE: Why use the error code "return 444" ?</h3><p>Error 444 or "return 444;" is a custom error code understood by the Nginx daemon to mean, "Close the connection using a tcp reset with the client without sending any headers." In essence, we are closing the connection with the client without sending them any web page data. This definitely saves bandwidth and may be necessary in DDOS situation. This error code should be used with great care. If you have a private site and wish to just close the connection, i.e. slam the door on them the error 444 is great. On the other hand search bots like Googlebot will punish a site which does not send proper error codes back in a timely fashion. To Googlebot an error 444 looks like a misconfigured server or a bad connection and will mark down your pagerank as such. Please take care when using this code as it is useful in certain situations and harmful in others.</p><p>Nginx understands that if you want to send the client the 444 error code (only 400-417 and 500-505 are allowed by RFC) then Nginx should just close the connection to the client. Just dropping the connection and sending an empty TCP reset packet to the client will deny scanner information about the server and _may_ confuse them.</p><p>So what is the difference in using an error 404 compared to an 444? Lets take a look at the header results using the cURL command to a server sending a 404 error. FYI: cURL will be sending the HEAD request to the server. Notice the server sends back a set of headers with the error code and some information about the server. </p><pre class="code">user@machine: curl -I http://www.somedomain.com/
+HTTP/1.1 404 Not Found
+Server: Nginx
+Date: Mon, 10 Jan 2020 20:10:30 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=5
+</pre><p></p><p>This is what cURL says about a Nginx server returning an error 444. The server sent nothing back to the client and closed the connection. The client did not get any useful information about the server. If you are paranoid about security or just do not want to provide and data to clients who cause errors, this is a good response for them. </p><pre class="code">user@machine: curl -I http://www.somedomain.com/
+curl: (52) Empty reply from server
+</pre><p></p><p>If you wish to change the return code to those found in the error_codes directive then your error page will be sent out instead. For example, instead of using code 444 you could send a 403 (Forbidden). For a full list of the error codes and their official definitions check out the <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">w3.org Error Status Code Definitions</a>.</p><br><br><br><br><h2>Directive explanation and insight</h2><p><b>Only requests to our Host are allowed :</b> This condition is to make sure that only clients who are asking for mydomain.com or www.mydomain.com are allowed access to our server. If a client is scanning web servers then they might ask for the ip address and this is NOT allowed by our rules. </p><p><b>Strict Transport Security add_header :</b> Strict Transport Security (STS or HSTS) is a proposed HTTPS response header that will require the user agent (such as a web browser) to access the website using secure connections only (such as HTTPS). The header specifies a period of time during which the user agent is not allowed to access the site insecurely. We use 2592000 seconds or 30 days.</p><p>When Strict-Transport-Security is active for a website, a complying user agent like Firefox, Internet Explorer, Opera or Chrome does the following: It automatically turns any insecure links to the website into secure links. (For instance, http://www.example.com/page/ will be modified to https://www.example.com/page/ before accessing the server.) Secondly, if the security of the connection cannot be ensured (e.g. the server's TLS certificate is self-signed), show an error message and do not allow the user to access the site despite the error. Strict-Transport-Security helps protect website users against some passive (eavesdropping) and active network attacks. A man-in-the-middle attacker will not be able to intercept any request to a website while the user's browser has Strict-Transport-Security active for that site. <a href="http://en.wikipedia.org/wiki/Strict_Transport_Security">-Wikipedia (STS)</a></p><p><b>Only allow GET and HEAD request methods :</b> Request Method restrictions allow you to filter on GET, HEAD, POST, SEARCH, etc. We will be limiting access to our example server to GET and HEAD requests only as we do not allow uploads or any other options due to security concerns. All other request methods will get an error defined by "return 405". Understand that Nginx looks at the files and file permissions you want to serve. If all of the files in document root are read only then Nginx knows this is a static site. Thus only GET and HEAD will be accepted. Other requests will get an error 405. If you have a dynamicly generate site or if nginx is setup as a reverse proxy then you may want to take some time and restrict the request methods.</p><blockquote><h3>How do I test each type of request method ?</h3><p>Curl is an excellent testing tool. These are some examples of the different request methods and how to get a response from a server. Test each of these against your server and make sure the header responses are what you expect. For example, only the GET and HEAD should work against a site setup to serve only static files.</p><pre class="code">GET
+  curl -HAccept:text/plain http://example.com
+
+HEAD
+  curl -I -X HEAD http://example.com
+
+PUT
+  curl -X PUT -HContent-type:text/plain --data "value1:value2" http://example.com
+
+DELETE
+  curl -X DELETE http://example.com
+
+POST
+  curl -d "param1=value1¶m2=value2" http://example.com/
+
+TRACE
+  curl -v -A "Curl" -X TRACE http://example.com
+</pre></blockquote><br><p><b>Deny certain User-Agents :</b> You may want to list out some user-agents you do not want connecting to your server. They can be scanners, bots, spammers or any one else you find is abusing your server.</p><p><b>Deny certain Referers :</b> Referer spam is more of an annoyance than a problem. A web site or bot will connect to your server with the referer field referencing their web site. The idea is that if you publish your web logs or statistics then their hostname will show up on your page. When a search bot like Google comes by it will see the link from your site to theirs and give the spammers more PageRank credit. First, never make your weblogs public. Second, block access to referer spammers with these lines.</p><p><b>Redirect from www to non-www :</b> is if you prefer clients who connect to your site to instead use the non-www domain. For example, if a browser connects to www.mydomain.com they will be redirected to the URL mydomain.com with a code 301. If they then save your site location in a bookmark it will show up as the preferred non-www domain.</p><p><b>Stop Image and Document Hijacking :</b> Image hijacking is when someone makes a link to your site to one of your pictures or videos, but displays it on their site as their own content. The reason this is done is to send a browser to your server to use your bandwidth and make the content look like part of the hijacker's site. This is most common as people make links to pictures and add them to a public forum or blog listing. They get to use your picture in their content and not have to use their bandwidth or server to host the file. In order to keep your bandwidth usage low you should block access to images from those clients who are not referring the content from a page on your site. Note, this function can be used for any kind on content. Just add the file types to the list. If would like more ideas on lowering bandwidth usage check out our <b><a href="https://calomel.org/save_web_bandwidth.html">Saving Webserver Bandwidth (Tips)</a></b>.</p><p><b>Restricted Access directory :</b> This area is to limit access to a private or content sensitive directory. We will be limiting access to it by ip address (first check) and if that passes then ask for a password (second check). Both must match before access is granted. </p><blockquote><p><b>access control list :</b> This is a way you can define a directory and only allow clients coming from the specified ips to have access. Use this function to allow internal LAN clients access to the status pages or employee contact information and deny other clients. In our example we will allow the clients coming from localhost (127.0.0.1/32) and internal LAN ips 10.10.10.0/24 to access the protected "secure" directory. BTW, if you use <a href="https://calomel.org/pf_config.html">OpenBSD's pf packet filter firewall</a> we highly suggest enabling "synproxy" in your pf.conf for all connections to your web server. Normally when a client initiates a TCP connection to a server, PF will pass the handshake packets between the two endpoints as they arrive. PF has the ability, however, to proxy the handshake. With the handshake proxied, PF itself will complete the handshake with the client, initiate a handshake with the server, and then pass packets between the two. The benefit of this process is that no packets are sent to the server before the client completes the handshake. This eliminates the threat of spoofed TCP SYN floods affecting the server because a spoofed client connection will be unable to complete the handshake. </p><p><b>password protected area :</b> If you are coming from an authorized ip address then we will ask for a username and password. If you have an area of the web site you only want authorized personnel to see then you should protect it. This set of directives will password protect the directory "/secure" and all files and directories under it. We will use the basic method which is the authors best choice to use especially for non-https sites. It will not send any of the passwords in clear text. Check "man htdigest" for details. </p><blockquote><p>To make the "access_list" password file use the binary htdigest in the following form. Supply the "username" and "password" pair for access. Remember that our configuration file will look for this file at /var/www/htdocs/secure/access_list : </p><pre class="command">htpasswd -b -c access_list username password
+</pre></blockquote><p></p><p></p></blockquote><p></p><p><b>Only allow these file types to document root :</b> We want to restrict access to our server to clients who are actually looking for data we serve out. For example, if a client is asking for a PHP file and we do not serve that type of file then we want to deny them access.</p><blockquote><p><b>"(^\/|\.html|\.css|\.jpg|favicon\.ico|robots\.txt|\.png)$" </b> matches the incoming request. If a request fails to match than this service will be skipped and the client will get an error. If all services fail to match Nginx returns a generic error (next section). The example URL string specifies the file types we expect a client to want to retrieve. The dollar sign ($) says that all the strings listed must be located at the end of the request URL. This line will allow: </p><ul><li>^\/ allows the root request http://mydomain.com/ to be accepted. / is expanded into /index.html by the web server</li><li>\.html HTML page files</li><li>\.css Cascading Style Sheets</li><li>\.jpg JPG pictures</li><li>favicon\.ico is the only .ico file</li><li>robots\.txt is the only text file</li><li>\.png PNG pictures</li><li>$ says that each of these strings have to be located at the end of the line</li></ul><p></p></blockquote><p></p><p><b>Serve an empty 1x1 gif _OR_ an error 204 (No Content) for favicon.ico :</b> Using either of these lines simply direct the Nginx daemon to serve out an empty 1x1 pixel (43 byte) favicon.ico file to the client or send back a return code 204, meaning "No content". When either option is in place you do not need a file called favicon.ico in your document root. This is perfect for anyone who sees the favicon.ico as useless and does not want to waste any bandwidth on it, but also do not want to see "file not found" errors in their logs. For more information make sure to read the section titled, "The Cursed favicon.ico" on our <a href="https://calomel.org/save_web_bandwidth.html">Webserver Optimization and Bandwidth Saving Tips</a> page.</p><p><b>System Maintenance :</b> This function will look for the file /system_maintenance.html in the document root. If the file exists then _ALL_ client requests will be redirected to this file with an error code 503 (Service Unavailable). If the file does not exist then your pages will be served as normal. The purpose is so that you can work on your site and still keep the Nginx daemon up to show helpful information to your users. The system_maintenance.html file can contain something as simple as "Site Temporarily Down. Be back up soon." It is vitally important to send clients an error code 503 in order to notify them that the page they are looking for has NOT changed, but that the site is temporally down. Google for example understands this error and will return to index your page later. If you were to redirect Google to the /system_maintenance.html page and send them a code 200 for example, Google might replace the indexing information they have with this page. Your site would then have to be completely re-indexed once you got your site back up. Definitely not what you want to happen. </p><p><b>All other errors get the generic error page :</b> If the client fails the previous tests then they will receive our error_page.html. This error page will be sent out for all error codes listed (400-417, 500-505). Note the use of the <b>internal</b> directive? This means that an external client will not be able to access the /error_page.html file directly, only Nginx can serve this file to a client.</p></blockquote><p></p><br><br><br><br><h2>Starting the daemon</h2><p>Make sure that the user and group Nginx is going to run as exists and can access the files in document root. Our example file will run the child daemons as the user "nginx" and the group "nginx".</p><p>Now that you have the config file installed in /etc/nginx.conf and configured you can start the daemon by hand with "<b>/usr/local/sbin/nginx</b>" or add the following into /etc/rc.local to start the Nginx daemon on boot. </p><blockquote><pre class="command">#### Nginx start in /etc/rc.local
+if [ -x /usr/local/sbin/nginx ]; then
+   echo -n ' Nginx'; /usr/local/sbin/nginx
+fi
+</pre></blockquote><p></p><br><br><br><br><h2>In Conclusion</h2><p>Nginx has many more options not covered in this how to. We highly suggest taking some time to read the <a href="http://wiki.codemongers.com/Main">Nginx English Wiki</a> if you need more web functionality. If you are happy with the options we have started out with then at this point all that is left is finding some content to serve and setup your web tree.</p><br><br><br><br><h2>Strip Unnecessary White space like spaces, tabs and new line characters</h2><p>How much bandwidth can you expect to save by stripping out white space? On average , one could expect to save 2% of the total size of the HTML pages written by hand or previously unoptimized. If your average page size is 100 kilobytes you could save around 2 kilobytes every time they were served. If you served a hundred thousand pages per day you could reduce your bandwidth usage by 200 megabytes per day. Not a lot, but every bit makes a difference.</p><p>This is a simple perl script called "strip_whitespace.pl". It will read in any html file and output the stripped version. Use this script to make a published copy of your html docs while keeping the human readable versions in a private directory. BTW, we use this code with the pre-compression option in Nginx to serve out pre-stripped, pre-compressed files to save on bandwidth and CPU time.</p><blockquote><pre class="code">#!/usr/bin/perl -w
+#
+## Calomel.org -- strip_whitespace.pl
+#
+## PURPOSE: This program will strip out all
+##    whitespace from a HTML file except what is
+##    between the pre and /pre and tags.
+#
+## DEPENDANCIES: p5-HTML-Parser which you can get by CPAN or
+##    installing a package from your OS supporters.
+#
+## USAGE: ./strip_whitespace.pl &lt; input.html &gt; output.html
+#
+
+use HTML::Parser;
+my $preserve = 0;
+
+# Ignore any test between the /pre tags
+sub process_tag
+{
+    my ($tag, $text) = @_;
+    if ($tag eq 'pre') { $preserve = 1; }
+    elsif ($tag eq '/pre') { $preserve = 0; }
+    print $text;
+}
+
+# Replace all white space with a single space except what
+# is between the pre tags. This includes all tabs (\t),
+# returns (\r) and new line characters (\n).
+sub process_default
+{
+    my ($text) = @_;
+    $text =~ s/\s+/ /g unless $preserve;
+    print $text;
+}
+
+undef $/;
+$_ = &lt;STDIN&gt;;
+
+my $p = HTML::Parser-&gt;new(
+    start_h =&gt; [\&amp;process_tag, 'tag,text'],
+    end_h =&gt; [\&amp;process_tag, 'tag,text'],
+    default_h =&gt; [\&amp;process_default, 'text']
+);
+
+$p-&gt;parse($_);
+
+## EOL
+</pre></blockquote><p></p><br><br><br><br><h2>Speed tips for an optimized, low latency, high speed and efficient web server</h2><blockquote><p>Whether your website is new or old everyone wants to send out information to their users quickly. A fast serving website is known to keep users around as people do not like to wait for a page to load. Google even includes the speed your webserver loads through Googlebot in its calculations of PageRank. In essence, the faster your page loads the higher your Google rank and the happier your users are. Lets take a look at a few ways to get your pages load quickly.</p><p><b>Network speed and capacity: </b> First and foremost you have to take in account your connection speed and packet rate to your users. If you have a lot of data to send and your are limited by your upload speed of your connection then your server might be fast enough to send out the data, but you simply can not get the bits uploaded fast enough to the user. Also be aware of the packet switching rate of your connection is usually rated in packets per seconds or pps. Make sure that your network is up to the task of delivering your data.</p><p>Lets say you have a main web page and it contains 10 objects,(i.e. pictures, text, css and so on) and the total size of all the objects are 300 kilobytes. 300 KB by the way is the average size of web page these days according to Google. If you want to serve one person per second then you will need at least 400 KB/sec of upload bandwidth including the TCP stack over head. Truthfully, this would be doable with most home DSL, Cable or FIOS connections. If you want to serve that same page to 10 people per second then you will need 10x the bandwidth or 4 megabytes per second. You need to make sure your upload bandwidth can handle the site you are trying to serve.</p><p><b>Workers and worker_processes: </b> ideally you want to setup nginx to use one(1) less worker then you have physical cores in your machine. A four(4) core machine would have three(3) workers. The last free core is left to be used by the OS and interrupts for the network interface. Setup the worker_processes to as low a number as you feel can support the maximum number of concurrent users connecting to your site. When you multiply workers, three(3) in this case, against worker_processes you get to total amount of client connections accepted by nginx. Lets say our webserver will never expect to receive more then 50 concurrent users at any one time. We can set worker_process to as little as 25 since workers times worker_processes would equal 75. The advantage of a low worker_process count is very, very fast reaction times when a client connects. When a client issues a request there is some serial contention when Nginx assigns a processes to fulfilling a request. By keeping worker_processes low you gain fast reaction speed.</p><p><b>Keep-alives enabled: </b> make sure you use Nginx's capability to use keep-alive requests. Keep-alive requests allow the client to request multiple items through a single TCP connection. This is very efficient delivery method compared to opening a TCP connection for every item. For example, it might take a client 0.5 second to open a new TCP connection when they could have just asked for another object in a current TCP stream which is practically instant. If you had 50 objects on the page and had to open 50 connections that could mean the page would load in 25 seconds. If you allowed the client to request the items through keep-alive the page could have loaded in just a few seconds. Its that big of a difference.</p><p><b>Static data is faster: </b> make sure the method you are serving pages at can handle the load of your clients. For example, static content can be delivered faster then dynamically generated content. Try to have as many static files as possible on your site if you can. You will see a big increase in page load times if you do.</p><p><b>Cache dynamic content: </b>If your content is dynamically generated then take a look at caching responses to the clients. Caching will increase the speed of your dynamically generated content significantly. If a page is the same for all clients there is no reason to generate it for every request. Cache those pages and decrease your response times to milliseconds.</p><p><b>High speed RAM disk: </b> setup your htdocs directory in a <a href="http://en.wikipedia.org/wiki/RAM_disk">RAM disk or RAM drive</a> and content delivery will be almost instantaneous. A ram disk is simply a directory which points to a section of ram instead of the normal hard drive. Ram is thousands of times faster then the hard drive or even a SSD drive so it makes sense to use it for a web server. The idea is to have your normal web files on the hard drive as your primary copy since ram disks go away when the system is rebooted. Then setup a ram drive as a directory and copy or rsync the files from the hard drive htdocs to the high speed ram disk. Then point nginx to the mount mount which reads from the ram disk.</p><p><b>Open_file_cache: </b> Once you have setup your ram drive or hard drive make sure you use Nginx's open_file_cache directive like we have in the examples above. This will allow nginx to access the files by inode number and bypass many of the slow lookups the OS needs to do to find a file. The cache will reduce access times by critical tenths of a second.</p><p><b>Buffer log writing: </b>When a client accesses your server Nginx will log the action. Every time the log is written there is an I/O call to the hard drive and this is expensive. Use the "buffer=32k" directive in the access_log line to reduce the server load. This will wait until at least 32 kilobytes of log data is ready before writing it out to the log file. In fact, increase this number even larger if you have lots of traffic. It will reduce the load on your box considerably.</p><p><b>Strip out white space: </b>White space is any extra lines, new line characters, extra spaces or extraneous data in the HTML page. Taking this junk out can reduce your web page size by just a few percent, but every bit counts. The smaller the page is the faster it can be sent. Right above this section we have a script called "strip_whitespace.pl" to help you out.</p><p><b>Make your pictures small and efficient: </b>If you do not need a big JPG on your page then make it smaller. Crop out any extra sections of the picture that are not needed or even blur the background to allow the compression algorithm the be more efficient. The majority of bandwidth used today is for pictures according to Yahoo and Google. You can save a lot of bandwidth and increase response time by serving optimized pictures. Use a program like pngcrush to make your PNG files smaller. If you prefer a web based tool, Yahoo offers <a href="http://www.smushit.com/ysmush.it/">Yahoo Smush.it</a> to compress your images for you and download the result. Take a look at Google's <a href="http://code.google.com/speed/articles/optimizing-images.html">Optimizing web graphics</a> for more ideas on making your pictures smaller.</p><p>To quantify the speed you can serve data at you need to test the webserver under extreme load and your real world busiest conditions.</p><br><br><h3>Stress testing your system and web server</h3><p>One of the tools we have found to be the best at stress testing a system is httperf. It does a really good job at opening connections quickly and sending requests. We noticed that many of the problems with tools is consistency and httperf does a significantly better job then "ab" also called apache benchmark. Also note that using httperf, apache bench or any other testing tool which just looks at single files is considered a "micro-benchmark". microbenchmark is really not a true measure of the server's performance in the real world, but a test one a very specific set of circumstances.</p><p></p><p>Here is an example of a FreeBSD 9.x system we setup to serve out static images for a web site. There are a few security tweaks to the system, but mainly it is a default install with _no_ /boot/loader.conf or /etc/sysctl.conf changes. The only purpose of this machine is to support the main web server by delivering buttons, favicons, signature images and such. We found that the majority of calls were made for these support objects and it was desired to split this function off to another box. Many sites split off their static data like Google's gstatic.com domain name.</p><p>To run the test you will need at least two separate boxes. One will be the client you will run httperf on and the other will be the web server, in this case it is the ip 192.168.1.100 we are connecting to. You need at least two boxes so one box is not the limiting factor of the test. For example, you could run out of cpu time, PCI bus bandwidth or hard drive bandwidth if serving and requesting was done on the same machine. If you have more clients to run httperf from that is even better. The limit should always be on the webserver side.</p><p>The webserver box is a simple 4 core (2.4GHz) machine with 4 gig or ram, a 320 gig SSD hard drive and a gigabit card. Using Nginx with "worker_processes 8", "worker_connections 500;" and keepalive_requests 100;" we served out an average of 74,908 images at a 12.3ms response time per request. Does the live site actually serve out this much data? No, the current average user load on the system is 6,00 sessions per second so we have room to grow. We could also add more machines and load balancer too, but to keep costs (power, rack space) down we limit this function to one machine.</p><blockquote><pre class="code">user@machine:~$ httperf --hog --server 192.168.1.100 --num-conn 10000 --rate 500 --num-calls=750
+
+Total: connections 3444 requests 1725444 replies 1722000 test-duration 23.047 s
+
+Connection rate: 149.4 conn/s (6.7 ms/conn, &lt;=1022 concurrent connections)
+Connection time [ms]: min 529.2 avg 6161.9 max 9756.6 median 6409.5 stddev 1285.4
+Connection time [ms]: connect 1.2
+Connection length [replies/conn]: 500.000
+
+Request rate: 74867.6 req/s (0.0 ms/req)
+Request size [B]: 65.0
+
+Reply rate [replies/s]: min 74683.7 avg 74908.1 max 75211.1 stddev 222.6 (4 samples)
+Reply time [ms]: response 12.3 transfer 0.0
+Reply size [B]: header 215.0 content 151.0 footer 0.0 (total 366.0)
+Reply status: 1xx=0 2xx=1722000 3xx=0 4xx=0 5xx=0
+
+CPU time [s]: user 4.03 system 18.91 (user 17.5% system 82.1% total 99.5%)
+Net I/O: 31530.5 KB/s (258.3*10^6 bps)
+
+Errors: total 10000 client-timo 0 socket-timo 0 connrefused 0 connreset 3444
+Errors: fd-unavail 6556 addrunavail 0 ftab-full 0 other 0
+</pre></blockquote><br><br><h3>Real world load, not just stress testing</h3><p>Stress testing is only good to find out what your system can do in the worst possible scenario (DDOS ?). You do not want to run your server at 100% utilization in production so stress testing is not good way to find out what the server will look like in production. For real world testing look at what your normal traffic load looks like at your busiest times of the day. This will show you how the system will behave when it is being used normally.</p><p>In our real world test case the web server was busiest when it was serving 192 concurrent sessions with 47 requests from each client (ip address). Every client can request each of those 47 items (pictures) as fast as they can to keep page load times down to a minimum. This peak load was only seen for a few minutes per hour for a total of 4 hours in the later part of the day. In our test we want to see what the webserver would look like if it had to serve out the peak load for a full 45 minutes.</p><p>The results of the test were promising; both top and httperf results are in the following window. While running httperf for 47 minutes straight, top showed that the web-server's load was steady at 0.42, each of the 8 nginx processes were at around 4%, system interrupts at 7% and the system as a whole was 85% idle for the entire testing time. Network load on the webserver was 1.2 megabytes per second incoming and 3.8 megabytes per second outgoing. We received requests for and served 25,627,681 small static objects total or an average of 9,024 requests per second.</p><blockquote><pre class="code">##
+#### top on the webserver box
+##
+last pid:  2655;  load averages:  0.42,  0.45,  0.33
+28 processes:  5 running, 23 sleeping
+CPU 0:  1.6% user,  0.0% nice,  6.7% system,  6.7% interrupt, 85.0% idle
+CPU 1:  4.7% user,  0.0% nice,  8.7% system,  0.0% interrupt, 86.6% idle
+CPU 2:  1.6% user,  0.0% nice, 13.0% system,  0.0% interrupt, 85.4% idle
+CPU 3:  2.8% user,  0.0% nice, 10.2% system,  0.0% interrupt, 87.0% idle
+Mem: 15M Active, 11M Inact, 125M Wired, 28K Cache, 18M Buf, 3791M Free
+Swap: 4096M Total, 4096M Free
+
+  PID USERNAME  THR PRI NICE   SIZE    RES STATE   C   TIME   WCPU COMMAND
+ 2599 nobody      1  26    0 22892K  4636K CPU0    0   0:56  5.27% nginx
+ 2601 nobody      1  20    0 22892K  4636K kqread  0   1:00  4.20% nginx
+ 2600 nobody      1  25    0 22892K  4624K CPU3    3   1:04  3.37% nginx
+ 2597 nobody      1  25    0 22892K  4624K RUN     0   0:59  3.37% nginx
+ 2598 nobody      1  20    0 22892K  4632K kqread  1   0:59  3.27% nginx
+ 2602 nobody      1  20    0 22892K  4616K kqread  1   0:49  2.98% nginx
+ 2595 nobody      1  25    0 22892K  4624K CPU2    2   1:10  2.20% nginx
+ 2596 nobody      1  20    0 22892K  4624K kqread  0   1:13  0.00% nginx
+
+
+##
+#### httperf on the client box (stopped after ~47 minutes)
+##
+user@machine:~$ httperf --hog --server=192.168.1.100 --wsess=100000,47,0 --rate 192
+
+Total: connections 545279 requests 25627681 replies 25627681 test-duration 2839.948 s
+
+Connection rate: 192.0 conn/s (5.2 ms/conn, &lt;=19 concurrent connections)
+Connection time [ms]: min 92.0 avg 92.4 max 95.4 median 92.5 stddev 0.2
+Connection time [ms]: connect 0.3
+Connection length [replies/conn]: 47.001
+
+Request rate: 9024.0 req/s (0.1 ms/req)
+Request size [B]: 65.0
+
+Reply rate [replies/s]: min 8944.2 avg 9024.0 max 9025.9 stddev 3.4 (568 samples)
+Reply time [ms]: response 0.3 transfer 0.0
+Reply size [B]: header 216.0 content 151.0 footer 0.0 (total 367.0)
+Reply status: 1xx=0 2xx=25627681 3xx=0 4xx=0 5xx=0
+
+CPU time [s]: user 659.85 system 2180.03 (user 23.2% system 76.8% total 100.0%)
+Net I/O: 3807.0 KB/s (31.2*10^6 bps)
+
+Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
+Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
+
+Session rate [sess/s]: min 188.58 avg 192.00 max 192.21 stddev 0.15 (545261/545261)
+Session: avg 1.00 connections/session
+</pre></blockquote><br><br><p>These tests are just a guide. Your results will be different as the speed and latency of your network, machine speed and object sizes will influence the results greatly. Take some time to familiarize yourself with the testing methods and tools. Then you can objectively see what your server can do and how you can make delivery of every single item on your web site as fast as possible. The best result will be an increase in your Google PageRank and increased traffic and at least your users will be thankful your site is quick to respond.</p></blockquote><br><br><p></p><div class="note"> Check the <a href="https://calomel.org/save_web_bandwidth.html">Webserver Optimization and Bandwidth Saving Tips</a> for ideas on how to serve your data even more efficiently. </div><p></p><br><br><br><br><h2>Questions?</h2><p><b>How can I protect my server from a DOS or DDOS with nginx ? </b></p><blockquote><p>DDOS or Distributed Denial of Service attacks are primarily used to take down a server or individual service. Attacks are usually initiated for a reason. They may be from a competitor trying to disrupt your business or from someone who feels you have wronged them in some way. Attacks do cost money and time so you can be assured they will stop eventually. The question is what price will you have to pay in time and technical services to stay on line. Plan ahead and have a disaster plan in place; you may have to deploy it at the most inopportune time like the day of a product launch or even in the middle of a holiday weekend.</p><p>There are primarily three types of attacks; hitting a CPU or database intensive page which uses up server resources, using up all your network bandwidth or hitting the server with a small packet payload, high rate of packets per second. The high packet per second attack is mostly used due to the low bandwidth needed from the attacking bot net and how easy it is to resource starve the target machine if it is not setup with this type of attack in mind.</p><p>We would like to give you specific settings to fend off a DDOS, but the configuration really depends on the type of attack you are receiving. Start with the settings we used in the examples above. On top of that you will probably want to have nginx setup with very short connection timeouts and make sure the server is using rate limiting as well to mitigate aggressive clients. You may also want to take a look at a perl script we have called, <a href="https://calomel.org/web_server_abuse_detection.html">Web Server Abuse Detection Script (perl)</a> which will watch the logs in real time for errors and use the firewall to block those ips.</p><p>Truthfully, there is only so much you can do to weather the storm of a DOS on a single server. You may need to setup a machine in front of the main webserver to be a reverse proxy. Something like a FreeBSD box using Nginx reverse proxy and acting as a caching server plus the use of Pf (packet filer) as a real time firewall.</p><p></p><p>If the DDOS is big enough you will want to look at setting up a cluster of machines at many different data centers. You only need to rent the servers for a month or so because most DDOS attacks do not last more then a few days. The costs for the servers might be as low as $25 per machine per data center. Each of these machines can be a Nginx reverse proxy pointing to your main server. Your main server only accepts traffic from the proxy servers and you change your domain's DNS to round robin to the rented proxy servers. Each reverse proxy will be filtering out DDOS traffic as needed, cache static data and serving clients on their own dedicated network. What is great about this approach is you control all the reverse proxies so you can setup scripting to block the attack as needed. You also have the full bandwidth of that data center's system to absorb the attack. If you need more bandwidth just sign up for another machine in another data center. It might cost you as little as a few hundred dollars per month to rent 10 servers at ten different data centers to hold off the attack and keep your customers traffic flowing.</p><p>Being hit by a big DDOS is not something you can just flip a switch and hold off unless you are ready for it and understand it. You need to plan for worst case scenarios and understand what steps you are going to take to stop an attack. Setup your servers securely, limit access to your services to sane values, try to use caching as much as possible and understand what each anti-dos mitigating step will accomplish. You may find you can hold off the script kiddies with your normal web server, a larger DOS with a reverse proxy cluster and a large DDOS with a distributed reverse proxy constellation.</p><p>In the end, can you win against a DDOS attack? Sadly, it really depends on your attacker's resources, how much money and time they have and how much business you are willing to loose if you can not out match your attackers. You might be able to withstand the onslaught if the attack is small compared to your infrastructure like when Anonymous attacked Amazon.com. It is also possible you or your company are no match for your attackers and they make you pay an "extortion" fee because it is less then the business you are loosing. It is also possible that the attack is just not worth your time and you take yourself offline till the attacks go away. Take a look at the WIRED link below for a story of a gambling site with plenty of money who actually lost the good fight.</p><p>Here are some good references you may want to start your research with: </p><ul><li><a href="http://www.wired.com/wired/archive/14.11/botnet.html">WIRED: Attack of the Bots</a></li><li><a href="http://rerepi.wordpress.com/2008/04/19/tuning-freebsd-sysoev-rit/">Tuning FreeBSD to serve 100-200 thousands of connections</a></li><li><a href="http://dos-attacks.com/2010/11/05/under-a-ddos-attack-%E2%80%93-here-is-what-you-can-do/">Under a DDoS Attack? Here is what you can do...</a></li><li><a href="http://blog.unixy.net/2010/08/the-penultimate-guide-to-stopping-a-ddos-attack-a-new-approach/">The penultimate guide to stopping a DDoS attack</a></li><li><a href="http://silverwraith.com/papers/freebsd-ddos.php">FreeBSD and Internet Attacks: Protecting yourself from denial of service</a></li></ul><p></p></blockquote><p><b>How can I build Nginx with TLS 1.2 (TLS 1.0 to 1.2) support and the newest OpenSSL ?</b></p><blockquote><p>More then likely the current OS's revision of openssl is 0.9.x or similar. Check your version of Openssl by running, "openssl version". OpenSSL before version 1.0.1 will only support TLS 1.0 and this is the root of the issue. Only the latest build of OpenSSL will support TLS 1.1 and 1.2. Also, there are many vulnerabilities to TLS 1.0 which 1.1 and 1.2 fix. Building Nginx against the newest version of OpenSSL will allow you to support TLS 1.2 clients like Opera and IE9 (Firefox and Chrome use NSS and do not support TLS 1.2 yet).</p><p>You will need to build Nginx from source and use the OpenSSL 1.0.1 (stable snapshot). The build is quite easy and this is one way to do it.</p><blockquote><pre class="code">## make a directory to build the source of both Nginx and OpenSSL
+mkdir /tmp/build
+cd /tmp/build/
+
+
+## wget the tar files for openssl stand snapshot. Goto this
+## ftp server and get the latest 1.0.1 tar file.
+ftp://ftp.openssl.org/snapshot/
+
+
+## Now wget the latest NGinx source from here.
+http://nginx.org/en/download.html
+
+## Untar both files in /tmp/build/
+
+## cd directory into the nginx source tree and execute the following line. MAKE
+## SURE to change the "--with-openssl" directive in this line to point to the
+## path of the openssl 1.0.1 source you downloaded. This is a very long line
+## since we cut out a lot of the modules not needed for a static file server. Just
+## copy and paste it somewhere you can look at it more closely. 
+
+make clean; ./configure --with-http_ssl_module --with-http_gzip_static_module --without-http_autoindex_module --without-http_browser_module --without-http_fastcgi_module --without-http_geo_module --without-http_empty_gif_module --without-http_map_module --without-http_proxy_module --without-http_memcached_module --without-http_ssi_module --without-http_userid_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module --without-http_split_clients_module --without-http_uwsgi_module --without-http_scgi_module --without-http_limit_zone_module --without-http_referer_module --without-http-cache --without-http_upstream_ip_hash_module --prefix=/usr/local/nginx --sbin-path=/usr/local/sbin/nginx --with-openssl=/tmp/build/openssl-1.0.1-stable-SNAP-20111219/ --conf-path=/etc/nginx.conf --pid-path=/var/run/nginx.pid --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --user=nginx --group=nginx &amp;&amp; make &amp;&amp; make install 
+
+## that's about it. When you start nginx you can test out the build
+## using your new copy of openssl. For example, You can see that calomel.org
+## supports TLS 1.2 with the strongest Elliptic curve Diffie Hellman key agreement
+## and SHA384 hash.
+echo 'GET HTTP/1.0' | /tmp/build/openssl-1.0.1-stable-SNAP-20111220/apps/openssl s_client -connect calomel.org:443
+ ...
+  SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+ ...
+</pre></blockquote></blockquote><p><b>How do I rotate the logs in Nginx ?</b></p><blockquote><p>There are two option regarding Nginx log rotation: you can use logrotate or you can write your own script. Using logrotate is good if you are on a Linux system and it is available. If you are running on OpenBSD or FreeBSD using the simple script method might be better. Let's look at both.</p><p><b>Logrotate: </b> This is the config for the logrotate daemon. Just make a file called "/etc/logrotate.d/nginx" with the following in it. This will rotate the log files daily and keep 12 archived copies. The Nginx daemon will then be HUP'd and start writing to the new log files. Please make sure the kill line points to the location the nginx.pid is in on your machine.</p><blockquote><pre class="code">user@machine:~# cat /etc/logrotate.d/nginx 
+/var/log/nginx/*.log {
+        daily
+        missingok
+        rotate 12
+        compress
+        delaycompress
+        notifempty
+        create 644 nobody root
+        sharedscripts
+        postrotate
+                kill -USR1 `cat /usr/local/nginx/logs/nginx.pid` &gt; /dev/null
+        endscript
+}
+</pre></blockquote><br><p><b>Script method log rotation: </b>This is a simple script to move the files to another directory and date them. The script is run daily through cron.</p><blockquote><pre class="code">## First make this script and make sure it is executable by the root user,
+## "chmod 700 /root/nginx_logrotate.sh" and "chown root /root/nginx_logrotate.sh"
+
+root@machine:~# cat /root/nginx_logrotate.sh 
+#!/bin/bash
+#
+## Nginx log rotation
+
+## move the logs
+mv /var/log/nginx/access.log /log_archives/access.log_`date +%F`
+mv /var/log/nginx/error.log /log_archives/error.log_`date +%F`
+mv /var/log/nginx/cache.log /log_archives/cache.log_`date +%F`
+
+## HUP nginx to start new log files
+kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+
+## clear out old log files after 90 days
+find /log_archives/ -type f -mtime 90 -exec ls -la {} \;
+
+
+## Second, add a cron job to execute the log rotation script every night at 23:59 (11:59pm)
+
+root@machine:~# crontab -l
+## nginx log rotation
+59   23    *   *   *   /root/nginx_logrotate.sh
+</pre></blockquote></blockquote><p><b>How can Nginx log to a central log server ?</b></p><blockquote><p>One way to get Nginx to log to a central log server or loghost is to use rsyslog. The newest Linux distributions should already have rsyslog installed by default. Rsyslog will simply log any lines found in the access log to the central loghost facility. Once this config is setup just restart rsyslog and look in /var/log/syslog for the webserver logs.</p><blockquote><pre class="code">## First, add this line to the /etc/rsyslog.conf . This will add support for log file reading. 
+$ModLoad imfile
+
+## Second, make a file called /etc/rsyslog.d/nginx.conf and put the following
+## in it. This will tell rsyslog to look at the Nginx access log located at
+## /var/log/nginx/access.log and log at the "info" level. This method is very
+## efficient.
+
+root@machine:~# cat /etc/rsyslog.d/nginx.conf 
+$InputFileName /var/log/nginx/access.log
+$InputFileTag nginx: 
+$InputFileStateFile stat-nginx-access 
+$InputFileSeverity info  
+$InputRunFileMonitor 
+</pre></blockquote></blockquote><p><b>How can I time the latency of multiple TCP and SSL handshakes ?</b></p><blockquote><p>Curl is the tool of choice. Here we make two(2) connections to encrypted.google.com and time the responses from both the 3 way TCP handshake and the SSL negotiation of Google's 1024 bit rsa certificate key. We see that the first connection completes the 3 way TCP handshake in 32ms and the SSL handshake finishes 95ms after that. The second connection on the next line is all 0.00's because Google allows keepalive connections. So, the second request went over the same TCP connection as the first and thus saved us time. Keepalive's are quite useful when used correctly.</p><blockquote><pre class="code">### bash shell
+$ export URL=https://encrypted.google.com
+$ curl -w "tcp: %{time_connect} ssl:%{time_appconnect} .. $URL\n" -sk -o /dev/null $URL -o /dev/null $URL
+tcp: 0.032 ssl:0.095 .. https://encrypted.google.com
+tcp: 0.000 ssl:0.000 .. https://encrypted.google.com
+</pre></blockquote></blockquote><p><b>How can I best optimize Nginx for HTTPS connections ?</b></p><blockquote><p>SSL negotiations consume a bit more CPU resources than a standard http connection. Understand that the amount of CPU used for HTTPS is not excessive, but the negotiation process does add a bit of delay (latency) to the initial connection process. On multi-processor systems you want to run several worker processes which are no less than the number of available CPU cores. By cores we mean real cores and not hyperthread Intel virtual cores.</p><p>The most CPU-intensive operation in HTTPS is the SSL handshake. There are a few ways to minimize the number of operations per client: </p><ul><li>First, enable keepalive connections to send several requests via one connection.</li><li>Second, reuse SSL session parameters to avoid SSL handshakes for parallel and subsequent connections.</li><li>Third, decide how many clients will connect per second and figure out if your cipher and hardware can handle the load</li></ul><br><b>Enable keepalives</b><p>Enable the "keepalive" directive to allow a remote client to send multiple queries per TCP connections. Take a look at our examples above concerning keepalive_requests and keepalive_timeout. You will want to look at the average amount of objects per page you serve. If we have 10 objects (pictures, html, css, html, ect. ) then set the keepalive_requests to something like 50 or 5 times the average. This means a client could load 5 full pages if they did not have local caching enabled before they would need to open another connection. A keepalive_timeout of 300 seconds is good to support long lived connections and the default 300 second timeout of a negotiated ssl connection. </p><blockquote><pre class="command">keepalive_requests    50;
+keepalive_timeout     300 300;
+</pre><p></p></blockquote><br><b>Setting up SSL session cache</b><p>The sessions stored in an SSL session cache are shared between workers and configured by the ssl_session_cache directive. One megabyte of the cache contains around four thousand (4000) sessions. The default cache timeout is 5 minutes and this can be increased by using the ssl_session_timeout directive. Here is a sample of the "Option 2" configuration from above. Just like in the example Nginx is optimized for a quad core system with 10M shared session cache: </p><blockquote><pre class="command">worker_processes  4;
+
+http {
+  ## Global SSL options
+  ssl_ciphers HIGH:!ADH:!MD5;
+  ssl_prefer_server_ciphers on;
+  ssl_protocols TLSv1;
+  ssl_session_cache shared:SSL:10m;
+  ssl_session_timeout 5m;
+
+  server {
+   listen            443;
+   server_name       example.com www.example.com;
+   keepalive_timeout 300 300;
+
+   ssl               on;
+   ssl_certificate /ssl_keys/mydomain.com_ssl.crt;
+   ssl_certificate_key /ssl_keys/mydomain_ssl.key; 
+   ...
+</pre><p></p></blockquote><br><b>How many ssl clients and how fast can we encrypt data?</b><p>You need to know how many SSL enable clients will be connecting to your servers per second and how fast you can encrypt the data flow. As we stated before the majority of time with SSL connections is taken up by the SSL handshake. The cipher you choose and the CPU in your machine are going to be the determining factors on how fast you negotiate with clients and how fast you encrypt data.</p><p>For these tests we will be using an Intel Quad core Xeon CPU L5630 @ 2.13GHz with 4gig of 1333MHz ram. The test OS is OpenBSD v5.0 (stable) and OpenSSL 1.0.0a. AES-NI (AES New Instructions) or the Advanced Encryption Standard (AES) Instruction Set can be enabled in our BIOS and is supported by our CPU. AES-NI is an extension to the x86 instruction set architecture for microprocessors from Intel and AMD with the purpose to improve the speed of applications performing encryption and decryption using the Advanced Encryption Standard (AES). The AES standard is comprised of three block ciphers, AES-128, AES-192 and AES-256, adopted from a larger collection originally published as Rijndael.</p><p>The first test will show us how fast our system can sign our ssl certificate during a handshake and how many ssl clients we can handshake with per second. A handshake is the action of the client and server opening up an encrypted connection between each other and negotiating with the site's SSL certificate. The common size of a SSL certificate is 1024, 2048 or 4096 bits. For example we sign calomel.org with a rsa 4096 bit key. So, when a client connects to our site they must negotiate with us with a rsa 4096 bit certificate.</p><p>The "sign" and "sign/s" are the values we want to examine. Make special note that the first results are for a single core and Nginx can work with multiple cores depending on your "worker_processes" directive. At rsa 4096, like what calomel.org is using, openssl specifies this machine can handshake with 44.9 clients per second per core and complete each certificate signing in 22ms (0.022). At rsa 2048 openssl can handle 300.1 SSL handshakes per second per core and sign in 0.3ms (0.003).</p><p>Note: AES-NI does NOT increase the speed of handshakes at all.</p><blockquote><pre class="code">#### Intel Quad core Xeon CPU L5630 @ 2.13GHz
+ user@machine: openssl speed rsa
+                   sign    verify    sign/s verify/s
+ rsa 4096 bits 0.022267s 0.000336s     44.9   2977.1 (1 core)
+ rsa 2048 bits 0.003332s 0.000092s    300.1  10814.8 (1 core)
+ rsa 1024 bits 0.000535s 0.000030s   1867.7  33674.9 (1 core)
+
+ user@machine: openssl speed -multi 4 rsa
+                   sign    verify    sign/s verify/s
+ rsa 4096 bits 0.005498s 0.000084s    181.9  11922.5 (4 cores)
+ rsa 2048 bits 0.000831s 0.000023s   1203.6  43244.5 (4 cores)
+ rsa 1024 bits 0.000134s 0.000007s   7435.1 134482.8 (4 cores)
+</pre></blockquote><p>The second test shows how much block cipher data our system can encrypt in real time. This simulates a bulk data transfer like uploading or downloading a large file encrypted over SSL after the handshake is completed. We see that our machine and openssl can process over (145855.83k / 1024) 142 megabytes per second per core of AES 256bit, 8192 byte chunked encrypted data. This is where AES-NI can help the most. If we enable AES-NI we can almost quadruple the encryption / decryption speed as a single core can processes (402330.62k / 1024) 392 megabytes per second per core up from 142 megabytes per second per core. If we use all four(4) cores we could saturate a 10 gigabit link.</p><blockquote><pre class="code">### single core AES 256bit encryption 
+ user@machine:  openssl speed -engine aesni aes-256-cbc
+ The 'numbers' are in 1000s of bytes per second processed.
+ type          16 bytes      64 bytes     256 bytes    1024 bytes    8192 bytes
+ aes-256 cbc   51537.86k     53793.62k    54669.65k    143895.81k    145855.83k (single core)
+ aes-256-cbc  269689.64k    328777.67k   401489.65k    400522.80k    402330.62k (single core AES-NI on)
+
+### four(4) cores AES 256bit encryption 
+ user@machine:  openssl -multi 4 -engine aesni speed aes-256-cbc
+ The 'numbers' are in 1000s of bytes per second processed.
+ type          16 bytes      64 bytes     256 bytes    1024 bytes    8192 bytes
+ evp          197800.42k    212958.32k   218247.91k    574456.18k    578834.20k (4 cores)
+ evp         1078184.98k   1222598.23k  1574396.94k   1610181.83k   1609346.98k (4 cores AES-NI on)
+</pre></blockquote><br><b>SSL optimization conclusions</b><p><b>How do I know if my machine supports AES-NI?</b> The new range of Intel and AMD CPU's have support for AES-NI. You should see a section in your BIOS called "AES-NI" under the CPU processor options. You can also check to see if your OS supports AES-NI. We used OpenBSD v5.0 stable and this does. You can use the command "openssl engine -t" and it should report "(aesni) Intel AES-NI engine [available]". If you see "(no-aesni)" anywhere on the line then AES-NI is NOT supported for your hardware even though the engine is available. Again, you need to make sure you enable the AES-NI option in the BIOS if available before the OS can support the option. Be aware that in order for you to take advantage of AES-NI the hardware (Intel L5630 CPU), the BIOS, the OS (OpenBSD v5.0 stable) and the program (OpenSSL 1.0.0.a) you use must all support AES-NI instructions.</p><p><b>What if you need more speed than a single machine can offer?</b> In most cases it is more cost effective to buy a weaker SSL certificate (1024 bit or 2048 bit compared to 4096 bit) than it is to buy SSL hardware. Looking at the results of the test above we see our machine can sign a 4096bit key 181.9 handshakes per second using all four(4) cores. What if you need to support 500 handshakes per second? You can buy more machines or you could just use a weaker rsa key if your business plan allows it. Our tests show this machine can support 1203.6 handshakes per second when using a rsa 2048 certificate key.</p><p>You can also take a look at some hardware SSL accelerator cards. They are beyond the scope of this article. What we have seen is hardware cards add too much overhead to the process to be truly viable and they normally do not help to speed up the handshake process. The hardware cards normally just speed up the AES block cipher encryption like AES-NI did. We prefer to add more machines to our cluster as this is the best price to performance option. If you have a few moderately powered front end SSL web proxies this will be a lot less expensive to run than one huge machine. Also, if one of the small front end goes down the others can take over. If the huge machine dies then you are offline. We prefer the smaller modular design.</p></blockquote><p><b>Can Nginx support many HTTPS domains on a single ip address ?</b></p><blockquote><p>Yes. A solution for running several HTTPS servers on a single IP address is TLSv1.1 <a href="http://en.wikipedia.org/wiki/Server_Name_Indication">Server Name Indication</a> extension (SNI, RFC3546), which allows a browser to pass a requested server name during the SSL handshake and, therefore, the server will know which certificate it should use for the connection. Support is available in all modern browsers. Note: regardless of server SNI support, older browsers always get the certificate of default server and they complain if a server name does not match a certificate's server name. Theoretically, after this step you may redirect them to an other server, but it's too late from user point of view.</p><p>In order to use SNI in Nginx, SNI must be supported in both the OpenSSL library with which the Nginx binary has been built as well as the library to which it is being dynamically linked at run time. OpenSSL supports SNI since 0.9.8f version if it was built with config option --enable-tlsext. Since OpenSSL 0.8.9j this option is enabled by default. If nginx was built with SNI support, then nginx will show this when run with the -V switch: </p><pre class="command">$ nginx -V
+   ...
+ TLS SNI support enabled
+   ...
+</pre><p></p><p>However, if the SNI-enabled nginx is linked dynamically to an OpenSSL library without SNI support, nginx displays the warning: </p><pre class="command">nginx was built with SNI support, however, now it is linked
+dynamically to an OpenSSL library which has no tlsext support,
+therefore SNI is not available
+</pre><p></p></blockquote><p></p><p><b>When using SSL, where does Nginx get its entropy ?</b></p><blockquote><p>Nginx uses OpenSSL's default entropy source. On Unix systems OpenSSL will try to use use /dev/urandom, /dev/random, /dev/srandom one after another. On FreeBSD /dev/urandom is symlink to /dev/random. On OpenBSD /dev/arandom is used. We highly advise using /dev/arandom On OpenBSD or FreeBSD if possible as it is extremely fast and uses high entropy. /dev/arandom uses the arc4random() method.</p><p>The arc4random() function provides a high quality 32-bit pseudo-random number very quickly. arc4random() seeds itself on a regular basis from the kernel strong random number subsystem described in random(4). On each call, an ARC4 generator is used to generate a new result. The arc4random() function uses the ARC4 cipher key stream generator, which uses 8*8 8-bit S-Boxes. The S-Boxes can be in about (2**1700) states. </p><p>The entropy source can be redefined by using the "SSLRandomSeed" directive and pointing to the new device. For example you can use the <a href="http://lukenotricks.blogspot.com/2009/12/usb-entropy-drive.html">Simtec Electronics Entropy USB Key</a> for high-quality random number generation.</p><p>For more detailed information about entropy check out our <a href="https://calomel.org/entropy_random_number_generators.html">Entropy and random number generators</a> page.</p></blockquote><p></p><p><b>Is Nginx susceptible to the Slowloris DoS attack like Apache ?</b></p><blockquote><p>It can be. Slowloris (slowloris.pl) holds connections open by sending partial HTTP requests. It continues to send subsequent headers at regular intervals to keep the sockets from closing. In this way webservers can be quickly tied up. In particular, servers that have threading enabled will tend to be more vulnerable, by virtue of the fact that they attempt to limit the amount of threading they'll allow.</p><p>Slowloris will wait for all the sockets to become available before it's successful at consuming them, so if it's a high traffic website, it may take a while for the site to free up it's sockets. So while you may be unable to see the website from your client, others may still be able to see it until all sockets are freed by them and consumed by Slowloris. This is because other users of the system must finish their requests before the sockets become available for Slowloris to consume.</p><p>Though it is difficult to be completely immune to this type of attack, Nginx is quite resilient. You can practice good web server security by doing the following: </p><ol><li>Limit the amount of connections and how fast those connections can be made from any ip address to your web server by use of your firewall. This can be done with <a href="https://calomel.org/pf_config.html">PF (we have a "how to")</a> or Iptables.</li><li>Time out clients who take too long to perform any action.</li><li>Drop clients immediately who send invalid data.</li><li>Limit the amount or memory, cpu time and system resources the webserver can use. This is so the webserver can not take down the machine if the site is attacked.</li></ol><p></p><p>The following Nginx directives will timeout clients who take too long to communicate their intentions to the server. The ignore_invalid_headers directive will drop any client trying to send invalid headers to the server. The explanations of each one is listed above on this page. </p><ul><li> client_header_timeout 60;</li><li> client_body_timeout 60;</li><li> keepalive_timeout 300 300;</li><li> ignore_invalid_headers on;</li><li> send_timeout 60;</li></ul><p></p></blockquote><p></p><p><b>How do I setup log rotation for Nginx logs on OpenBSD?</b></p><blockquote><p>Add the following two lines to the bottom of the /etc/newsyslog.conf file. This will rotate the logs if they are larger then 512KB and gzip the old file. We will keep a total of 4 log files. </p><pre class="code">root@machine# vi /etc/newsyslog.conf
+
+# logfile                       owner:group  mode count size when flags
+/var/log/nginx/access.log       root:wheel   644  4     512  *     Z     /var/run/nginx.pid
+/var/log/nginx/error.log        root:wheel   644  4     512  *     Z     /var/run/nginx.pid
+</pre><p></p></blockquote><p></p><p><b>Is it possible to ask Nginx to look in Memcached, but if not found to look on the local file system before passing to the back end? Would this make things more efficient?</b></p><blockquote><p>Yes, it's possible, but it would NOT be more efficient.</p><p>Sending the file from the local file system is most efficient way if kernel VM has cached that file: then sendfile() will be a zero-copy operation: you save memory and CPU time. Working with memcached or a back end server requires: </p><ul><li> copy operations to the kernel by memcached or back end systems,</li><li> then copy operations from the kernel by nginx,</li><li> then copy operations to the kernel by nginx</li></ul><p></p><p>If memcached or a back end server are on the same computer as nginx, then all these operations involve context switches between nginx and memcached or back end.</p><p>quoted from the author, Igor Sysoev</p></blockquote><p></p><p><b>In what circumstances would Nginx take advantage of multiple CPUs or cores?</b></p><blockquote><p>From my experience nginx needs more CPUs in 3 cases: </p><ul><li>nginx does a lot of gzip'ing </li><li>nginx handles many SSL connections </li><li>the kernel processes a lot of TCP connections of around 3,000 requests/s. </li></ul><p></p><p>For example, one could use a quad core for a PHP back end and a dual core for the nginx proxy to handle the connections and compressing the output.</p><p>paraphrased from the author, Igor Sysoev</p></blockquote><p></p><p><b>I am interested in setting up a SSL encrypted server (https port 443). Can your help me?</b></p><blockquote> Yes. Please check out our <a href="https://calomel.org/ssl_certs.html">Guide to Webserver SSL Certificates</a>. Setting up SSL through Nginx is quite easy. What is most important is understanding how SSL encryption works and what your expectations should be.</blockquote><p></p><p><b>Do you have a listing of all of the nginx directives?</b></p><blockquote> The nginx wiki site has all of the config directives listed on the <a href="http://wiki.codemongers.com/NginxModules">Nginx Wiki Configuration File Options</a> page.</blockquote><p></p><p><b>Can you suggest a good web page optimization reporting site?</b></p><blockquote>We highly suggest taking a look at <a href="http://www.webpagetest.org/">PageTest - Web Page Optimization and Performance Test</a>. It is free and will analyze a page and show graphs pertaining to your sites performance and speed of delivery.</blockquote><p></p><p><b>How can I test to see if my server is actually compressing/gzip'ing served files?</b></p><blockquote>Look at the logs and take a look at the end of each line. In the log format directive from our example above we defined the $gzip_ratio to show if a file is compressed. If you would rather use an external site for verification then check out <a href="http://whatsmyip.org/mod_gzip_test/">WhatIsMyIp Gzip Test</a> page. Put in the full URL in question and it will display the results. Finally, you can use the utility cURL, "curl -I --compressed http://localhost". This will show you the headers returned from the server. Look for a header "Content-Encoding: gzip".</blockquote><p></p><p><b>I am looking for a simpler web server. Can your help me?</b></p><blockquote> If you want a dead simple web server then check out the <a href="https://calomel.org/thttpd.html">tHttpd "how to"</a>. It is a webserver that is ready to use by executing one line and it works really well too.</blockquote><p></p><br><br><br><br><p>Questions, comments, or suggestions? <b><a href="https://calomel.org/calomel_at.html">Contact Calomel.org</a></b> or <a rel="author" href="https://profiles.google.com/101623135720127712698?rel=author">Google+</a></p><br><br><div style="text-align:center"><big><a href="https://calomel.org/">Calomel.org Home Page</a> :: Open Source Research and Reference</big></div></div><a href="https://calomel.org/"><img src="./Nginx  how to  - Fast and Secure Web Server (nginx.conf) @ Calomel.org - Open Source Research and Reference_files/calomel_footer.jpg" alt="Calomel.org :: Open Source Research and Reference" height="111" width="1000" border="0" class="center"></a></body><style type="text/css">embed[type*="application/x-shockwave-flash"],embed[src*=".swf"],object[type*="application/x-shockwave-flash"],object[codetype*="application/x-shockwave-flash"],object[src*=".swf"],object[codebase*="swflash.cab"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"],object[classid*="d27cdb6e-ae6d-11cf-96b8-444553540000"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"]{	display: none !important;}</style><link rel="stylesheet" type="text/css" href="data:text/css,"></html>

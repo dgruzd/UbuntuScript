@@ -1,5 +1,6 @@
 #!/bin/sh
 config_folder="$HOME/Script/config/vim"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #mv -i $HOME/.gvimrc $HOME/.gvimrc.backup
 ln -vi -s $config_folder/gvimrc $HOME/.gvimrc

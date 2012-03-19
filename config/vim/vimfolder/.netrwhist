@@ -1,7 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/nyaa/github/ip.railscasts.ru/app/views/layouts'
-let g:netrw_dirhist_2='/home/nyaa/BVS/app'
-let g:netrw_dirhist_3='/home/nyaa/github/reading-guru/app'
-let g:netrw_dirhist_4='/home/nyaa/kinderglaz/config/deploy'
-let g:netrw_dirhist_5='/home/nyaa/github/bestyoutubelyrics/app/assets/stylesheets'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/nyaa/projects/UbuntuScript/FirstInstall'
+let g:netrw_dirhist_2='/Users/nyaa/.vim/bundle'
+let g:netrw_dirhist_3='/Users/nyaa/.vim/bundle/nerdtree'
+let g:netrw_dirhist_4='/Users/nyaa/.vim/bundle/nerdtree/doc'

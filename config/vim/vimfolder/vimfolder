@@ -1,1 +1,0 @@
-/home/nyaa/Script/config/vim/vimfolder

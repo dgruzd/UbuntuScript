@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-ram = 2048
+ram = ARGV.first.to_i
 tables_count = 100
 fast_cpu = true
 

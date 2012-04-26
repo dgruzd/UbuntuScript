@@ -10,23 +10,25 @@ cd /tmp
 #chmod +x rvm
 #mv rvm rvm.sh
 
-wget -N https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer
-mv rvm-installer rvm.sh
-chmod +x rvm.sh
-./rvm.sh
-rm rvm.sh
+#wget -N https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer
+#mv rvm-installer rvm.sh
+#chmod +x rvm.sh
+#./rvm.sh
+#rm rvm.sh
+
+curl -L get.rvm.io | bash -s stable
 
 #seems like rvm auto add this line to .bashrc
-cp $HOME/.bashrc $HOME/.bashrc.backup
-echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && source \"$HOME/.rvm/scripts/rvm\"" >> $HOME/.bashrc
+#cp $HOME/.bashrc $HOME/.bashrc.backup
+#echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && source \"$HOME/.rvm/scripts/rvm\"" >> $HOME/.bashrc
 
 
 
-echo "Starting .bashrc:"
-echo "#######################################"
-cat $HOME/.bashrc | grep '.rvm'
-echo "#######################################"
-echo "Check is above a line with rvm"
+#echo "Starting .bashrc:"
+#echo "#######################################"
+#cat $HOME/.bashrc | grep '.rvm'
+#echo "#######################################"
+#echo "Check is above a line with rvm"
 
 echo "Now please restart shell or open a new one and install ruby"
 #echo "Ctrl + Shift + T > ./rmv2.sh"
@@ -34,8 +36,4 @@ echo "Now please restart shell or open a new one and install ruby"
 echo "Do you want to use ri & rdoc (on server recomended not to) [Y/N]?"
 read ri
 
-if [[ $ri =~ [Yy]  ]]; then
-echo "ok"
-else
-echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-fi
+if [[ $ri =~ [Yy]  ]]; then echo "ok"; else echo "gem: --no-ri --no-rdoc" > ~/.gemrc; fi

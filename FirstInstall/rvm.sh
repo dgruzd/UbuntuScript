@@ -19,6 +19,10 @@ sudo apt-get --assume-yes install git curl build-essential bison openssl libread
 #curl -L get.rvm.io | bash -s stable
 curl https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
 
+#http://railsapps.github.com/openssl-certificate-verify-failed.html
+#rvm pkg install openssl && rmdir $rvm_path/usr/ssl/certs && ln -s /etc/ssl/certs $rvm_path/usr/ssl
+#echo ":ssl_verify_mode: 0" >> ~/.gemrc
+
 #seems like rvm auto add this line to .bashrc
 cp $HOME/.bashrc $HOME/.bashrc.backup
 echo "[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && source \"$HOME/.rvm/scripts/rvm\"" >> $HOME/.bashrc

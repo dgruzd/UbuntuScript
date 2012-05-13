@@ -36,6 +36,7 @@ proml
 
 
 
+alias ll='ls -al '
 
 
 # APT ALIASES
@@ -54,7 +55,7 @@ alias gd='git diff'
 alias go='git checkout '
 alias gp='git push '
 alias gpu='git pull '
-alias gg='git add -A && git commit -a && git push'
+alias gg='echo "git add -A" && git add -A && echo "git commit -a" && git commit -a && echo "git push" && git push'
 alias gm='git merge --no-ff '
 
 alias gii='git rm -r --cached . && git add -A && git commit -a'

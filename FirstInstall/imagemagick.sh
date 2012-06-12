@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo apt-get --assume-yes install imagemagick libmagickcore-dev
+sudo apt-get --assume-yes install imagemagick libmagickcore-dev libmagickwand-dev

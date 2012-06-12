@@ -41,4 +41,9 @@ echo "Now please restart shell or open a new one and install ruby"
 echo "Do you want to use ri & rdoc (on server recomended not to) [Y/N]?"
 read ri
 
-if [[ $ri =~ [Yy]  ]]; then echo "ok"; else echo "gem: --no-ri --no-rdoc" > ~/.gemrc; fi
+if [ $ri =~ [Yy]  ];
+then 
+  echo "ok"
+else
+  echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+fi

@@ -5,7 +5,7 @@
 # For Ruby / Ruby HEAD (MRI, Rubinius, & REE), install the following:
   sudo apt-get --assume-yes install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion
 # Additional packages
-sudo apt-get --assume-yes install libsqlite3-0 ruby-dev wget libcurl4-openssl-dev libmemcached-dev libsasl2-dev libmemcached-dbg gettext
+sudo apt-get --assume-yes install libsqlite3-0 ruby-dev wget libcurl4-openssl-dev libmemcached-dev libsasl2-dev libmemcached-dbg gettext imagemagick
 
 curl -L get.rvm.io | bash -s stable
 #seems like rvm auto add this line to .bashrc

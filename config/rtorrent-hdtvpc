@@ -1,0 +1,31 @@
+port_range = 40007-40007
+port_random = no
+dht = auto
+dht_port = 40008
+peer_exchange = yes
+
+use_udp_trackers = yes
+
+directory = /home/nyaa/Downloads/
+
+min_peers = 1
+max_peers = 1000
+upload_rate = 0
+download_rate = 0
+
+session = /home/nyaa/.rtorrent_session
+
+check_hash = yes
+session_save = yes
+encryption = allow_incoming
+
+encoding_list = UTF-8
+
+schedule = watch_directory,5,5,load_start=/home/nyaa/torr/*.torrent
+#schedule = watch_directory,5,5,"load_start=/home/nyaa/torr/HD/*.torrent,d.set_directory=/home/nyaa/Video/HD"
+#schedule = watch_directory,5,5,"load_start=/home/nyaa/torr/Serial/*.torrent,d.set_directory=/home/nyaa/Video/Serial"
+
+
+
+#schedule = low_diskspace,5,60,close_low_diskspace=100M
+

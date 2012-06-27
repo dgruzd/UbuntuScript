@@ -33,9 +33,9 @@ if has("gui_running")
   elseif has("x11")
     set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
   else
-    set guifont=Courier_New:h11:cDEFAULT
+    set guifont=Monaco:h15
+"   set guifont=Courier_New:h11:cDEFAULT
   endif
-"  set guifont=Monaco:h14
   
 "https://github.com/altercation/vim-colors-solarized
 "  colorscheme desert 
@@ -51,6 +51,9 @@ else
 
 endif
 
+
+set cpoptions+=$
+set virtualedit=all
 
 " Statusline
 set laststatus=2

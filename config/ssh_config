@@ -1,0 +1,7 @@
+Host *
+GSSAPIAuthentication no
+GSSAPIKeyExchange no
+
+ControlMaster auto
+ControlPersist 5m
+ControlPath ~/.ssh/%r@%h:%p

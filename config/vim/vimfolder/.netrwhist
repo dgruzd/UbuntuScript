@@ -1,11 +1,3 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/Users/nyaa/remotefs/dm_hd'
-let g:netrw_dirhist_2='/Users/nyaa/github/stomsafe/app'
-let g:netrw_dirhist_3='/Users/nyaa/github/scicon/db/migrate'
-let g:netrw_dirhist_4='/Users/nyaa/github/scicon/app'
-let g:netrw_dirhist_5='/Users/nyaa/github/scicon/app/controllers'
-let g:netrw_dirhist_6='/Users/nyaa/github/scicon/app'
-let g:netrw_dirhist_7='/Users/nyaa/github/scicon/app/models'
-let g:netrw_dirhist_8='/Users/nyaa/github/stomsafe/db/migrate'
-let g:netrw_dirhist_9='/Users/nyaa/github/stomsafe/app'
+let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_1='/home/nyaa/github/scicon/db/migrate'

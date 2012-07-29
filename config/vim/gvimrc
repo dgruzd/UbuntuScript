@@ -1,8 +1,20 @@
 "Use Vim settings, rather then Vi settings (much better!).
 "This must be first, because it changes other options as a side effect.
 
-  call pathogen#infect()
-  call pathogen#helptags()
+"  call pathogen#infect()
+"  call pathogen#helptags()
+
+
+" Vundle
+set nocompatible
+filetype off " обязательно!
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+filetype plugin indent on " обязательно!
+
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails'
+
 
   set shell=/bin/sh
 

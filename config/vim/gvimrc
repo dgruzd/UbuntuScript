@@ -11,12 +11,13 @@ filetype off " обязательно!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 filetype plugin indent on " обязательно!
-
+Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-bundler'
 Bundle 'scrooloose/nerdtree'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
 
 
   set shell=/bin/sh

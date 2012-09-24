@@ -8,4 +8,4 @@
 
 sudo add-apt-repository ppa:pitti/postgresql
 sudo apt-get update
-sudo apt-get --assume-yes install postgresql libpq-dev
+sudo apt-get --assume-yes install postgresql libpq-dev postgresql-contrib

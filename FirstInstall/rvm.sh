@@ -17,3 +17,4 @@ echo "#######################################"
 echo "Check is above a line with rvm"
 
 echo "gem: --no-ri --no-rdoc" >> ~/.gemrc
+source ~/.rvm/scripts/rvm

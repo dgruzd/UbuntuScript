@@ -2,7 +2,7 @@
 q3config="$HOME/.q3a/baseq3/autoexec.cfg"
 wget32="ioquake3-1.36-7.1.i386.run"
 wget64="ioquake3-1.36-7.1.x86_64.run"
-url=http://q3.zengile.com/files
+url=http://q3.zengile.com/system/q3files
 
 
 echo "Type your machine type \"64\" or \"32\" bit (2 digits), followed by [ENTER]:"

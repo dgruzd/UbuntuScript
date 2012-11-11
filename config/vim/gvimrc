@@ -69,7 +69,7 @@ Bundle 'scrooloose/nerdtree'
 
 
   set cpoptions+=$
-  set virtualedit=all
+  " set virtualedit=all
 
   " Statusline
   set laststatus=2

@@ -2,6 +2,7 @@
 q3config="$HOME/.q3a/baseq3/autoexec.cfg"
 wget32="ioquake3-1.36-7.1.i386.run"
 wget64="ioquake3-1.36-7.1.x86_64.run"
+url=http://q3.zengile.com/system/q3files
 
 
 echo "Type your machine type \"64\" or \"32\" bit (2 digits), followed by [ENTER]:"
@@ -28,15 +29,16 @@ echo "r_customHeight $height" | tee -a $q3config
 echo "r_mode -1" | tee -a $q3config
 echo "vid_restart" | tee -a $q3config
 
+
 cd /tmp
 #http://ioquake3.org/extras/patch-data/
 echo "Downloading common quake3 resourses files.."
-axel -a http://dl.dropbox.com/u/9175582/quake3-latest-pk3s.zip
+axel -a $url/quake3-latest-pk3s.zip
 echo "Downloading maps.."
-axel -a http://dl.dropbox.com/u/9175582/quake3-maps.zip
+axel -a $url/quake3-maps.zip
 #quake gold cd
 echo "Downloading pak0.pk3 file.."
-axel -a http://dl.dropbox.com/u/9175582/PAK0.PK3
+axel -a $url/PAK0.PK3
 mv -v PAK0.PK3 $HOME/.q3a/baseq3
 unzip quake3-latest-pk3s.zip && rm -v quake3-latest-pk3s.zip
 unzip quake3-maps.zip && rm -v quake3-maps.zip

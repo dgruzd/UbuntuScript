@@ -1,0 +1,24 @@
+key_buffer              = 8M
+max_connections         = 30
+query_cache_size        = 8M
+query_cache_limit       = 512K
+thread_stack            = 128K
+
+
+/usr/share/doc/mysql-server-5.0/examples/my-small.cnf
+
+
+key_buffer_size
+query_cache_size
+query_cache_limit
+table_cache
+max_connections
+tmp_table_size
+innodb_buffer_pool_size
+
+
+#http://stackoverflow.com/questions/1178736/mysql-maximum-memory-usage
+#Hi! Thanks for your answer. I have noticed that the equation that people quote is the following: key_buffer_size+(read_buffer_size+sort_buffer_size)*max_connections=Total Memory. I have set the following: key_buffer_size=128M, read_buffer_size=1M, sort_buffer_size=2M, max_connections=120, and the total memory on the server is 512M. However, after many queries, the free memory has gone as low as 12M and would probably continue to go down with further usage. Is there a reason why this is so and can it be prevented? Thanks!
+
+
+#http://itbg.davnozdu.ru/2009/10/mysql-5-vdsvps-very-low-memory.html

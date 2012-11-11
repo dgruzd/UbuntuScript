@@ -1,0 +1,13 @@
+http://habrahabr.ru/blogs/ror/117797/
+gem 'yaml_db', :git => 'git://github.com/ludicast/yaml_db.git'
+
+export RAILS_ENV=production rake db:data:dump
+db/data.yml
+
+rake db:create
+rake db:migrate
+Ну и, наконец, загружаем дамп в новую базу:
+rake db:data:load
+
+мы используем gem install taps
+работает также db:push db:pull

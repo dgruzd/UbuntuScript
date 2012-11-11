@@ -1,0 +1,23 @@
+worker_processes 2
+working_directory "/home/username/www/redmine/"
+
+preload_app true
+
+timeout 30
+
+listen "/home/username/www/redmine/tmp/sockets/unicorn.sock", :backlog => 64
+
+pid "/home/username/www/redmine/tmp/pids/unicorn.pid"
+
+stderr_path "/home/username/www/redmine/log/unicorn.stderr.log"
+stdout_path "/home/username/www/redmine/log/unicorn.stdout.log"
+
+before_fork do |server, worker|
+    defined?(ActiveRecord::Base) and
+        ActiveRecord::Base.connection.disconnect!
+end
+
+after_fork do |server, worker|
+    defined?(ActiveRecord::Base) and
+        ActiveRecord::Base.establish_connection
+end

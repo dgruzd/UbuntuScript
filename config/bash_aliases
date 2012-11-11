@@ -36,6 +36,7 @@ proml
 
 
 
+alias ll='ls -al '
 
 
 # APT ALIASES
@@ -54,10 +55,20 @@ alias gd='git diff'
 alias go='git checkout '
 alias gp='git push '
 alias gpu='git pull '
-alias gg='git add -A && git commit -a && git push'
+alias gg='echo "git add -A" && git add -A && echo "git commit -a" && git commit -a && echo "git push" && git push'
+alias gm='git merge --no-ff '
 
+alias gii='git rm -r --cached . && git add -A && git commit -a'
+alias gi='git update-index --assume-unchanged '
 # ALIASES FOR RAILS
 alias dbm='bundle exec rake db:migrate'
 alias rspec='bundle exec rspec spec/'
-
+alias ruby-style='find . -iname "*.rb" -exec rbeautify {} \;'
 alias speedtest512='dd if=/dev/zero of=output.img bs=8k count=64k && rm output.img'
+alias tmux="tmux attach || tmux new"
+
+alias postgres="sudo su - postgres"
+alias psqlp="sudo -u postgres psql"
+
+alias pyserv="python -m SimpleHTTPServer"
+alias pingt="mtr "

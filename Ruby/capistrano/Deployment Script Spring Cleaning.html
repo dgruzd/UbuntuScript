@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://github.com/blog/470-deployment-script-spring-cleaning -->
+<html class=" js flexbox flexbox-legacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths webkit"><head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# githubog: http://ogp.me/ns/fb/githubog#"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Deployment Script Spring Cleaning</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="https://github.com/opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+    <link rel="shortcut icon" href="https://github.com/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    <meta content="authenticity_token" name="csrf-param">
+<meta content="/0IcFq+CxEBiDP0jbBTk4+YL4Bdf/SfJqFilhlWvWFA=" name="csrf-token">
+
+    <link href="./Deployment Script Spring Cleaning_files/github-5952a32767ae80acf5267aa3ae2f8bc90197cfdd.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="./Deployment Script Spring Cleaning_files/github2-0362aac7f9b6a26a7d1f5bcb8c3d429a39498c73.css" media="screen" rel="stylesheet" type="text/css">
+    
+
+    <script type="text/javascript" async="" id="gauges-tracker" data-site-id="4ed95060f5a1f5137e000005" src="./Deployment Script Spring Cleaning_files/track.js"></script><script src="./Deployment Script Spring Cleaning_files/jquery-5b140862bd914d3619171dece9be92269c2b1fe1.js" type="text/javascript"></script>
+    <script src="./Deployment Script Spring Cleaning_files/github-9b054322958355512cd77c5f36c41526133ea833.js" type="text/javascript"></script><script type="text/javascript" async="" src="./Deployment Script Spring Cleaning_files/ga.js"></script>
+    
+
+    
+  <link href="https://github.com/blog.atom" rel="alternate" title="The GitHub Blog" type="application/atom+xml">
+  <link href="https://github.com/blog/comments.atom" rel="alternate" title="GitHub Blog Comments" type="application/atom+xml">
+
+  </head><style type="text/css">embed[type*="application/x-shockwave-flash"],embed[src*=".swf"],object[type*="application/x-shockwave-flash"],object[codetype*="application/x-shockwave-flash"],object[src*=".swf"],object[codebase*="swflash.cab"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"],object[classid*="d27cdb6e-ae6d-11cf-96b8-444553540000"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"]{	display: none !important;}</style><link rel="stylesheet" type="text/css" href="data:text/css,">
+
+
+  <body class="logged_in  linux  env-production " data-blob-contribs-enabled="yes">
+    
+    
+    
+
+      <div id="header" class="true clearfix">
+        <div class="container clearfix">
+          <a class="site-logo" href="https://github.com/">
+            <!--[if IE]>
+            <img alt="GitHub" class="github-logo" src="https://a248.e.akamai.net/assets.github.com/images/modules/header/logov7.png?1323882804" />
+            <img alt="GitHub" class="github-logo-hover" src="https://a248.e.akamai.net/assets.github.com/images/modules/header/logov7-hover.png?1324325453" />
+            <![endif]-->
+            <img alt="GitHub" class="github-logo-4x" height="30" src="./Deployment Script Spring Cleaning_files/logov7@4x.png">
+            <img alt="GitHub" class="github-logo-4x-hover" height="30" src="./Deployment Script Spring Cleaning_files/logov7@4x-hover.png">
+          </a>
+
+              
+    <div class="topsearch ">
+<form action="https://github.com/search" id="top_search_form" method="get">        <a href="https://github.com/search" class="advanced-search tooltipped downwards" title="Advanced Search">Advanced Search</a>
+        <div class="search placeholder-field js-placeholder-field">
+          <label class="placeholder" for="global-search-field" style="display: block; ">Search…</label>
+          <input type="text" class="search my_repos_autocompleter" id="global-search-field" name="q" results="5" spellcheck="false" autocomplete="off" data-autocomplete="my-repos-autocomplete">
+          <div id="my-repos-autocomplete" class="autocomplete-results">
+            <ul class="js-navigation-container"></ul>
+          </div>
+          <input type="submit" value="Search" class="button">
+        </div>
+        <input type="hidden" name="type" value="Everything">
+        <input type="hidden" name="repo" value="">
+        <input type="hidden" name="langOverride" value="">
+        <input type="hidden" name="start_value" value="1">
+</form>      <ul class="top-nav">
+          <li class="explore"><a href="https://github.com/explore">Explore</a></li>
+          <li><a href="https://gist.github.com/">Gist</a></li>
+          <li><a href="https://github.com/blog">Blog</a></li>
+        <li><a href="http://help.github.com/">Help</a></li>
+      </ul>
+    </div>
+
+
+            
+
+
+  <div id="userbox">
+    <div id="user">
+      <a href="https://github.com/nyaa"><img height="20" src="./Deployment Script Spring Cleaning_files/db8f1852caaec8a657efe9dc10e00266" width="20"></a>
+      <a href="https://github.com/nyaa" class="name">nyaa</a>
+    </div>
+    <ul id="user-links">
+      <li>
+        <a href="https://github.com/inbox/notifications" id="notifications" class="tooltipped downwards" title="Notifications">
+          <span class="icon">Notifications</span>
+        </a>
+      </li>
+      <li><a href="https://github.com/settings/profile" id="settings" class="tooltipped downwards" title="Account Settings"><span class="icon">Account Settings</span></a></li>
+      <li><a href="https://github.com/logout" id="logout" class="tooltipped downwards" title="Log Out"><span class="icon">Log Out</span></a></li>
+    </ul>
+  </div>
+
+
+
+          
+        </div>
+      </div>
+
+      
+
+        <div class="site clearfix">
+          <div class="container">
+            
+<div class="pagehead"><div id="posts">
+  <div class="list">
+    <ul>
+      <li class="hentry post" id="post_470">
+<h2><a href="./Deployment Script Spring Cleaning_files/Deployment Script Spring Cleaning.html" class="reverse url entry-title" rel="bookmark">Deployment Script Spring Cleaning</a> <small></small></h2>
+  <div class="meta">
+    <div class="who_when">
+      <img height="16" src="./Deployment Script Spring Cleaning_files/b8dbb1987e8e5318584865f880036796" width="16">
+      <span class="author vcard fn"><a href="https://github.com/defunkt">defunkt</a></span>
+      <span class="published" title="2009-08-04T20:46:49-07:00"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comments">August  4, 2009</a></span>
+      
+    </div>
+    <div class="respond">
+      
+    </div>
+  </div>
+  <div class="entry-content">
+    <p>Better late than never, right? As we get ready to upgrade our servers I thought it’d be a good time to upgrade our deployment process. Currently pushing out a new version of GitHub takes upwards of 15 minutes. Ouch. My goal: one minute deploys (excluding server restart time).</p>
+<p>We currently use <a href="http://www.capify.org/">Capistrano</a> with a 400 line <em>deploy.rb</em> file. Engine Yard provides a handful of useful Cap tasks (in gem form) that we use along with many of the built-in features. We also use the <a href="http://github.com/37signals/fast_remote_cache">fast_remote_cache</a> deployment strategy and have written a handful (400 lines or so) of our own tasks to manage things like our <a href="http://github.com/pjhyett/github-services">service hooks</a> or <span class="caps">SVN</span> importer.</p>
+<p>As you may know, Capistrano keeps a <em>releases</em> directory where it creates timestamped versions of your app. All your daemons and processes then assume your app lives under a directory called <em>current</em> which is actually a symlink to the latest timestamped version of your app in <em>releases</em>. When you deploy a new version of your app, it’s put into a new timestamped directory under <em>releases</em>. After all the heavy lifting is done the <em>current</em> symlink is switched to it.</p>
+<p>Which was really great. Before Git. So I went digging.</p>
+<p></p><div align="center"><a href="http://rubyhitsquad.com/Vlad_the_Deployer.html"><img src="./Deployment Script Spring Cleaning_files/687474703a2f2f696d672e736b697463682e636f6d2f32303039303830352d6d327278643371316232626972756e68386364626177386d71342e706e67"></a></div><p></p>
+<p>First I investigated <a href="http://rubyhitsquad.com/Vlad_the_Deployer.html">Vlad the Deployer</a>, the Capistrano alternative in Ruby. I like that it’s built on Rake but it seems to make the same assumptions as Capistrano. Basically both of these tools are modular and built in such a way that they work the same whether you’re using Subversion, Perforce, or Git. Which is great if you’re using <span class="caps">SVN</span> but unfortunate if you’re using Git.</p>
+<p>For example, this is from Vlad’s included Git deployment strategy:</p>
+<noscript>&lt;pre&gt;##&lt;br&gt;
+# Returns the command that will check out &lt;ins&gt;revision&lt;/ins&gt; from the&lt;br&gt;
+# repository into directory &lt;ins&gt;destination&lt;/ins&gt;.  &lt;ins&gt;revision&lt;/ins&gt; can be any&lt;br&gt;
+# SHA1 or equivalent (e.g. branch, tag, etc…)&lt;br&gt;&lt;br&gt;
+def checkout(revision, destination)&lt;br&gt;
+  destination = File.join(destination, ‘repo’)&lt;br&gt;
+  revision = ‘&lt;span class="caps"&gt;HEAD&lt;/span&gt;’ if revision =~ /head/i&lt;br&gt;&lt;br&gt;
+  [ “rm -rf #{destination}”,&lt;br&gt;
+    “#{git_cmd} clone #{repository} #{destination}”,&lt;br&gt;
+    “cd #{destination}”,&lt;br&gt;
+    “#{git_cmd} checkout &lt;del&gt;f -b deployed&lt;/del&gt;#{revision} #{revision}”,&lt;br&gt;
+    “cd -”&lt;br&gt;
+  ].join(" &amp;amp;&amp;amp; ")&lt;br&gt;
+end&lt;/pre&gt;</noscript>
+<script src="./Deployment Script Spring Cleaning_files/162448.js"></script><link rel="stylesheet" href="https://gist.github.com/stylesheets/gist/embed.css"><div id="gist-162448" class="gist">
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="gist-highlight"><pre><div class="line" id="LC1"><span class="c1">##</span></div><div class="line" id="LC2"><span class="c1"># Returns the command that will check out +revision+ from the</span></div><div class="line" id="LC3"><span class="c1"># repository into directory +destination+.  +revision+ can be any</span></div><div class="line" id="LC4"><span class="c1"># SHA1 or equivalent (e.g. branch, tag, etc...)</span></div><div class="line" id="LC5"><br></div><div class="line" id="LC6"><span class="k">def</span> <span class="nf">checkout</span><span class="p">(</span><span class="n">revision</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div><div class="line" id="LC7">&nbsp;&nbsp;<span class="n">destination</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="s1">'repo'</span><span class="p">)</span></div><div class="line" id="LC8">&nbsp;&nbsp;<span class="n">revision</span> <span class="o">=</span> <span class="s1">'HEAD'</span> <span class="k">if</span> <span class="n">revision</span> <span class="o">=~</span> <span class="sr">/head/i</span></div><div class="line" id="LC9"><br></div><div class="line" id="LC10">&nbsp;&nbsp;<span class="o">[</span> <span class="s2">"rm -rf </span><span class="si">#{</span><span class="n">destination</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span></div><div class="line" id="LC11">&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">"</span><span class="si">#{</span><span class="n">git_cmd</span><span class="si">}</span><span class="s2"> clone </span><span class="si">#{</span><span class="n">repository</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">destination</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span></div><div class="line" id="LC12">&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">"cd </span><span class="si">#{</span><span class="n">destination</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span></div><div class="line" id="LC13">&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">"</span><span class="si">#{</span><span class="n">git_cmd</span><span class="si">}</span><span class="s2"> checkout -f -b deployed-</span><span class="si">#{</span><span class="n">revision</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">revision</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span></div><div class="line" id="LC14">&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">"cd -"</span></div><div class="line" id="LC15">&nbsp;&nbsp;<span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s2">" &amp;&amp; "</span><span class="p">)</span></div><div class="line" id="LC16"><span class="k">end</span></div><div class="line" id="LC17"><br></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/162448/637d44ca408dde974da02ba6e693e73895d486ea/git.rb" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/162448#file_git.rb" style="float:right;margin-right:10px;color:#666">git.rb</a>
+            <a href="https://gist.github.com/162448">This Gist</a> brought to you by <a href="http://github.com/">GitHub</a>.
+          </div>
+        </div>
+</div>
+<p>When you deploy a new copy of your app, Vlad removes the existing copy and does a full clone to get a new version. Capistrano does something similar by default but has a bundled “remote_cache” strategy that is a bit smarter: it caches the Git repo and does a <em>fetch</em> then a <em>reset</em>. It still has to then copy the updated version of your app into a timestamped directory and switch the symlink, but it’s able to cut down on time spent pulling redundant objects. It even knows about the <em>depth</em> option.</p>
+<p></p><div align="center"><a href="http://rush.heroku.com/"><img src="./Deployment Script Spring Cleaning_files/687474703a2f2f696d672e736b697463682e636f6d2f32303039303830352d6e39707834376a736a723863396963343561316933317562656d2e706e67"></a></div><p></p>
+<p>The next thing I looked at was Heroku’s <a href="http://rush.heroku.com/">rush</a>. It lets you drive servers (even clusters of them) using Ruby over <span class="caps">SSH</span>, which looked very promising. Maybe I’d write a little <em>git-deploy</em> script based on it.</p>
+<p>Unfortunately for me Rush needs to be installed on every server you’re managing. It also needs a running instance of <em>rushd</em>. Which makes sense – it’s a super powerful library – but that wouldn’t work for deploying GitHub.</p>
+<p></p><div align="center"><a href="http://docs.fabfile.org/0.9"><img src="./Deployment Script Spring Cleaning_files/687474703a2f2f696d672e736b697463682e636f6d2f32303039303830352d716432787871616b7764786d66316475396670646133336a69652e706e67"></a></div><p></p>
+<p><a href="http://docs.fabfile.org/0.9/">Fabric</a> is a library I first heard about <a href="https://gist.github.com/blog/340-fabric-simple-pythonic-deployment">back in February</a>. It’s like Capistrano or Vlad but with more emphasis on being a framework/tool for remote management of servers. Easy deployment scripts are just a side effect of that mentality.</p>
+<p>It’s very powerful and after playing with it for a while I was extremely pleased. I’ll definitely be using it in all my Python projects. However, I wasn’t looking forward to porting all our custom Capistrano tasks to Python. Also, though I love Python, we’re mostly a Ruby shop and everyone needs to be able to add, debug, and modify our deploy scripts with ease.</p>
+<p>Playing with Fabric did inspire me, though. Capistrano is basically a tool for remote server management, too, if you think about it. We may have outgrown its ideas about deployment but I can always write my own deployment code using Capistrano’s ssh and clustering capabilities. So I did.</p>
+<p></p><div align="center"><a href="http://www.capify.org/"><img src="./Deployment Script Spring Cleaning_files/687474703a2f2f696d672e736b697463682e636f6d2f32303039303830352d6465793471717468326e316937797167326271316763343263692e706e67"></a></div><p></p>
+<p>It turned out to be pretty easy. First I created a <em>config/deploy</em> directory and started splitting up the <em>deploy.rb</em> into smaller chunks:</p>
+<pre>$ ls -1 config/deploy
+gem_eval.rb
+import.rb
+notify.rb
+queue.rb
+services.rb
+settings.rb
+sudo_everywhere.rb
+symlinks.rb
+</pre>
+<p>Then I pulled them in. Careful here: Capistrano override both <em>load</em> and <em>require</em> so it’s probably best to just use <em>load</em>.</p>
+<noscript>&lt;pre&gt;&lt;br&gt;
+# basics&lt;br&gt;
+load ‘config/deploy/sudo_everywhere’&lt;br&gt;
+load ‘config/deploy/settings’&lt;br&gt;&lt;br&gt;
+# daemons&lt;br&gt;
+load ‘config/deploy/services’&lt;br&gt;
+load ‘config/deploy/queue’&lt;br&gt;
+load ‘config/deploy/import’&lt;br&gt;
+load ‘config/deploy/gem_eval’&lt;br&gt;&lt;br&gt;
+# deployment tasks&lt;br&gt;
+load ‘config/deploy/symlinks’&lt;br&gt;&lt;br&gt;
+# candy&lt;br&gt;
+load ‘config/deploy/notify’&lt;br&gt;&lt;/pre&gt;</noscript>
+<script src="./Deployment Script Spring Cleaning_files/162529.js"></script><link rel="stylesheet" href="https://gist.github.com/stylesheets/gist/embed.css"><div id="gist-162529" class="gist">
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="gist-highlight"><pre><div class="line" id="LC1"><span class="c1"># basics</span></div><div class="line" id="LC2"><span class="nb">load</span> <span class="s1">'config/deploy/sudo_everywhere'</span></div><div class="line" id="LC3"><span class="nb">load</span> <span class="s1">'config/deploy/settings'</span></div><div class="line" id="LC4"><br></div><div class="line" id="LC5"><span class="c1"># daemons</span></div><div class="line" id="LC6"><span class="nb">load</span> <span class="s1">'config/deploy/services'</span></div><div class="line" id="LC7"><span class="nb">load</span> <span class="s1">'config/deploy/queue'</span></div><div class="line" id="LC8"><span class="nb">load</span> <span class="s1">'config/deploy/import'</span></div><div class="line" id="LC9"><span class="nb">load</span> <span class="s1">'config/deploy/gem_eval'</span></div><div class="line" id="LC10"><br></div><div class="line" id="LC11"><span class="c1"># deployment tasks</span></div><div class="line" id="LC12"><span class="nb">load</span> <span class="s1">'config/deploy/symlinks'</span></div><div class="line" id="LC13"><br></div><div class="line" id="LC14"><span class="c1"># candy</span></div><div class="line" id="LC15"><span class="nb">load</span> <span class="s1">'config/deploy/notify'</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/162529/d35aec13bdaae90f7291485f535f3906f4372c33/gistfile1.rb" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/162529#file_gistfile1.rb" style="float:right;margin-right:10px;color:#666">gistfile1.rb</a>
+            <a href="https://gist.github.com/162529">This Gist</a> brought to you by <a href="http://github.com/">GitHub</a>.
+          </div>
+        </div>
+</div>
+<p>This separation kept the <em>deploy.rb</em> and each specific file small and focused.</p>
+<p>Next I thought about how I’d do Git-based deployment. Not too different from Capistrano’s remote_cache, really. Just get rid of all the timestamp directories and have the <em>current</em> directory contain our clone of the Git repo. Do a <em>fetch</em> then <em>reset</em> to deploy. Rollback? No problem.</p>
+<p>The best part is that because Engine Yard’s gemified tasks and our own code both call standard Capistrano tasks like <em>deploy</em> and <em>deploy:update</em>, we can just replace them and not change the dependent code.</p>
+<p>Here’s what our new <em>deploy.rb</em> looks like. Well, the meat of it at least:</p>
+<noscript>&lt;pre&gt;# you’d obviously have more settings somewhere&lt;br&gt;
+set :repository, “git@github.com:defunkt/github.git”&lt;br&gt;
+set :branch,     “origin/master”&lt;br&gt;&lt;br&gt;
+namespace :deploy do&lt;br&gt;
+  desc “Deploy the MFer”&lt;br&gt;
+  task :default do&lt;br&gt;
+    update&lt;br&gt;
+    restart&lt;br&gt;
+    cleanup&lt;br&gt;
+  end&lt;br&gt;&lt;br&gt;
+  desc “Setup a GitHub-style deployment.”&lt;br&gt;
+  task :setup, :except =&amp;gt; { :no_release =&amp;gt; true } do&lt;br&gt;
+    run “git clone #{repository} #{current_path}”&lt;br&gt;
+  end&lt;br&gt;&lt;br&gt;
+  desc “Update the deployed code.”&lt;br&gt;
+  task :update_code, :except =&amp;gt; { :no_release =&amp;gt; true } do&lt;br&gt;
+    run “cd #{current_path}; git fetch origin; git reset —hard #{branch}”&lt;br&gt;
+  end&lt;br&gt;&lt;br&gt;
+  desc “Rollback a single commit.”&lt;br&gt;
+  task :rollback, :except =&amp;gt; { :no_release =&amp;gt; true } do&lt;br&gt;
+    set :branch, “&lt;span class="caps"&gt;HEAD&lt;/span&gt;^”&lt;br&gt;
+    default&lt;br&gt;
+  end&lt;br&gt;
+end&lt;/pre&gt;</noscript>
+<script src="./Deployment Script Spring Cleaning_files/162444.js"></script><link rel="stylesheet" href="https://gist.github.com/stylesheets/gist/embed.css"><div id="gist-162444" class="gist">
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="gist-highlight"><pre><div class="line" id="LC1"><span class="c1"># you'd obviously have more settings somewhere</span></div><div class="line" id="LC2"><span class="n">set</span> <span class="ss">:repository</span><span class="p">,</span> <span class="s2">"git@github.com:defunkt/github.git"</span></div><div class="line" id="LC3"><span class="n">set</span> <span class="ss">:branch</span><span class="p">,</span>     <span class="s2">"origin/master"</span></div><div class="line" id="LC4"><br></div><div class="line" id="LC5"><span class="n">namespace</span> <span class="ss">:deploy</span> <span class="k">do</span></div><div class="line" id="LC6">&nbsp;&nbsp;<span class="n">desc</span> <span class="s2">"Deploy the MFer"</span></div><div class="line" id="LC7">&nbsp;&nbsp;<span class="n">task</span> <span class="ss">:default</span> <span class="k">do</span></div><div class="line" id="LC8">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">update</span></div><div class="line" id="LC9">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">restart</span></div><div class="line" id="LC10">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">cleanup</span></div><div class="line" id="LC11">&nbsp;&nbsp;<span class="k">end</span></div><div class="line" id="LC12"><br></div><div class="line" id="LC13">&nbsp;&nbsp;<span class="n">desc</span> <span class="s2">"Setup a GitHub-style deployment."</span></div><div class="line" id="LC14">&nbsp;&nbsp;<span class="n">task</span> <span class="ss">:setup</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span></div><div class="line" id="LC15">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">run</span> <span class="s2">"git clone </span><span class="si">#{</span><span class="n">repository</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">"</span></div><div class="line" id="LC16">&nbsp;&nbsp;<span class="k">end</span></div><div class="line" id="LC17"><br></div><div class="line" id="LC18">&nbsp;&nbsp;<span class="n">desc</span> <span class="s2">"Update the deployed code."</span></div><div class="line" id="LC19">&nbsp;&nbsp;<span class="n">task</span> <span class="ss">:update_code</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span></div><div class="line" id="LC20">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">run</span> <span class="s2">"cd </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">; git fetch origin; git reset --hard </span><span class="si">#{</span><span class="n">branch</span><span class="si">}</span><span class="s2">"</span></div><div class="line" id="LC21">&nbsp;&nbsp;<span class="k">end</span></div><div class="line" id="LC22"><br></div><div class="line" id="LC23">&nbsp;&nbsp;<span class="n">desc</span> <span class="s2">"Rollback a single commit."</span></div><div class="line" id="LC24">&nbsp;&nbsp;<span class="n">task</span> <span class="ss">:rollback</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span></div><div class="line" id="LC25">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">set</span> <span class="ss">:branch</span><span class="p">,</span> <span class="s2">"HEAD^"</span></div><div class="line" id="LC26">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">default</span></div><div class="line" id="LC27">&nbsp;&nbsp;<span class="k">end</span></div><div class="line" id="LC28"><span class="k">end</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/162444/6e3a81c85dd6e86f711f24619caf561f2c1ccc16/gistfile1.rb" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/162444#file_gistfile1.rb" style="float:right;margin-right:10px;color:#666">gistfile1.rb</a>
+            <a href="https://gist.github.com/162444">This Gist</a> brought to you by <a href="http://github.com/">GitHub</a>.
+          </div>
+        </div>
+</div>
+<p>Great. I like this – very Gitty and simple. But copying and removing directories wasn’t the only slow part of our deploy process.</p>
+<p>Every Capistrano task you run adds a bit of overhead. I don’t know exactly why, but I imagine each task opens a fresh <span class="caps">SSH</span> connection to the necessary servers. Maybe. Either way, the less tasks you run the better.</p>
+<p>We were running about eight symlink related tasks during each deploy. Config files and cache directories that only live on the server need to be symlinked into the app’s directory structure after the <em>reset</em>. Cutting these actions down to a single task made everything much, much faster.</p>
+<p>Here’s our <em>symlinks.rb</em>:</p>
+<noscript>&lt;pre&gt;set :normal_symlinks, %w(&lt;br&gt;
+  config/solr.yml&lt;br&gt;
+  config/memcached.yml&lt;br&gt;
+  config/database.yml&lt;br&gt;
+  config/mongrel_cluster.yml&lt;br&gt;
+)&lt;br&gt;&lt;br&gt;
+set :weird_symlinks, {&lt;br&gt;
+  ‘network_data_cache’ =&amp;gt; ‘tmp/network_data_cache’,&lt;br&gt;
+  ‘impact_data_cache’  =&amp;gt; ‘tmp/impact_data_cache’,&lt;br&gt;
+  ‘podcast’            =&amp;gt; ‘public/gitsplosion’,&lt;br&gt;
+  ‘tarballs’           =&amp;gt; ‘public/tarballs’,&lt;br&gt;
+  ‘system’             =&amp;gt; ‘public/system’&lt;br&gt;
+}&lt;br&gt;&lt;br&gt;
+namespace :symlinks do&lt;br&gt;
+  desc “Make all the damn symlinks”&lt;br&gt;
+  task :make, :roles =&amp;gt; :app, :except =&amp;gt; { :no_release =&amp;gt; true } do&lt;br&gt;
+    commands = normal_symlinks.map do |path|&lt;br&gt;
+      “rm -rf #{release_path}/#{path} &amp;amp;&amp;amp; \&lt;br&gt;
+       ln -s #{shared_path}/#{path} #{release_path}/#{path}”&lt;br&gt;
+    end&lt;br&gt;&lt;br&gt;
+    commands += weird_symlinks.map do |from, to|&lt;br&gt;
+      “rm -rf #{release_path}/#{to} &amp;amp;&amp;amp; \&lt;br&gt;
+       ln -s #{shared_path}/#{from} #{release_path}/#{to}”&lt;br&gt;
+    end&lt;br&gt;&lt;br&gt;
+    # needed for some of the symlinks&lt;br&gt;
+    run “mkdir -p #{current_path}/tmp”&lt;br&gt;&lt;br&gt;
+    run &amp;lt;&amp;lt;-&lt;span class="caps"&gt;CMD&lt;/span&gt;&lt;br&gt;
+      cd #{release_path} &amp;amp;&amp;amp;&lt;br&gt;
+      #{commands.join(" &amp;amp;&amp;amp; ")}&lt;br&gt;&lt;span class="caps"&gt;CMD&lt;/span&gt;&lt;br&gt;
+  end&lt;br&gt;
+end&lt;br&gt;&lt;br&gt;
+after “deploy:update_code”, “symlinks:make”&lt;br&gt;&lt;/pre&gt;</noscript>
+<script src="./Deployment Script Spring Cleaning_files/162525.js"></script><link rel="stylesheet" href="https://gist.github.com/stylesheets/gist/embed.css"><div id="gist-162525" class="gist">
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="gist-highlight"><pre><div class="line" id="LC1"><span class="n">set</span> <span class="ss">:normal_symlinks</span><span class="p">,</span> <span class="sx">%w(</span></div><div class="line" id="LC2"><span class="sx">  config/solr.yml</span></div><div class="line" id="LC3"><span class="sx">  config/memcached.yml</span></div><div class="line" id="LC4"><span class="sx">  config/database.yml</span></div><div class="line" id="LC5"><span class="sx">  config/mongrel_cluster.yml</span></div><div class="line" id="LC6"><span class="sx">)</span></div><div class="line" id="LC7"><br></div><div class="line" id="LC8"><span class="n">set</span> <span class="ss">:weird_symlinks</span><span class="p">,</span> <span class="p">{</span></div><div class="line" id="LC9">&nbsp;&nbsp;<span class="s1">'network_data_cache'</span> <span class="o">=&gt;</span> <span class="s1">'tmp/network_data_cache'</span><span class="p">,</span></div><div class="line" id="LC10">&nbsp;&nbsp;<span class="s1">'impact_data_cache'</span>  <span class="o">=&gt;</span> <span class="s1">'tmp/impact_data_cache'</span><span class="p">,</span></div><div class="line" id="LC11">&nbsp;&nbsp;<span class="s1">'podcast'</span>            <span class="o">=&gt;</span> <span class="s1">'public/gitsplosion'</span><span class="p">,</span></div><div class="line" id="LC12">&nbsp;&nbsp;<span class="s1">'tarballs'</span>           <span class="o">=&gt;</span> <span class="s1">'public/tarballs'</span><span class="p">,</span></div><div class="line" id="LC13">&nbsp;&nbsp;<span class="s1">'system'</span>             <span class="o">=&gt;</span> <span class="s1">'public/system'</span></div><div class="line" id="LC14"><span class="p">}</span></div><div class="line" id="LC15"><br></div><div class="line" id="LC16"><span class="n">namespace</span> <span class="ss">:symlinks</span> <span class="k">do</span></div><div class="line" id="LC17">&nbsp;&nbsp;<span class="n">desc</span> <span class="s2">"Make all the damn symlinks"</span></div><div class="line" id="LC18">&nbsp;&nbsp;<span class="n">task</span> <span class="ss">:make</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span></div><div class="line" id="LC19">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">commands</span> <span class="o">=</span> <span class="n">normal_symlinks</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">path</span><span class="o">|</span></div><div class="line" id="LC20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">"rm -rf </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">path</span><span class="si">}</span><span class="s2"> &amp;&amp; \</span></div><div class="line" id="LC21"><span class="s2">       ln -s </span><span class="si">#{</span><span class="n">shared_path</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">path</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span></div><div class="line" id="LC22">&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">end</span></div><div class="line" id="LC23"><br></div><div class="line" id="LC24">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">commands</span> <span class="o">+=</span> <span class="n">weird_symlinks</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="o">|</span></div><div class="line" id="LC25">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">"rm -rf </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">to</span><span class="si">}</span><span class="s2"> &amp;&amp; \</span></div><div class="line" id="LC26"><span class="s2">       ln -s </span><span class="si">#{</span><span class="n">shared_path</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">from</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">to</span><span class="si">}</span><span class="s2">"</span></div><div class="line" id="LC27">&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">end</span></div><div class="line" id="LC28"><br></div><div class="line" id="LC29">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1"># needed for some of the symlinks</span></div><div class="line" id="LC30">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">run</span> <span class="s2">"mkdir -p </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">/tmp"</span></div><div class="line" id="LC31"><br></div><div class="line" id="LC32">&nbsp;&nbsp;&nbsp;&nbsp;<span class="n">run</span> <span class="o">&lt;&lt;-</span><span class="no">CMD</span></div><div class="line" id="LC33"><span class="sh">      cd #{release_path} &amp;&amp;</span></div><div class="line" id="LC34"><span class="sh">      #{commands.join(" &amp;&amp; ")}</span></div><div class="line" id="LC35"><span class="no">    CMD</span></div><div class="line" id="LC36">&nbsp;&nbsp;<span class="k">end</span></div><div class="line" id="LC37"><span class="k">end</span></div><div class="line" id="LC38"><br></div><div class="line" id="LC39"><span class="n">after</span> <span class="s2">"deploy:update_code"</span><span class="p">,</span> <span class="s2">"symlinks:make"</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/162525/d0bc46228a470b00837e7a2144887e862751b1c1/symlinks.rb" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/162525#file_symlinks.rb" style="float:right;margin-right:10px;color:#666">symlinks.rb</a>
+            <a href="https://gist.github.com/162525">This Gist</a> brought to you by <a href="http://github.com/">GitHub</a>.
+          </div>
+        </div>
+</div>
+<p>Finally, bundling <span class="caps">CSS</span> and JavaScript. I’d like to move us to <a href="http://getsprockets.org/">Sprockets</a> but we’re not using it yet and this adventure is all about speeding up our existing setup.</p>
+<p>Since the early days we’ve been using Uladzislau Latynski’s jsmin.rb to minimize our JavaScript. Our Cap task looked something like this:</p>
+<noscript>&lt;pre&gt;desc “Shrink the js”&lt;br&gt;
+task :minimize_js, :roles =&amp;gt; :app, :except =&amp;gt; { :no_release =&amp;gt; true } do&lt;br&gt;
+  require ‘lib/js_minimizer’&lt;br&gt;
+  paths  = []&lt;br&gt;
+  paths += Dir[‘public/javascripts/jquery.*.js’].sort&lt;br&gt;
+  paths += Dir[‘public/javascripts/github.*.js’].sort&lt;br&gt;
+  paths  = paths.flatten&lt;br&gt;&lt;br&gt;
+  put JSMinimizer.minimize_files(*paths), “#{release_path}/public/javascripts/bundle.js”&lt;br&gt;
+end&lt;/pre&gt;</noscript>
+<script src="./Deployment Script Spring Cleaning_files/162535.js"></script><link rel="stylesheet" href="https://gist.github.com/stylesheets/gist/embed.css"><div id="gist-162535" class="gist">
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="gist-highlight"><pre><div class="line" id="LC1"><span class="n">desc</span> <span class="s2">"Shrink the js"</span></div><div class="line" id="LC2"><span class="n">task</span> <span class="ss">:minimize_js</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span></div><div class="line" id="LC3">&nbsp;&nbsp;<span class="nb">require</span> <span class="s1">'lib/js_minimizer'</span></div><div class="line" id="LC4">&nbsp;&nbsp;<span class="n">paths</span>  <span class="o">=</span> <span class="o">[]</span></div><div class="line" id="LC5">&nbsp;&nbsp;<span class="n">paths</span> <span class="o">+=</span> <span class="no">Dir</span><span class="o">[</span><span class="s1">'public/javascripts/jquery.*.js'</span><span class="o">].</span><span class="n">sort</span></div><div class="line" id="LC6">&nbsp;&nbsp;<span class="n">paths</span> <span class="o">+=</span> <span class="no">Dir</span><span class="o">[</span><span class="s1">'public/javascripts/github.*.js'</span><span class="o">].</span><span class="n">sort</span></div><div class="line" id="LC7">&nbsp;&nbsp;<span class="n">paths</span>  <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">flatten</span></div><div class="line" id="LC8"><br></div><div class="line" id="LC9">&nbsp;&nbsp;<span class="n">put</span> <span class="no">JSMinimizer</span><span class="o">.</span><span class="n">minimize_files</span><span class="p">(</span><span class="o">*</span><span class="n">paths</span><span class="p">),</span> <span class="s2">"</span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/public/javascripts/bundle.js"</span></div><div class="line" id="LC10"><span class="k">end</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/162535/39d9c651934a42439b0b3e168a1c2a3e1d67735d/gistfile1.rb" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/162535#file_gistfile1.rb" style="float:right;margin-right:10px;color:#666">gistfile1.rb</a>
+            <a href="https://gist.github.com/162535">This Gist</a> brought to you by <a href="http://github.com/">GitHub</a>.
+          </div>
+        </div>
+</div>
+<p>Spot the problem? We’re minimizing the JS locally, on every deploy, then uploading it to each server individually. We also do this same process for Gist’s JavaScript and the <span class="caps">CSS</span> (using YUI’s <span class="caps">CSS</span> compressor). So with N servers, this is basically happening 3N times on each deploy. Yowza.</p>
+<p>Solution? Do the minimizing and bundling on the servers. The beefy, beefy servers:</p>
+<noscript>&lt;pre&gt;desc “Shrink and bundle js and css”&lt;br&gt;
+task :bundle, :roles =&amp;gt; :app, :except =&amp;gt; { :no_release =&amp;gt; true } do&lt;br&gt;
+  run “cd #{current_path}; RAILS_ROOT=#{current_path} rake bundle:all”&lt;br&gt;
+end&lt;/pre&gt;</noscript>
+<script src="./Deployment Script Spring Cleaning_files/162537.js"></script><link rel="stylesheet" href="https://gist.github.com/stylesheets/gist/embed.css"><div id="gist-162537" class="gist">
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="gist-highlight"><pre><div class="line" id="LC1"><span class="n">desc</span> <span class="s2">"Shrink and bundle js and css"</span></div><div class="line" id="LC2"><span class="n">task</span> <span class="ss">:bundle</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span></div><div class="line" id="LC3">&nbsp;&nbsp;<span class="n">run</span> <span class="s2">"cd </span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">; RAILS_ROOT=</span><span class="si">#{</span><span class="n">current_path</span><span class="si">}</span><span class="s2"> rake bundle:all"</span></div><div class="line" id="LC4"><span class="k">end</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/162537/38bec83b921db6c01aea30915518709db1aa3eb6/gistfile1.rb" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/162537#file_gistfile1.rb" style="float:right;margin-right:10px;color:#666">gistfile1.rb</a>
+            <a href="https://gist.github.com/162537">This Gist</a> brought to you by <a href="http://github.com/">GitHub</a>.
+          </div>
+        </div>
+</div>
+<p>As long as the <em>bundle</em> Rake tasks don’t need to load the Rails environment (which ours don’t), this is much faster.</p>
+<h3>Conclusion</h3>
+<p>We moved to a more Git-like deployment setup, cut down the number of tasks we run, and moved bundling and minimizing JS and <span class="caps">CSS</span> from our localhost to the server. Did it help?</p>
+<p>As I said before, a GitHub deploy can take 15 minutes (not counting server restarts). My goal was to drop it down to 1 minute. How’d we do?</p>
+<pre class="console">$ time cap production deploy
+  * executing `production'
+  * executing `deploy'
+    triggering before callbacks for `deploy:update'
+  * executing `notify:campfire'
+  * executing `deploy:update'
+  * executing `deploy:update_code'
+    triggering after callbacks for `deploy:update_code'
+  * executing `symlinks:make'
+  * executing `deploy:bundle'
+  * executing `deploy:restart'
+  * executing `mongrel:restart'
+  * executing `deploy:cleanup'
+
+real	0m14.361s
+user	0m2.049s
+sys	0m0.560s
+</pre>
+<p>15 minutes down to 14 seconds. Not bad.</p>
+  </div>
+</li>
+
+      <h3>34 Comments</h3>
+      <div id="comments" class="new-comments blog-comments">
+          
+<div id="comment-2136" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/9f4bd7da7faefa82f4db08e5c522ce55" width="20"></span>
+      <strong class="author"><a href="https://github.com/isaachall">isaachall</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2136">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2136"><time class="js-relative-date" datetime="2009-08-04T23:27:11-07:00" title="2009-08-04 23:27:11">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Pretty sweet. Thanks for sharing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2137" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/2f798fbacb02f4b0047bdd4a338c651b" width="20"></span>
+      <strong class="author"><a href="https://github.com/vangberg">vangberg</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2137">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2137"><time class="js-relative-date" datetime="2009-08-04T23:42:20-07:00" title="2009-08-04 23:42:20">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Using a Git based deploy is definitely the right thing to do.</p>
+
+<p>Opening a new SSH connection each time is going to slow down stuff, but you can have SSH use an existing connecting for subsequent connects:</p>
+
+<pre><code>ControlMaster auto
+ControlPath ~/.ssh/master-%r@%h:%p
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2138" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/8fdec6fbaee7217ed882221f23f5e3ee" width="20"></span>
+      <strong class="author"><a href="https://github.com/daviscabral">daviscabral</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2138">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2138"><time class="js-relative-date" datetime="2009-08-05T00:05:20-07:00" title="2009-08-05 00:05:20">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Nice post. </p>
+
+<p>Thanks for sharing +1</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2139" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/00ba56a9f737b4268f5088d3ebdefaa8" width="20"></span>
+      <strong class="author"><a href="https://github.com/jasonwatkinspdx">jasonwatkinspdx</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2139">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2139"><time class="js-relative-date" datetime="2009-08-05T01:18:04-07:00" title="2009-08-05 01:18:04">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Yeah, moving the release versions inside git is definitely the way to go. One variation I've seen still keeps the capistrano timestamp approach as local branch names. This keeps everything in sync with any deploy log you maintain as well as making it easier to revert if necessary after any number of successful deploys.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2140" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/b19b02a49b433c9e2e6e6c43785d2bfb" width="20"></span>
+      <strong class="author"><a href="https://github.com/raggi">raggi</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2140">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2140"><time class="js-relative-date" datetime="2009-08-05T01:26:55-07:00" title="2009-08-05 01:26:55">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Been doing similar stuff with vlad for a long time. Rejected capistrano early on because I don't want to learn a bunch of cruft so that I can write my own scripts that just execute a bunch of commands over ssh.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2141" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/959be122ff68722c18fc41e487e9465d" width="20"></span>
+      <strong class="author"><a href="https://github.com/leehambley">leehambley</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2141">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2141"><time class="js-relative-date" datetime="2009-08-05T01:39:51-07:00" title="2009-08-05 01:39:51">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Thanks for the post, this is a great message for people who were worried about scaling with Capistrano, I can't think of using anything else, and the idea of Vlad turns my stomach, great to note you took a couple wildcard options into consideration!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2142" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/a3406e66dc2a5e80bbc2fd7d5342cc22" width="20"></span>
+      <strong class="author"><a href="https://github.com/chrismear">chrismear</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2142">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2142"><time class="js-relative-date" datetime="2009-08-05T03:32:23-07:00" title="2009-08-05 03:32:23">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>I may be misunderstanding something, but in the rollback task it checks out HEAD^, which is just the parent commit. Would it be better to use HEAD@{1}, or something similar, to get the last checked-out commit, in case you have multiple commits between deploys?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2143" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/5cdc13ebb94012de13314f8e3bcfec8b" width="20"></span>
+      <strong class="author"><a href="https://github.com/imbriaco">imbriaco</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2143">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2143"><time class="js-relative-date" datetime="2009-08-05T06:08:31-07:00" title="2009-08-05 06:08:31">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Nice post, Chris.  You might want to take a look at fast_remote_cache as well, it's what we use to solve the same problem:  <a href="http://github.com/37signals/fast_remote_cache/tree">http://github.com/37signals/fast_remote_cache/tree</a> </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2144" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/992fe8c19bbbc27f2b562a9f96efc03d" width="20"></span>
+      <strong class="author"><a href="https://github.com/jamis">jamis</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2144">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2144"><time class="js-relative-date" datetime="2009-08-05T06:14:00-07:00" title="2009-08-05 06:14:00">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>You hit the nail on the head, Chris, with rolling your own. Too many people see the default deployment tasks as the entirety of cap, and despair when the default tasks fail them. It really is not hard to write your own deployment tasks. Thank-you for writing this up!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2145" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/2224acac6b9f3f0e7728322f48866d1e" width="20"></span>
+      <strong class="author"><a href="https://github.com/tapajos">tapajos</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2145">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2145"><time class="js-relative-date" datetime="2009-08-05T06:16:43-07:00" title="2009-08-05 06:16:43">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Chris,</p>
+
+<p>I've had worked in the same problem in our system and reduced the time a lot too. Basicaly we don't delete anything during the deploy(just move), only in a cron job every night. Our deploy is very fast too.</p>
+
+<p>I will implement some of your ideas too.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2146" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/9a690fb441a12954b959c5beb8f41a38" width="20"></span>
+      <strong class="author"><a href="https://github.com/natacado">natacado</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2146">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2146"><time class="js-relative-date" datetime="2009-08-05T09:39:15-07:00" title="2009-08-05 09:39:15">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>My understanding is that Capistrano uses the <code>releases/YYYMMDDHHMM</code> directory structure and <code>current</code> symlink as a way to ensure an atomic switchover during deployment. Does simply running <code>git reset --hard</code> atomically switch the release, or are you mixing in an load-balancer recipe that ensures the host doesn't receive any traffic during the deployment?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2147" class="comment blog-comment github-staff-tag">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/b8dbb1987e8e5318584865f880036796" width="20"></span>
+      <strong class="author"><a href="https://github.com/defunkt">defunkt</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2147">
+        commented
+        </a>
+      </em>
+        <span class="tag">github staff</span>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2147"><time class="js-relative-date" datetime="2009-08-05T10:06:45-07:00" title="2009-08-05 10:06:45">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p><a href="https://github.com/natacado" class="user-mention">@natacado</a> <a href="https://github.com/git" class="user-mention">@git</a> reset --hard@ is very, very fast.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2148" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/89e57a28dfdb85e07b33f92783dbe349" width="20"></span>
+      <strong class="author"><a href="https://github.com/danielvlopes">danielvlopes</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2148">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2148"><time class="js-relative-date" datetime="2009-08-05T13:50:44-07:00" title="2009-08-05 13:50:44">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Thanks for the post.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2149" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/6eeb5509abc07f9f6c3eab38f013e739" width="20"></span>
+      <strong class="author"><a href="https://github.com/rcrowley">rcrowley</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2149">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2149"><time class="js-relative-date" datetime="2009-08-05T17:48:16-07:00" title="2009-08-05 17:48:16">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>It must not matter for a Rails app but I've found the <code>-T</code> option to <code>ln</code> very useful when writing deploy systems.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2151" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/238ef07c3c64486de45c3751c9c88726" width="20"></span>
+      <strong class="author"><a href="https://github.com/jrmehle">jrmehle</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2151">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2151"><time class="js-relative-date" datetime="2009-08-06T08:13:20-07:00" title="2009-08-06 08:13:20">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p><a href="https://github.com/natacado" class="user-mention">@natacado</a>: You can always display a maintenance page if you are concerned about limiting traffic to your site while a deployment is going on. It's not the most ideal as the people who visit your site are never happy to see a maintenance page. However if deploys on a larger site like Github only take 14 seconds, then your deploys should be shorter.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2152" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/ae959c6836366656b895069d75ad09bf" width="20"></span>
+      <strong class="author"><a href="https://github.com/edavis10">edavis10</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2152">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2152"><time class="js-relative-date" datetime="2009-08-06T08:39:55-07:00" title="2009-08-06 08:39:55">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Thanks for writing this up.  My deployments have been taking longer and longer due to git submodules (N clones each deploy).  Your recipes along with a basic <code>git submodule init &amp;&amp; git submodule update</code> should speed it up.  Thanks.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2164" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/a6153f0a25105a00af80971ed8c89d9c" width="20"></span>
+      <strong class="author"><a href="https://github.com/mkrisher">mkrisher</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2164">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2164"><time class="js-relative-date" datetime="2009-08-07T12:05:34-07:00" title="2009-08-07 12:05:34">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>anyone else running into an issue with overriding the rollback task?</p>
+
+<p>"/Library/Ruby/Gems/1.8/gems/capistrano-2.5.8/lib/capistrano/configuration/namespaces.rb:97:in <code>task': defining a task named</code>rollback' would shadow an existing namespace with that name (ArgumentError)"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2175" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/cf9e21cabb1af219d025d8642ae5ec27" width="20"></span>
+      <strong class="author"><a href="https://github.com/brycethornton">brycethornton</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2175">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2175"><time class="js-relative-date" datetime="2009-08-09T16:57:53-07:00" title="2009-08-09 16:57:53">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Yeah, I was just going to post about the issue I was having with the rollback task. I get the exact same error.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2178" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/cc371b26b5881c44cde17f7885ccd608" width="20"></span>
+      <strong class="author"><a href="https://github.com/tpitale">tpitale</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2178">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2178"><time class="js-relative-date" datetime="2009-08-11T19:09:34-07:00" title="2009-08-11 19:09:34">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>mkrisher/brycethornton, same here. Any solution?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2179" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/646ab8b3bffe79ea5a31a4093057b420" width="20"></span>
+      <strong class="author"><a href="https://github.com/catgofire">catgofire</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2179">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2179"><time class="js-relative-date" datetime="2009-08-12T20:53:17-07:00" title="2009-08-12 20:53:17">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Wow ... 5600% improvement. That's quite impressive.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2195" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/f70d901dff6e4c30b2a075c67d91ad3d" width="20"></span>
+      <strong class="author"><a href="https://github.com/coderifous">coderifous</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2195">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2195"><time class="js-relative-date" datetime="2009-08-17T08:31:21-07:00" title="2009-08-17 08:31:21">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Hey Chris - check out the dancing_with_sprockets rails plugin when you are ready to move to sprockets.  I like Sam's sprockets, but the sprockets-rails plugin caused me pain.     </p>
+
+<p><a href="http://github.com/coderifous/dancing_with_sprockets">http://github.com/coderifous/dancing_with_sprockets</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2204" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/a475dddebda57b162fa9378363175e81" width="20"></span>
+      <strong class="author"><a href="https://github.com/kuahyeow">kuahyeow</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2204">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2204"><time class="js-relative-date" datetime="2009-08-17T22:02:06-07:00" title="2009-08-17 22:02:06">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Hmm, I'm in the same boat with <a href="https://github.com/chrismear" class="user-mention">@chrismear</a>. HEAD^ will just rollback to the previous commit. HEAD@{1} seems better. Unless I'm missing something....</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2210" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/c11579192bd480035b95d6cc82a79907" width="20"></span>
+      <strong class="author"><a href="https://github.com/kommen">kommen</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2210">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2210"><time class="js-relative-date" datetime="2009-08-19T05:41:09-07:00" title="2009-08-19 05:41:09">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Regarding the problem with the "defining a task named 'rollback' would shadow an existing namespace with that name (ArgumentError)" error. This is caused because "rollback" is actually a namespace with a default task. So to prevent the error you should use something like this:</p>
+
+<p>namespace :rollback do<br>
+    desc "Rollback a single commit."<br>
+    task :code, :except =&gt; { :no_release =&gt; true } do<br>
+      set :branch, "HEAD^"<br>
+      default<br>
+    end</p>
+
+<pre><code>task :default do
+  rollback
+end
+</code></pre>
+
+<p>end</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2211" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/c11579192bd480035b95d6cc82a79907" width="20"></span>
+      <strong class="author"><a href="https://github.com/kommen">kommen</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2211">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2211"><time class="js-relative-date" datetime="2009-08-19T05:49:33-07:00" title="2009-08-19 05:49:33">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>And here the code that should actually work...</p>
+
+<pre><code>namespace :rollback do
+  desc "Rollback a single commit."
+  task :code, :except =&gt; { :no_release =&gt; true } do
+    set :branch, "HEAD^"
+    deploy.default
+  end
+
+  task :default do
+    rollback.code
+  end
+end
+</code></pre>
+
+<p>(the code belongs within the :deploy namespace)<br>
+Next time I test the code before posting ;)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2227" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/61a9c8eaffd6c2a681a4bd42f2538f4e" width="20"></span>
+      <strong class="author"><a href="https://github.com/pietern">pietern</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2227">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2227"><time class="js-relative-date" datetime="2009-08-23T03:12:27-07:00" title="2009-08-23 03:12:27">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p><a href="https://github.com/mkrisher" class="user-mention">@mkrisher</a> / <a href="https://github.com/kommen" class="user-mention">@kommen</a> :<br>
+As you define all the tasks yourself and only use Capistrano as a wrapper for executing commands remotely, you can remove:</p>
+
+<pre><code>load 'deploy' if respond_to?(:namespace)
+</code></pre>
+
+<p>from your Capfile.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2239" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/9a64f190613b1893b7203ef362932d33" width="20"></span>
+      <strong class="author"><a href="https://github.com/brianjlandau">brianjlandau</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2239">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2239"><time class="js-relative-date" datetime="2009-08-28T07:08:37-07:00" title="2009-08-28 07:08:37">3 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>I <a href="http://gist.github.com/176754">forked</a> <a href="https://github.com/defunkt" class="user-mention">@defunkt</a>'s gist and applied some of the changes suggested above (<a href="https://github.com/kommen" class="user-mention">@kommen</a> &amp; <a href="https://github.com/chrismear" class="user-mention">@chrismear</a>) as well as a few of my own improvements. It tries to make things run as smoothly as possible with other cap recipes|plugins that you might be using or might want to use.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-2279" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/bc56e3ab1109d0ac3322d9cdea2bd52c" width="20"></span>
+      <strong class="author"><a href="https://github.com/shayarnett">shayarnett</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2279">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-2279"><time class="js-relative-date" datetime="2009-09-10T20:26:36-07:00" title="2009-09-10 20:26:36">2 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>I recently wrote about this on my <a href="http://almostproductive.net/past/2009/9/3/adopting_the_github_deployment_strategy/">blog</a>. Including a <a href="http://gist.github.com/180365">gist</a> of my full deploy.rb that can be dropped into most normal deployments.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-6396" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/ffcab65cd081527c38e6584ae729b276" width="20"></span>
+      <strong class="author"><a href="https://github.com/bronson">bronson</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-6396">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-6396"><time class="js-relative-date" datetime="2009-11-24T14:55:55-08:00" title="2009-11-24 14:55:55">2 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>There is also Inploy: <a href="http://github.com/dcrec1/inploy">http://github.com/dcrec1/inploy</a></p>
+
+<p>If you're using Git and deploying to Passenger, apparently it rocks.  I plan on trying it for my next project.</p>
+
+<p>Also, how about removing the spam above this comment?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-6423" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/369b9fd2a0d9e7cdbc60907a2a056ad9" width="20"></span>
+      <strong class="author"><a href="https://github.com/smtlaissezfaire">smtlaissezfaire</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-6423">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-6423"><time class="js-relative-date" datetime="2009-11-29T00:31:47-08:00" title="2009-11-29 00:31:47">2 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Here's a cap plugin wrapping up the idea:</p>
+
+<p><a href="http://github.com/smtlaissezfaire/fast_git_deploy">http://github.com/smtlaissezfaire/fast_git_deploy</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-6770" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/a31c2c26350e9e2b07fbd99fbd5ff520" width="20"></span>
+      <strong class="author"><a href="https://github.com/lawrencepit">lawrencepit</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-6770">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-6770"><time class="js-relative-date" datetime="2010-02-18T19:29:53-08:00" title="2010-02-18 19:29:53">2 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>With the new bundler, I guess most deploy scripts will execute "bundle install" with every deploy. However, this can easily take up a minute of the time. Any suggestions?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-7370" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/4aed3eb291895487e95cc2850cb92391" width="20"></span>
+      <strong class="author"><a href="https://github.com/antifuchs">antifuchs</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-7370">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-7370"><time class="js-relative-date" datetime="2010-04-15T03:42:15-07:00" title="2010-04-15 03:42:15">2 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Thanks for inspiring us to refactor our capistrano scripts (-:</p>
+
+<p>I'm very happy with a similar but slightly different solution to the git release management: We use two git directories in releases/, and use the "current" symlink to identify the active and inactive checkout dir; then we check out and frob the inactive dir, and switch the current symlink when the scripts are satisfied. </p>
+
+<p>This allows us to do potentially dangerous things in the inactive dir, and even if the deploment fails before the restart step (provided that no migrations ran), we can fix those problems without any stress.</p>
+
+<p>With this (and with a neat trick that allows us to run rake only once on every machine), our deploy time went down to 1:30 from 5 minutes, which is much more bearable! (-:</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-7688" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/b75dac25689d4fd87810949f637f8ee6" width="20"></span>
+      <strong class="author"><a href="https://github.com/ryanbillingsley">ryanbillingsley</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-7688">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-7688"><time class="js-relative-date" datetime="2010-05-27T13:34:16-07:00" title="2010-05-27 13:34:16">2 years ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>I am still trying to get the hang of git but I like this approach.  The only problem I am having is with the update_code task.  it will never pull the latest commit from github.  Is there something I am missing?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-8844" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/334a587ef1901e2d48dfd15f90522496" width="20"></span>
+      <strong class="author"><a href="https://github.com/lenary">lenary</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-8844">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-8844"><time class="js-relative-date" datetime="2010-10-01T14:35:44-07:00" title="2010-10-01 14:35:44">a year ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>and just in time for rails rumble! thanks!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+<div id="comment-12989" class="comment blog-comment">
+  <div class="cmeta">
+    <p class="author">
+        <span class="gravatar"><img height="20" src="./Deployment Script Spring Cleaning_files/f551b401381cea55f5444239cbf5d8da" width="20"></span>
+      <strong class="author"><a href="https://github.com/notahat">notahat</a></strong>
+      <em class="action-text">
+        <a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-12989">
+        commented
+        </a>
+      </em>
+    </p>
+    <p class="info">
+      <em class="date"><a href="https://github.com/blog/470-deployment-script-spring-cleaning#comment-12989"><time class="js-relative-date" datetime="2011-07-07T18:48:19-07:00" title="2011-07-07 18:48:19">8 months ago</time></a></em>
+        <span class="icon"></span>
+    </p>
+  </div>
+
+
+  <div class="body">
+    <div class="formatted-content">
+      <div class="content-body markdown-body ">
+          <p>Do you always take the site down before doing the git reset, and bring it back up again afterwards? If not, is there a problem with swapping files out from under the running app servers? We're running unicorn, and I'm not sure how it would feel about this.</p>
+
+<p>Also, how does bundling fit into all this? The git reset might be fast, but bundler is not.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+          Comments are closed on this post. If you are having trouble with the site, please contact <a href="mailto:support@github.com">support@github.com</a>.
+      </div>
+    </ul>
+  </div>
+  
+<div class="sidebar">
+  <div id="rss">
+    <a href="https://github.com/blog.atom"><img alt="RSS Feed" src="./Deployment Script Spring Cleaning_files/rss.png"></a>
+    <h3><a href="https://github.com/blog.atom">Subscribe to the GitHub Blog</a></h3>
+    <p>Never miss a new feature and always know about scheduled maintenance.</p>
+  </div>
+
+  <div class="others">
+    <ul>
+      <li>
+        <div><a href="https://github.com/blog/broadcasts">Broadcasts</a></div>
+        <div class="meta">New features &amp; announcements</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="others">
+    
+<div class="github-jobs-promotion" url="https://jobs.github.com/widget.js?callback=jobsWidgetCallback&amp;description=Ruby,Shell,C++" style="visibility: visible; ">
+  <p>
+    <a class="job-link" href="http://jobs.github.com/positions/3e809f3e-528d-11e1-9ed8-b903e0441c37" target="_blank">
+      <strong class="job-company">Blueleaf</strong> is hiring:
+      <strong class="job-position">Part-time Rails/jQuery at Blueleaf</strong> in
+      <span class="job-location">Cambridge, MA</span>
+    </a>
+  </p>
+  <a href="http://jobs.github.com/" target="_blank" class="jobs-logo">Brought to you by <strong>github:jobs</strong></a>
+</div>
+
+
+  </div>
+
+  <div class="others">
+    <ul>
+        <li>
+          <div><a href="https://github.com/blog/1072-adam-roben-is-a-githubber" rel="bookmark">Adam Roben is a GitHubber</a></div>
+          <div class="meta">tclem on Mar 05</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1071-matthew-mccullough-is-a-githubber" rel="bookmark">Matthew McCullough is a GitHubber</a></div>
+          <div class="meta">schacon on Mar 05</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1069-responsible-disclosure-policy" rel="bookmark">Responsible Disclosure Policy</a></div>
+          <div class="meta">mojombo on Mar 04</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1068-public-key-security-vulnerability-and-mitigation" rel="bookmark">Public Key Security Vulnerability and Mitigation</a></div>
+          <div class="meta">mojombo on Mar 04</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1067-github-for-mac-1-2-snow-octocat" rel="bookmark">GitHub for Mac 1.2: Snow Octocat</a></div>
+          <div class="meta">dannygreg on Mar 02</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1066-stockholm-drinkup" rel="bookmark">Stockholm Drinkup</a></div>
+          <div class="meta">holman on Mar 01</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1065-drinkup-in-bend-oregon" rel="bookmark">Drinkup in Bend Oregon</a></div>
+          <div class="meta">jonmagic on Mar 01</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1064-london-github-drinkup" rel="bookmark">London GitHub Drinkup</a></div>
+          <div class="meta">rtyley on Mar 01</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1063-github-at-the-game-developers-conference" rel="bookmark">GitHub at the Game Developers Conference</a></div>
+          <div class="meta">leereilly on Feb 29</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1062-our-first-github-coderdojo-session" rel="bookmark">Our First GitHub CoderDojo Session</a></div>
+          <div class="meta">cameronmcefee on Feb 28</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1056-blob-contributions-box" rel="bookmark">Blob contributions box</a></div>
+          <div class="meta">kneath on Feb 23</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1060-miami-github-drink-up" rel="bookmark">Miami GitHub Drink Up</a></div>
+          <div class="meta">bleikamp on Feb 23</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1059-bellevue-wa-drinkup" rel="bookmark">Bellevue, WA Drinkup</a></div>
+          <div class="meta">Haacked on Feb 23</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1054-gaug-es-for-android" rel="bookmark">Gaug.es for Android</a></div>
+          <div class="meta">mattgraham on Feb 22</div>
+        </li>
+        <li>
+          <div><a href="https://github.com/blog/1053-last-minute-drinkup-in-nyc" rel="bookmark">Last minute drinkup in NYC!</a></div>
+          <div class="meta">ericgerhardt on Feb 21</div>
+        </li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4ed95060f5a1f5137e000005');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+</div></div>
+          </div>
+          <div class="context-overlay"></div>
+        </div>
+
+      <!-- footer -->
+      <div id="footer">
+        
+  <div class="upper_footer">
+     <div class="container clearfix">
+
+       <!--[if IE]><h4 id="blacktocat_ie">GitHub Links</h4><![endif]-->
+       <!--[if !IE]--><h4 id="blacktocat">GitHub Links</h4><!--[endif]-->
+
+       <ul class="footer_nav">
+         <h4>GitHub</h4>
+         <li><a href="https://github.com/about">About</a></li>
+         <li><a href="https://github.com/blog">Blog</a></li>
+         <li><a href="https://github.com/features">Features</a></li>
+         <li><a href="https://github.com/contact">Contact &amp; Support</a></li>
+         <li><a href="https://github.com/training">Training</a></li>
+         <li><a href="http://enterprise.github.com/">GitHub Enterprise</a></li>
+         <li><a href="http://status.github.com/">Site Status</a></li>
+       </ul>
+
+       <ul class="footer_nav">
+         <h4>Tools</h4>
+         <li><a href="http://get.gaug.es/">Gauges: Analyze web traffic</a></li>
+         <li><a href="http://speakerdeck.com/">Speaker Deck: Presentations</a></li>
+         <li><a href="https://gist.github.com/">Gist: Code snippets</a></li>
+         <li><a href="http://mac.github.com/">GitHub for Mac</a></li>
+         <li><a href="http://mobile.github.com/">Issues for iPhone</a></li>
+         <li><a href="http://jobs.github.com/">Job Board</a></li>
+       </ul>
+
+       <ul class="footer_nav">
+         <h4>Extras</h4>
+         <li><a href="http://shop.github.com/">GitHub Shop</a></li>
+         <li><a href="http://octodex.github.com/">The Octodex</a></li>
+       </ul>
+
+       <ul class="footer_nav">
+         <h4>Documentation</h4>
+         <li><a href="http://help.github.com/">GitHub Help</a></li>
+         <li><a href="http://developer.github.com/">Developer API</a></li>
+         <li><a href="http://github.github.com/github-flavored-markdown/">GitHub Flavored Markdown</a></li>
+         <li><a href="http://pages.github.com/">GitHub Pages</a></li>
+       </ul>
+
+     </div><!-- /.site -->
+  </div><!-- /.upper_footer -->
+
+<div class="lower_footer">
+  <div class="container clearfix">
+    <!--[if IE]><div id="legal_ie"><![endif]-->
+    <!--[if !IE]--><div id="legal"><!--[endif]-->
+      <ul>
+          <li><a href="https://github.com/site/terms">Terms of Service</a></li>
+          <li><a href="https://github.com/site/privacy">Privacy</a></li>
+          <li><a href="https://github.com/security">Security</a></li>
+      </ul>
+
+      <p>© 2012 <span title="0.37423s from fe4.rs.github.com">GitHub</span> Inc. All rights reserved.</p>
+    </div><!-- /#legal or /#legal_ie-->
+
+      <div class="sponsor">
+        <a href="http://www.rackspace.com/" class="logo">
+          <img alt="Dedicated Server" height="36" src="./Deployment Script Spring Cleaning_files/rackspaces_logo.png" width="38">
+        </a>
+        Powered by the <a href="http://www.rackspace.com/">Dedicated
+        Servers</a> and<br> <a href="http://www.rackspacecloud.com/">Cloud
+        Computing</a> of Rackspace Hosting<span>®</span>
+      </div>
+  </div><!-- /.site -->
+</div><!-- /.lower_footer -->
+
+      </div><!-- /#footer -->
+
+    
+
+<div id="keyboard_shortcuts_pane" class="instapaper_ignore readability-extra" style="display:none">
+  <h2>Keyboard Shortcuts <small><a href="https://github.com/blog/470-deployment-script-spring-cleaning#" class="js-see-all-keyboard-shortcuts">(see all)</a></small></h2>
+
+  <div class="columns threecols">
+    <div class="column first">
+      <h3>Site wide shortcuts</h3>
+      <dl class="keyboard-mappings">
+        <dt>s</dt>
+        <dd>Focus site search</dd>
+      </dl>
+      <dl class="keyboard-mappings">
+        <dt>?</dt>
+        <dd>Bring up this help dialog</dd>
+      </dl>
+    </div><!-- /.column.first -->
+
+    <div class="column middle" style="display:none">
+      <h3>Commit list</h3>
+      <dl class="keyboard-mappings">
+        <dt>j</dt>
+        <dd>Move selection down</dd>
+      </dl>
+      <dl class="keyboard-mappings">
+        <dt>k</dt>
+        <dd>Move selection up</dd>
+      </dl>
+      <dl class="keyboard-mappings">
+        <dt>c <em>or</em> o <em>or</em> enter</dt>
+        <dd>Open commit</dd>
+      </dl>
+      <dl class="keyboard-mappings">
+        <dt>y</dt>
+        <dd>Expand URL to its canonical form</dd>
+      </dl>
+    </div><!-- /.column.first -->
+
+    <div class="column last" style="display:none">
+      <h3>Pull request list</h3>
+      <dl class="keyboard-mappings">
+        <dt>j</dt>
+        <dd>Move selection down</dd>
+      </dl>
+      <dl class="keyboard-mappings">
+        <dt>k</dt>
+        <dd>Move selection up</dd>
+      </dl>
+      <dl class="keyboard-mappings">
+        <dt>o <em>or</em> enter</dt>
+        <dd>Open issue</dd>
+      </dl>
+    </div><!-- /.columns.last -->
+
+  </div><!-- /.columns.equacols -->
+
+  <div style="display:none">
+    <div class="rule"></div>
+
+    <h3>Issues</h3>
+
+    <div class="columns threecols">
+      <div class="column first">
+        <dl class="keyboard-mappings">
+          <dt>j</dt>
+          <dd>Move selection down</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>k</dt>
+          <dd>Move selection up</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>x</dt>
+          <dd>Toggle selection</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>o <em>or</em> enter</dt>
+          <dd>Open issue</dd>
+        </dl>
+      </div><!-- /.column.first -->
+      <div class="column middle">
+        <dl class="keyboard-mappings">
+          <dt>I</dt>
+          <dd>Mark selection as read</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>U</dt>
+          <dd>Mark selection as unread</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>e</dt>
+          <dd>Close selection</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>y</dt>
+          <dd>Remove selection from view</dd>
+        </dl>
+      </div><!-- /.column.middle -->
+      <div class="column last">
+        <dl class="keyboard-mappings">
+          <dt>c</dt>
+          <dd>Create issue</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>l</dt>
+          <dd>Create label</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>i</dt>
+          <dd>Back to inbox</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>u</dt>
+          <dd>Back to issues</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>/</dt>
+          <dd>Focus issues search</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:none">
+    <div class="rule"></div>
+
+    <h3>Issues Dashboard</h3>
+
+    <div class="columns threecols">
+      <div class="column first">
+        <dl class="keyboard-mappings">
+          <dt>j</dt>
+          <dd>Move selection down</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>k</dt>
+          <dd>Move selection up</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>o <em>or</em> enter</dt>
+          <dd>Open issue</dd>
+        </dl>
+      </div><!-- /.column.first -->
+    </div>
+  </div>
+
+  <div style="display:none">
+    <div class="rule"></div>
+
+    <h3>Network Graph</h3>
+    <div class="columns equacols">
+      <div class="column first">
+        <dl class="keyboard-mappings">
+          <dt><span class="badmono">←</span> <em>or</em> h</dt>
+          <dd>Scroll left</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt><span class="badmono">→</span> <em>or</em> l</dt>
+          <dd>Scroll right</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt><span class="badmono">↑</span> <em>or</em> k</dt>
+          <dd>Scroll up</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt><span class="badmono">↓</span> <em>or</em> j</dt>
+          <dd>Scroll down</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>t</dt>
+          <dd>Toggle visibility of head labels</dd>
+        </dl>
+      </div><!-- /.column.first -->
+      <div class="column last">
+        <dl class="keyboard-mappings">
+          <dt>shift <span class="badmono">←</span> <em>or</em> shift h</dt>
+          <dd>Scroll all the way left</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>shift <span class="badmono">→</span> <em>or</em> shift l</dt>
+          <dd>Scroll all the way right</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>shift <span class="badmono">↑</span> <em>or</em> shift k</dt>
+          <dd>Scroll all the way up</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>shift <span class="badmono">↓</span> <em>or</em> shift j</dt>
+          <dd>Scroll all the way down</dd>
+        </dl>
+      </div><!-- /.column.last -->
+    </div>
+  </div>
+
+  <div style="display:none">
+    <div class="rule"></div>
+    <div class="columns threecols">
+      <div class="column first" style="display:none">
+        <h3>Source Code Browsing</h3>
+        <dl class="keyboard-mappings">
+          <dt>t</dt>
+          <dd>Activates the file finder</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>l</dt>
+          <dd>Jump to line</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>w</dt>
+          <dd>Switch branch/tag</dd>
+        </dl>
+        <dl class="keyboard-mappings">
+          <dt>y</dt>
+          <dd>Expand URL to its canonical form</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div id="markdown-help" class="instapaper_ignore readability-extra">
+  <h2>Markdown Cheat Sheet</h2>
+
+  <div class="cheatsheet-content">
+
+  <div class="mod">
+    <div class="col">
+      <h3>Format Text</h3>
+      <p>Headers</p>
+      <pre># This is an &lt;h1&gt; tag
+## This is an &lt;h2&gt; tag
+###### This is an &lt;h6&gt; tag</pre>
+     <p>Text styles</p>
+     <pre>*This text will be italic*
+_This will also be italic_
+**This text will be bold**
+__This will also be bold__
+
+*You **can** combine them*
+</pre>
+    </div>
+    <div class="col">
+      <h3>Lists</h3>
+      <p>Unordered</p>
+      <pre>* Item 1
+* Item 2
+  * Item 2a
+  * Item 2b</pre>
+     <p>Ordered</p>
+     <pre>1. Item 1
+2. Item 2
+3. Item 3
+   * Item 3a
+   * Item 3b</pre>
+    </div>
+    <div class="col">
+      <h3>Miscellaneous</h3>
+      <p>Images</p>
+      <pre>![GitHub Logo](/images/logo.png)
+Format: ![Alt Text](url)
+</pre>
+     <p>Links</p>
+     <pre>http://github.com - automatic!
+[GitHub](http://github.com)</pre>
+<p>Blockquotes</p>
+     <pre>As Kanye West said:
+
+&gt; We're living the future so
+&gt; the present is our past.
+</pre>
+    </div>
+  </div>
+  <div class="rule"></div>
+
+  <h3>Code Examples in Markdown</h3>
+  <div class="col">
+      <p>Syntax highlighting with <a href="http://github.github.com/github-flavored-markdown/" title="GitHub Flavored Markdown" target="_blank">GFM</a></p>
+      <pre>```javascript
+function fancyAlert(arg) {
+  if(arg) {
+    $.facebox({div:'#foo'})
+  }
+}
+```</pre>
+    </div>
+    <div class="col">
+      <p>Or, indent your code 4 spaces</p>
+      <pre>Here is a Python code example
+without syntax highlighting:
+
+    def foo:
+      if not bar:
+        return true</pre>
+    </div>
+    <div class="col">
+      <p>Inline code for comments</p>
+      <pre>I think you should use an
+`&lt;addr&gt;` element here instead.</pre>
+    </div>
+  </div>
+
+  </div>
+
+
+
+    <div class="ajax-error-message">
+      <p><span class="icon"></span> Something went wrong with that request. Please try again. <a href="javascript:;" class="ajax-error-dismiss">Dismiss</a></p>
+    </div>
+
+    
+    
+    
+    <span id="server_response_time" data-time="0.37601" data-host="fe4"></span>
+  
+
+<div style="clear: both; "></div></body></html>

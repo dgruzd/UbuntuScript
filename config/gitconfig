@@ -1,0 +1,7 @@
+[user]
+	name = Dmitry Gruzd
+	email = donotsendhere@gmail.com
+[core]
+	editor = mvim -f
+	packedGitLimit = 1g
+	bigFileThreshold = 10m

@@ -65,7 +65,6 @@ alias dbm='bundle exec rake db:migrate'
 alias rspec='bundle exec rspec spec/'
 alias ruby-style='find . -iname "*.rb" -exec rbeautify {} \;'
 alias speedtest512='dd if=/dev/zero of=output.img bs=8k count=64k && rm output.img'
-
 alias tmux="tmux attach || tmux new"
 
 alias postgres="sudo su - postgres"

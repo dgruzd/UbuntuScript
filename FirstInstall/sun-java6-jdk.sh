@@ -1,11 +1,19 @@
 #!/bin/sh
 
+chmod +x jdk-6u34-linux-x64.bin 
+./jdk-6u33-linux-x64.bin 
+sudo chown root -R jdk1.6.0_34 
+sudo mv jdk1.6.0_34/ /usr/lib/jvm/ 
 
-dist_name=oneiric
-#sudo add-apt-repository ppa:ferramroberto/java
-echo "deb http://ppa.launchpad.net/ferramroberto/java/ubuntu $dist_name main" | sudo tee -a /etc/apt/sources.list
-echo "deb-src http://ppa.launchpad.net/ferramroberto/java/ubuntu $dist_name main" | sudo tee -a /etc/apt/sources.list
+sudo update-alternatives --install "/usr/bin/java" "java" \ 
+"/usr/lib/jvm/bin/java" 1 
 
-sudo apt-get update
-sudo apt-get --assume-yes install sun-java6-jdk #sun-java6-plugin
-sudo update-alternatives --config java
+sudo update-alternatives --install "/usr/bin/javac" "javac" \ 
+"/usr/lib/jvm/bin/javac" 1 
+
+sudo update-alternatives --install "/usr/bin/javaws" "javaws" \ 
+"/usr/lib/jvm/bin/javaws" 1 
+
+sudo update-alternatives --config java 
+sudo update-alternatives --config javac 
+sudo update-alternatives --config javaws 

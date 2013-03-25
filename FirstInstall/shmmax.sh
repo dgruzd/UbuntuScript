@@ -6,7 +6,7 @@
 #cat /proc/sys/kernel/shmmax
 
 
-MB=512
+MB=4048
 let SHMMAX=MB*1024*1024
 echo $SHMMAX
 

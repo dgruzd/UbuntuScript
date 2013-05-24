@@ -1,8 +1,9 @@
 #!/bin/sh
+#http://www.splitbrain.org/blog/2008-11/02-dns_tunneling_made_simple
+
 sudo apt-get install screen libnet-dns-perl libmime-base32-perl vim
 cd /tmp
-rm dnstunnel.tar.gz
-wget http://zengile.com/dnstunnel.tar.gz
+wget -N http://zengile.com/dnstunnel.tar.gz
 tar xvzf dnstunnel.tar.gz
 rm dnstunnel.tar.gz
 sudo mkdir -pv /opt

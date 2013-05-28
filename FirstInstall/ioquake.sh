@@ -1,12 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 q3config="$HOME/.q3a/baseq3/autoexec.cfg"
 wget32="ioquake3-1.36-7.1.i386.run"
 wget64="ioquake3-1.36-7.1.x86_64.run"
 url=http://q3.zengile.com/system/q3files
 
 
-echo "Type your machine type \"64\" or \"32\" bit (2 digits), followed by [ENTER]:"
-read mtype
 #echo "Type your nickname:"
 #read nick
 nick=`whoami`
@@ -51,11 +49,7 @@ cp -v *.pk3 $HOME/.q3a/baseq3
 rm -rf quake3-latest-pk3s/
 rm -rf quake3-maps/
 
-
-
-
-
-if [ "$mtype" = "64" ]; then
+if [ $(uname -m) == 'x86_64' ]; then
   wget -N http://ioquake3.org/files/1.36/installer/$wget64
   LANG=C sudo sh $wget64 
 else

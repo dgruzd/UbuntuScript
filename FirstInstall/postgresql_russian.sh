@@ -17,7 +17,7 @@ sudo mv russian.dict $DIR
 
 
 echo "CREATE TEXT SEARCH DICTIONARY russian_ispell ( TEMPLATE = ispell, DictFile = russian, AffFile = russian, StopWords = russian);" | sudo -u postgres psql
-echo "CREATE TEXT SEARCH CONFIGURATION ru (COPY=russian);" | sudo -u postgres psql
-echo "ALTER TEXT SEARCH CONFIGURATION ru ALTER MAPPING FOR hword, hword_part, word WITH russian_ispell, russian_stem;" | sudo -u postgres psql
+echo "CREATE TEXT SEARCH CONFIGURATION russian (COPY=russian);" | sudo -u postgres psql
+echo "ALTER TEXT SEARCH CONFIGURATION russian ALTER MAPPING FOR hword, hword_part, word WITH russian_ispell, russian_stem;" | sudo -u postgres psql
 
-echo "select to_tsvector('ru', 'мама мыла раму');" | sudo -u postgres psql
+echo "select to_tsvector('russian', 'мама мыла раму');" | sudo -u postgres psql

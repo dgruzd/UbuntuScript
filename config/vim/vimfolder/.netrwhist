@@ -1,6 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_cnt =5
 let g:netrw_dirhist_1='/home/nyaa/github/spb30/lib/weatherapi'
 let g:netrw_dirhist_2='/home/nyaa/.q3a/baseq3'
 let g:netrw_dirhist_3='/home/nyaa/github/stomsafe/app/assets/javascripts/application'
 let g:netrw_dirhist_4='/home/nyaa/github/qdproject/script/foursquare'
+let g:netrw_dirhist_5='/home/nyaa/github/capobvious/lib/capobvious'

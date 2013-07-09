@@ -16,7 +16,7 @@ if [ "$1" = "install" ]; then
   else
     wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/FirstInstall/$2.sh
     chmod +x $2.sh
-    ./$2.sh
+    ./$2.sh $3
     rm $2.sh
   fi
 elif  [ "$1" = "list" ]; then
@@ -33,7 +33,7 @@ elif  [ "$1" = "cat" ]; then
     less $2.sh
     rm $2.sh
 elif  [ "$1" = "help" ]; then
-  echo "apt-nyaa ver 0.0.3\nUsage:\napt-nyaa install SOME_APP\napt-nyaa cat SOMETHING #look source code\napt-nyaa search SOMETHING\napt-nyaa list\napt-nyaa help\napt-nyaa upgrade"
+  echo "apt-nyaa ver 0.0.4\nUsage:\napt-nyaa install SOME_APP\napt-nyaa cat SOMETHING #look source code\napt-nyaa search SOMETHING\napt-nyaa list\napt-nyaa help\napt-nyaa upgrade"
 elif  [ "$1" = "upgrade" ]; then
   sudo apt-get --assume-yes install wget > /dev/null 2>&1 && cd /usr/bin/ && sudo wget -Nq https://raw.github.com/nyaa/UbuntuScript/master/apt-nyaa && sudo chmod +x apt-nyaa
   exit 0

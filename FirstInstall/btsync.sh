@@ -20,16 +20,17 @@ tar xvzf $filename -C btsync
 sudo mv btsync/btsync /usr/bin/
 rm -rf btsync
 
+if [ "$1" = "upgrade" ]; then
+  exit
+else
+  btsync --dump-sample-config > $config
+  mkdir -pv $HOME/.sync
 
-btsync --dump-sample-config > $config
-mkdir -pv $HOME/.sync
+  sed -i "s/home\/user/home\/$(whoami)/" $config
+  sed -i "s/My\sSync\sDevice/$(cat /etc/hostname)/" $config
 
-sed -i "s/home\/user/home\/$(whoami)/" $config
-sed -i "s/My\sSync\sDevice/$(cat /etc/hostname)/" $config
+  "${EDITOR:-vi}" $config
 
-"${EDITOR:-vi}" $config
-
-
-
-echo "#sudo -u $(whoami) -H btsync --config $config" | sudo tee -a /etc/rc.local
-sudo "${EDITOR:-vi}" /etc/rc.local
+  echo "#sudo -u $(whoami) -H btsync --config $config" | sudo tee -a /etc/rc.local
+  sudo "${EDITOR:-vi}" /etc/rc.local
+fi

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo apt-get --assume-yes install pyrit
+sudo apt-get --assume-yes install pyrit python-psycopg2
 # sudo apt-get --assume-yes install python-dev libpcap-dev
 # mkdir -p /tmp/pyrit
 # cd /tmp/pyrit

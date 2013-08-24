@@ -11,5 +11,5 @@ echo "proxyPort = 8118" | sudo tee -a $POLIPO_CONF
 echo "socksParentProxy = \"localhost:9050\"" | sudo tee -a $POLIPO_CONF
 echo "socksProxyType = socks5" | sudo tee -a $POLIPO_CONF
 echo "proxyAddress = \"0.0.0.0\"" | sudo tee -a $POLIPO_CONF
-echo "allowedClients = 127.0.0.1, 192.168.1.0/24" | sudo tee -a $POLIPO_CONF
+echo "allowedClients = 127.0.0.1 #, 192.168.1.0/24" | sudo tee -a $POLIPO_CONF
 sudo service polipo restart

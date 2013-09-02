@@ -16,6 +16,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-bundler'
 Bundle 'scrooloose/nerdtree'
+Bundle 'altercation/vim-colors-solarized'
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
 

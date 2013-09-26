@@ -116,3 +116,5 @@ cat > ~/.bitcoin/bitcoin.conf <<EOL
 # Minimize to the system tray
 #minimizetotray=1
 EOL
+
+#bitcoind -daemon

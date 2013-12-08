@@ -117,4 +117,4 @@ cat > ~/.bitcoin/bitcoin.conf <<EOL
 #minimizetotray=1
 EOL
 
-#bitcoind -daemon
+echo "bitcoind -daemon"

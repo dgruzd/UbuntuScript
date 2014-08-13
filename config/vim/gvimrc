@@ -13,8 +13,8 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 filetype plugin indent on " обязательно!
 Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails'
+"Bundle 'tpope/vim-fugitive'
+"Bundle 'tpope/vim-rails'
 "Bundle 'tpope/vim-bundler'
 "Bundle 'scrooloose/nerdtree'
 Bundle 'altercation/vim-colors-solarized'

@@ -1,0 +1,271 @@
+"Use Vim settings, rather then Vi settings (much better!).
+"This must be first, because it changes other options as a side effect.
+
+"  call pathogen#infect()
+"  call pathogen#helptags()
+
+
+" Vundle
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+"Bundle 'tpope/vim-fugitive'
+"Bundle 'tpope/vim-rails'
+"Bundle 'tpope/vim-bundler'
+"Bundle 'scrooloose/nerdtree'
+Bundle 'altercation/vim-colors-solarized'
+
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+
+set shell=/bin/sh
+
+set nocompatible
+set noswapfile
+set number      "show line numbers
+"display tabs
+set list
+set listchars=tab:▷⋅
+
+set incsearch   "find the next match as we type the search
+set hlsearch    "hilight searches by default
+
+set wrap        "dont wrap lines
+set linebreak   "wrap lines at convenient points
+
+syntax on
+
+if has("gui_running")
+set guioptions-=T
+set guioptions-=m
+if has("gui_gtk2")
+"set guifont=Courier\ New\ 13
+set guifont=Inconsolata\ 12
+elseif has("gui_photon")
+set guifont=Courier\ New:s11
+elseif has("gui_kde")
+set guifont=Courier\ New/11/-1/5/50/0/0/0/1/0
+elseif has("x11")
+set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
+else
+set guifont=Monaco:h15
+"   set guifont=Courier_New:h11:cDEFAULT
+endif
+
+"https://github.com/altercation/vim-colors-solarized
+"  colorscheme desert 
+"  set background=dark
+set background=light
+colorscheme solarized
+
+"set guifont=Courier\ 12
+set cursorline
+set lines=33
+set columns=118
+else
+
+endif
+
+
+set cpoptions+=$
+" set virtualedit=all
+
+" Statusline
+set laststatus=2
+set statusline=%F%m%r%h%w\ line:%l/%L[%p%%]
+
+" set statusline=
+" set statusline +=%1*\ %n\ %*            "buffer number
+" set statusline +=%5*%{&ff}%*            "file format
+" set statusline +=%3*%y%*                "file type
+" set statusline +=%4*\ %<%F%*            "full path
+" set statusline +=%2*%m%*                "modified flag
+" set statusline +=%1*%=%5l%*             "current line
+" set statusline +=%2*/%L%*               "total lines
+" set statusline +=%1*%4v\ %*             "virtual column number
+" set statusline +=%2*0x%04B\ %*          "character under cursor
+
+" set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L] 
+
+" Устанавливаем кодировки
+set encoding=utf8
+set termencoding=utf-8
+
+" Включаем "умные" отспупы ( например, автоотступ после {)
+set smartindent
+"Настроим кол-во символов пробелов, которые будут заменять \t
+set tabstop=2
+set shiftwidth=2
+set smarttab
+set softtabstop=2
+" Преобразование Таба в пробелы
+set expandtab
+
+
+"Включим автоотступы для новых строк
+set ai
+"Включим отступы в стиле Си
+set cin
+
+"Далее настроим поиск и подсветку результатов поиска и совпадения скобок
+set showmatch 
+set incsearch
+set ignorecase
+
+"-------------------------
+" HOTKEYS
+"-------------------------
+" Launch program
+"map R <Esc>:w<CR>:!%:p<CR>
+
+" Пробел в нормальном режиме перелистывает страницы
+"nmap <Space> <PageDown>
+
+
+" C-c and C-v - Copy/Paste в "глобальный клипборд"
+vmap <C-C> "+yi
+imap <C-V> <esc>"+gPi
+
+" To save, ctrl-s.
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
+
+
+" F2 - save and exit
+map <F2> :wq<cr>
+vmap <F2> :wq<cr>i
+imap <F2> :wq<cr>i
+
+if has("gui_running")
+imap <F4> <Esc>:browse tabnew<CR> 
+map <F4> <Esc>:browse tabnew<CR>
+imap <F5> <Esc> :tabprev <CR>i
+map <F5> :tabprev <CR>
+imap <F6> <Esc> :tabnext <CR>i
+map <F6> :tabnext <CR>
+imap <F8> <Esc> :tabclose <CR>i
+map <F8> :tabclose <CR>
+else
+map <F5> :bp<cr>
+vmap <F5> :bp<cr>
+imap <F5> :bp<cr>i
+map <F6> :bn<cr>
+vmap <F6> :bn<cr>
+imap <F6> :bn<cr>i
+map <F7> :ls<cr>
+vmap <F7> :ls<cr>
+imap <F7> :ls<cr>i
+map <F8> :bd<cr>
+vmap <F8> <esc>:bd<cr>
+imap <F8> <esc>:bd<cr>i
+endif
+
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType sh,ruby,python,coffee   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+" Ru commands
+map ё `
+map й q
+map ц w
+map у e
+map к r
+map е t
+map н y
+map г u
+map ш i
+map щ o
+map з p
+map х [
+map ъ ]
+
+map ф a
+map ы s
+map в d
+map а f
+map п g
+map р h
+map о j
+map л k
+map д l
+map ж ;
+map э '
+
+map я z
+map ч x
+map с c
+map м v
+map и b
+map т n
+map ь m
+map б ,
+    map ю .
+
+    map Ё ~
+    map Й Q
+    map Ц W
+    map У E
+    map К R
+    map Е T
+    map Н Y
+    map Г U
+    map Ш I
+    map Щ O
+    map З P
+    map Х {
+      map Ъ }
+
+      map Ф A
+      map Ы S
+      map В D
+      map А F
+      map П G
+      map Р H
+      map О J
+      map Л K
+      map Д L
+      map Ж :
+      map Э "
+
+      map Я Z
+      map Ч X
+      map С C
+      map М V
+      map И B
+      map Т N
+      map Ь M
+      map Б <
+      map Ю >
+
+
+
+      " Convert each NameLikeThis to name_like_this in current line.
+      ":s#\(\<\u\l\+\|\l\+\)\(\u\)#\l\1_\l\2#g
+
+      " Alternative: accept numbers in name.
+      ":s#\C\(\<\u[a-z0-9]\+\|[a-z0-9]\+\)\(\u\)#\l\1_\l\2#g
+
+      " All buffers
+      ":%s#\C\(\<\u[a-z0-9]\+\|[a-z0-9]\+\)\(\u\)#\l\1_\l\2#g
+
+      ":1,$s/_\([a-z]\)/\u\1/g

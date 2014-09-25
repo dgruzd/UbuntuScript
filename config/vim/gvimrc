@@ -1,9 +1,31 @@
+call plug#begin('~/.vim/plugged')
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }
+Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+Plug 'slim-template/vim-slim', { 'for': 'slim' }
+Plug 'altercation/vim-colors-solarized'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'gregsexton/gitv'
+Plug 'tpope/vim-fugitive'
+" Plug 'vim-scripts/L9'
+" Plug 'vim-scripts/FuzzyFinder'
+call plug#end()
+
+set shell=/bin/sh
+
 set nocompatible
 set noswapfile
 set number      "show line numbers
 set list "display tabs
 set listchars=tab:▷⋅
 "set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+
+
+set incsearch   "find the next match as we type the search
+set hlsearch    "hilight searches by default
+set wrap        "dont wrap lines
+set linebreak   "wrap lines at convenient points
 
 syntax on
 
@@ -49,6 +71,7 @@ set smarttab
 set softtabstop=2
 " Преобразование Таба в пробелы
 set expandtab
+
 "Включим автоотступы для новых строк
 set ai
 "Включим отступы в стиле Си
@@ -66,3 +89,5 @@ autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+map <C-t> :NERDTreeToggle 

@@ -29,8 +29,8 @@ set linebreak   "wrap lines at convenient points
 
 syntax on
 
-colorscheme solarized "https://github.com/altercation/vim-colors-solarized
 if has("gui_running")
+colorscheme solarized "https://github.com/altercation/vim-colors-solarized
 set guioptions-=T
 set guioptions-=m
 if has("gui_gtk2")

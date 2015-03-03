@@ -1,6 +1,4 @@
 #!/bin/sh
-sudo add-apt-repository ppa:relan/exfat
+sudo add-apt-repository universe
 sudo apt-get update
-sudo apt-get --assume-yes install exfat-utils fuse-exfat
-
-#sudo mount.exfat-fuse /dev/sdh1 /mnt/ 
+sudo apt-get install exfat-fuse exfat-utils

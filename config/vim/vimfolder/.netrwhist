@@ -1,4 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =3
 let g:netrw_dirhist_1='/Users/nyaa/github/onlinetours/app/workers'
 let g:netrw_dirhist_2='/Users/nyaa/github/MyScript/Other/9gag_dl'
+let g:netrw_dirhist_3='/Users/nyaa/github/onlinetours/app/models'

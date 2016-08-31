@@ -58,6 +58,8 @@ endif
 " Statusline
 set laststatus=2
 set statusline=%F%m%r%h%w\ line:%l/%L[%p%%]
+set statusline+=\ col:%c
+set statusline +=\ hex:0x%04B\ %*          "character under cursor
 
 
 " Устанавливаем кодировки
@@ -92,3 +94,6 @@ noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<C
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
 map <C-t> :NERDTreeToggle 
+
+" Disable mouse
+set mouse=

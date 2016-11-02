@@ -13,3 +13,7 @@ echo "socksProxyType = socks5" | sudo tee -a $POLIPO_CONF
 echo "proxyAddress = \"0.0.0.0\"" | sudo tee -a $POLIPO_CONF
 echo "allowedClients = 127.0.0.1 #, 192.168.1.0/24" | sudo tee -a $POLIPO_CONF
 sudo service polipo restart
+
+TOR_CONF="/etc/tor/torrc"
+echo "ExitPolicy reject *:*" | sudo tee -a $TOR_CONF
+echo "ExitPolicy reject6 *:*" | sudo tee -a $TOR_CONF
